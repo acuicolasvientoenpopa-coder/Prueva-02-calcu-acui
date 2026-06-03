@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaCalc CR</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #0a1628;
+--surface: #0f2040;
+--surface2: #142a4f;
+--green: #00c896;
+--blue: #0099ff;
+--yellow: #f0a500;
+--text: #e8edf5;
+--text2: #8899b0;
+--danger: #ff4466;
+--border: rgba(255,255,255,0.08);
+--radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+font-family: 'DM Sans', sans-serif;
+background: var(--bg);
+color: var(--text);
+min-height: 100vh;
+overflow-x: hidden;
+}
+h1,h2,h3,h4,.tab-btn,.species-card-name {
+font-family: 'Syne', sans-serif;
+}
+.mono {
+font-family: 'DM Mono', monospace;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--surface2); border-radius:3px; }
+
+/* AUTH SCREEN */
+#auth-screen {
+display:flex; align-items:center; justify-content:center;
+min-height:100vh; padding:20px;
+}
+.auth-container {
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:40px 32px;
+width:100%; max-width:420px;
+}
+.auth-logo {
+text-align:center; margin-bottom:28px;
+}
+.auth-logo h1 {
+font-size:28px; color:var(--green);
+}
+.auth-logo p {
+color:var(--text2); font-size:13px; margin-top:4px;
+}
+.auth-tabs {
+display:flex; gap:0; margin-bottom:24px;
+background:var(--bg); border-radius:10px; padding:4px;
+}
+.auth-tab {
+flex:1; text-align:center; padding:10px;
+border-radius:8px; cursor:pointer;
+font-family:'Syne',sans-serif; font-weight:600;
+font-size:14px; color:var(--text2);
+transition:.2s;
+}
+.auth-tab.active {
+background:var(--surface2); color:var(--green);
+}
+.form-group {
+margin-bottom:16px;
+}
+.form-group label {
+display:block; font-size:12px; color:var(--text2);
+margin-bottom:6px; font-weight:500;
+}
+.form-group input, .form-group select, .form-group textarea {
+width:100%; padding:12px 14px;
+background:var(--bg); border:1px solid var(--border);
+border-radius:10px; color:var(--text);
+font-family:'DM Sans',sans-serif; font-size:14px;
+outline:none; transition:.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+border-color:var(--green);
+}
+.btn {
+width:100%; padding:14px;
+border:none; border-radius:10px;
+font-family:'Syne',sans-serif; font-weight:700;
+font-size:15px; cursor:pointer;
+transition:.2s;
+}
+.btn-primary {
+background:linear-gradient(135deg,var(--green),#00a87e);
+color:#fff;
+}
+.btn-primary:hover { opacity:.9; }
+.btn-danger {
+background:var(--danger); color:#fff;
+}
+.btn-secondary {
+background:var(--surface2); color:var(--text);
+border:1px solid var(--border);
+}
+.btn-small {
+width:auto; padding:8px 16px; font-size:12px;
+}
+.auth-error {
+color:var(--danger); font-size:12px;
+margin-top:8px; text-align:center;
+}
+
+/* MAIN APP */
+#app-screen { display:none; }
+.header {
+background:var(--surface);
+border-bottom:1px solid var(--border);
+padding:12px 20px;
+display:flex; align-items:center; justify-content:space-between;
+position:sticky; top:0; z-index:100;
+}
+.header-left h2 {
+font-size:18px; color:var(--green);
+}
+.header-left p {
+font-size:11px; color:var(--text2); margin-top:2px;
+}
+.header-right {
+display:flex; align-items:center; gap:10px;
+}
+.header-right .user-info {
+text-align:right;
+}
+.header-right .user-info span {
+display:block; font-size:12px; color:var(--text);
+font-weight:600;
+}
+.header-right .user-info small {
+font-size:10px; color:var(--text2);
+}
+.btn-logout {
+background:transparent; border:1px solid var(--border);
+color:var(--text2); padding:8px 12px;
+border-radius:8px; cursor:pointer; font-size:12px;
+font-family:'DM Sans',sans-serif;
+transition:.2s;
+}
+.btn-logout:hover { border-color:var(--danger); color:var(--danger); }
+
+/* TABS */
+.tabs {
+display:flex; gap:0;
+background:var(--surface);
+border-bottom:1px solid var(--border);
+overflow-x:auto; padding:0 12px;
+-webkit-overflow-scrolling:touch;
+}
+.tab-btn {
+padding:14px 16px; white-space:nowrap;
+font-size:12px; font-weight:600;
+color:var(--text2); cursor:pointer;
+border-bottom:3px solid transparent;
+transition:.2s; flex-shrink:0;
+}
+.tab-btn.active {
+color:var(--green);
+border-bottom-color:var(--green);
+}
+.tab-btn:hover { color:var(--text); }
+
+.tab-content { display:none; padding:16px; max-width:900px; margin:0 auto; }
+.tab-content.active { display:block; }
+
+/* CARDS */
+.card {
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:20px; margin-bottom:16px;
+}
+.card-title {
+font-size:15px; font-weight:700;
+margin-bottom:14px; display:flex;
+align-items:center; gap:8px;
+}
+.card-title .dot {
+width:8px; height:8px; border-radius:50%;
+}
+
+/* SPECIES CARDS */
+.species-grid {
+display:grid;
+grid-template-columns: repeat(auto-fill, minmax(130px,1fr));
+gap:10px; margin-bottom:20px;
+}
+.species-card {
+background:var(--bg);
+border:2px solid var(--border);
+border-radius:12px;
+padding:14px 10px;
+text-align:center; cursor:pointer;
+transition:.2s; position:relative;
+}
+.species-card:hover { border-color:var(--blue); }
+.species-card.selected { border-color:var(--green); background:rgba(0,200,150,0.05); }
+.species-card .emoji { font-size:32px; display:block; margin-bottom:6px; }
+.species-card-name { font-size:12px; font-weight:700; }
+.species-card .sci { font-size:9px; color:var(--text2); font-style:italic; margin-top:2px; }
+.badge-custom {
+position:absolute; top:6px; right:6px;
+background:var(--yellow); color:#000;
+font-size:8px; font-weight:700;
+padding:2px 6px; border-radius:4px;
+font-family:'Syne',sans-serif;
+}
+
+/* GRID LAYOUT */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+@media(max-width:600px) {
+.grid-2, .grid-3 { grid-template-columns:1fr; }
+}
+
+/* RESULTS */
+.result-grid {
+display:grid;
+grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+gap:10px;
+}
+.result-item {
+background:var(--bg);
+border:1px solid var(--border);
+border-radius:10px;
+padding:12px;
+}
+.result-item label {
+font-size:10px; color:var(--text2);
+display:block; margin-bottom:4px;
+}
+.result-item .value {
+font-family:'DM Mono',monospace;
+font-size:16px; font-weight:500;
+color:var(--green);
+}
+.result-item.income .value { color:var(--blue); }
+.result-item.profit .value { color:var(--yellow); }
+.result-item.warning .value { color:var(--danger); }
+
+/* WATER PARAMS SECTION */
+.section-water {
+background: rgba(0,153,255,0.04);
+border:1px solid rgba(0,153,255,0.15);
+border-radius: var(--radius);
+padding:16px; margin-bottom:16px;
+}
+.section-zoo {
+background: rgba(240,165,0,0.04);
+border:1px solid rgba(240,165,0,0.15);
+border-radius: var(--radius);
+padding:16px; margin-bottom:16px;
+}
+
+/* BITACORA LIST */
+.bit-record {
+background:var(--bg);
+border:1px solid var(--border);
+border-radius:10px;
+padding:14px; margin-bottom:10px;
+position:relative;
+}
+.bit-record .bit-head {
+display:flex; justify-content:space-between;
+align-items:center; margin-bottom:8px;
+}
+.bit-record .bit-head span {
+font-size:13px; font-weight:600;
+}
+.bit-record .bit-detail {
+font-size:11px; color:var(--text2);
+line-height:1.8;
+}
+.bit-record .bit-detail b { color:var(--text); }
+.btn-delete {
+background:transparent; border:1px solid var(--danger);
+color:var(--danger); padding:4px 10px;
+border-radius:6px; cursor:pointer; font-size:11px;
+}
+
+/* CHART */
+.chart-container {
+background:var(--bg);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:16px; margin-bottom:16px;
+overflow-x:auto;
+}
+.bar-chart {
+min-height:200px; position:relative;
+}
+.bar-row {
+display:flex; align-items:center;
+margin-bottom:4px; gap:8px;
+}
+.bar-label {
+min-width:70px; font-size:10px;
+color:var(--text2); text-align:right;
+font-family:'DM Mono',monospace;
+}
+.bar-fill {
+height:16px; border-radius:4px;
+transition:width .3s; min-width:2px;
+}
+.bar-value {
+font-size:10px; color:var(--text2);
+font-family:'DM Mono',monospace;
+min-width:50px;
+}
+
+/* TABLE */
+.data-table {
+width:100%; border-collapse:collapse;
+font-size:11px; overflow-x:auto;
+display:block;
+}
+.data-table th {
+background:var(--surface2);
+padding:10px 8px; text-align:left;
+color:var(--text2); font-weight:600;
+font-size:10px; white-space:nowrap;
+position:sticky; top:0;
+}
+.data-table td {
+padding:8px; border-bottom:1px solid var(--border);
+white-space:nowrap;
+font-family:'DM Mono',monospace;
+font-size:11px;
+}
+.data-table tr:hover td { background:rgba(255,255,255,0.02); }
+
+/* PARAMS TABLE */
+.param-row {
+display:flex; align-items:center;
+padding:12px 0; border-bottom:1px solid var(--border);
+gap:12px; flex-wrap:wrap;
+}
+.param-row .param-name {
+flex:1; min-width:120px;
+font-size:13px; font-weight:500;
+}
+.param-row .param-unit {
+font-size:11px; color:var(--text2); min-width:60px;
+}
+.param-row .param-default {
+font-size:10px; color:var(--text2);
+font-family:'DM Mono',monospace;
+min-width:80px;
+}
+.param-row input {
+width:100px; padding:8px 10px;
+background:var(--bg); border:1px solid var(--border);
+border-radius:8px; color:var(--text);
+font-family:'DM Mono',monospace;
+font-size:13px; outline:none;
+}
+.param-row input:focus { border-color:var(--green); }
+
+/* MINI TABS */
+.mini-tabs {
+display:flex; gap:6px; flex-wrap:wrap;
+margin-bottom:16px;
+}
+.mini-tab {
+padding:8px 14px; border-radius:8px;
+background:var(--bg); border:1px solid var(--border);
+color:var(--text2); cursor:pointer;
+font-size:11px; font-weight:600;
+font-family:'Syne',sans-serif;
+transition:.2s;
+}
+.mini-tab.active {
+background:var(--green); color:#000;
+border-color:var(--green);
+}
+
+/* MODAL */
+.modal-overlay {
+display:none; position:fixed;
+top:0; left:0; right:0; bottom:0;
+background:rgba(0,0,0,0.7);
+z-index:200; align-items:center;
+justify-content:center; padding:20px;
+}
+.modal-overlay.show {
+display:flex;
+}
+.modal {
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:28px; width:100%;
+max-width:500px; max-height:90vh;
+overflow-y:auto;
+}
+.modal h3 {
+margin-bottom:20px; font-size:18px;
+}
+
+/* TOAST */
+.toast-container {
+position:fixed; top:20px; right:20px;
+z-index:300;
+}
+.toast {
+background:var(--surface2);
+border:1px solid var(--border);
+border-radius:10px;
+padding:14px 20px;
+margin-bottom:8px;
+font-size:13px;
+animation: toastIn .3s ease;
+display:flex; align-items:center; gap:8px;
+}
+.toast.success { border-left:3px solid var(--green); }
+.toast.error { border-left:3px solid var(--danger); }
+.toast.info { border-left:3px solid var(--blue); }
+@keyframes toastIn {
+from { opacity:0; transform:translateX(40px); }
+to { opacity:1; transform:translateX(0); }
+}
+
+/* SPINNER */
+.spinner-overlay {
+display:none; position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:rgba(10,22,40,0.85);
+z-index:250;
+align-items:center; justify-content:center;
+}
+.spinner-overlay.show { display:flex; }
+.spinner {
+width:40px; height:40px;
+border:3px solid var(--surface2);
+border-top-color:var(--green);
+border-radius:50%;
+animation:spin .8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* FILTERS */
+.filters {
+display:flex; gap:10px; flex-wrap:wrap;
+margin-bottom:16px;
+}
+.filters select, .filters input {
+padding:10px 12px;
+background:var(--bg); border:1px solid var(--border);
+border-radius:8px; color:var(--text);
+font-family:'DM Sans',sans-serif;
+font-size:13px; outline:none;
+}
+.filters select:focus, .filters input:focus {
+border-color:var(--green);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px) {
+.header { flex-wrap:wrap; gap:8px; }
+.species-grid { grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); }
+.result-grid { grid-template-columns: 1fr 1fr; }
+.tabs { padding:0 4px; }
+.tab-btn { padding:12px 10px; font-size:11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- SPINNER -->
+<div class="spinner-overlay" id="spinner">
+<div class="spinner"></div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+<div class="auth-container">
+<div class="auth-logo">
+<h1>🐟 AquaCalc CR</h1>
+<p>Calculadora Profesional de Acuicultura</p>
+</div>
+<div class="auth-tabs">
+<div class="auth-tab active" onclick="switchAuthTab('login')">Ingresar</div>
+<div class="auth-tab" onclick="switchAuthTab('register')">Registrarse</div>
+</div>
+<div id="login-form">
+<div class="form-group">
+<label>Correo electrónico</label>
+<input type="email" id="login-email" placeholder="usuario@email.com">
+</div>
+<div class="form-group">
+<label>Contraseña</label>
+<input type="password" id="login-pass" placeholder="••••••••">
+</div>
+<button class="btn btn-primary" onclick="doLogin()">Ingresar</button>
+<div class="auth-error" id="login-error"></div>
+</div>
+<div id="register-form" style="display:none">
+<div class="form-group">
+<label>Nombre completo</label>
+<input type="text" id="reg-name" placeholder="Juan Pérez">
+</div>
+<div class="form-group">
+<label>Nombre de finca</label>
+<input type="text" id="reg-farm" placeholder="Finca El Estanque">
+</div>
+<div class="form-group">
+<label>Correo electrónico</label>
+<input type="email" id="reg-email" placeholder="usuario@email.com">
+</div>
+<div class="form-group">
+<label>Contraseña (mín. 6 caracteres)</label>
+<input type="password" id="reg-pass" placeholder="••••••••">
+</div>
+<button class="btn btn-primary" onclick="doRegister()">Crear Cuenta</button>
+<div class="auth-error" id="reg-error"></div>
+</div>
+</div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app-screen">
+<div class="header">
+<div class="header-left">
+<h2>🐟 AquaCalc CR</h2>
+<p id="header-farm"></p>
+</div>
+<div class="header-right">
+<div class="user-info">
+<span id="header-user"></span>
+<small id="header-email"></small>
+</div>
+<button class="btn-logout" onclick="doLogout()">Salir</button>
+</div>
+</div>
+
+<div class="tabs">
+<div class="tab-btn active" onclick="switchTab(0)">🧮 Calculadora</div>
+<div class="tab-btn" onclick="switchTab(1)">📋 Bitácora</div>
+<div class="tab-btn" onclick="switchTab(2)">📊 Seguimiento</div>
+<div class="tab-btn" onclick="switchTab(3)">⚙️ Parámetros</div>
+<div class="tab-btn" onclick="switchTab(4)">🐠 Mis Especies</div>
+</div>
+
+<!-- TAB 0: CALCULADORA -->
+<div class="tab-content active" id="tab-0">
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Seleccionar Especie</div>
+<div class="species-grid" id="calc-species-grid"></div>
+</div>
+
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--blue)"></div>Datos del Proyecto</div>
+<div class="grid-2">
+<div class="form-group">
+<label id="lbl-vol">Volumen (m³)</label>
+<input type="number" id="calc-vol" oninput="calcResults()" placeholder="0">
+</div>
+<div class="form-group">
+<label>Densidad de siembra</label>
+<input type="number" id="calc-dens" oninput="calcResults()" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>Peso inicial (g)</label>
+<input type="number" id="calc-wi" oninput="calcResults()" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>Peso cosecha (g)</label>
+<input type="number" id="calc-wf" oninput="calcResults()" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>Supervivencia (%)</label>
+<input type="number" id="calc-surv" oninput="calcResults()" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>FCR</label>
+<input type="number" id="calc-fcr" oninput="calcResults()" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>Precio alimento (₡/kg)</label>
+<input type="number" id="calc-pfeed" oninput="calcResults()" placeholder="0">
+</div>
+<div class="form-group">
+<label>Precio venta (₡/kg)</label>
+<input type="number" id="calc-psale" oninput="calcResults()" placeholder="0">
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--yellow)"></div>Resultados</div>
+<div class="result-grid" id="calc-results"></div>
+</div>
+
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Ración Diaria</div>
+<div class="grid-2">
+<div class="form-group">
+<label>Biomasa actual del estanque (kg)</label>
+<input type="number" id="calc-biom-act" oninput="calcRation()" step="any" placeholder="0">
+</div>
+</div>
+<div class="result-grid" id="ration-results" style="margin-top:12px"></div>
+</div>
+</div>
+
+<!-- TAB 1: BITÁCORA -->
+<div class="tab-content" id="tab-1">
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Nuevo Registro</div>
+
+<div class="grid-3" style="margin-bottom:12px">
+<div class="form-group">
+<label>Fecha</label>
+<input type="date" id="bit-date">
+</div>
+<div class="form-group">
+<label>Estanque</label>
+<input type="text" id="bit-pond" placeholder="Ej: Estanque 1">
+</div>
+<div class="form-group">
+<label>Especie</label>
+<select id="bit-species"></select>
+</div>
+</div>
+<div class="grid-3" style="margin-bottom:16px">
+<div class="form-group">
+<label>Alimento suministrado (kg)</label>
+<input type="number" id="bit-feed" step="any" placeholder="0">
+</div>
+<div class="form-group">
+<label>Mortalidades</label>
+<input type="number" id="bit-mort" placeholder="0">
+</div>
+<div class="form-group">
+<label>Peso muestreo (g)</label>
+<input type="number" id="bit-weight" step="any" placeholder="0">
+</div>
+</div>
+
+<div class="section-water">
+<div class="card-title" style="color:var(--blue)"><div class="dot" style="background:var(--blue)"></div>Calidad de Agua</div>
+<div class="grid-3">
+<div class="form-group">
+<label>Oxígeno disuelto (mg/L)</label>
+<input type="number" id="bit-o2" step="any">
+</div>
+<div class="form-group">
+<label>Temperatura (°C)</label>
+<input type="number" id="bit-temp" step="any">
+</div>
+<div class="form-group">
+<label>pH</label>
+<input type="number" id="bit-ph" step="any">
+</div>
+<div class="form-group">
+<label>Amonio NH₃ (mg/L)</label>
+<input type="number" id="bit-nh3" step="any">
+</div>
+<div class="form-group">
+<label>Nitrito NO₂ (mg/L)</label>
+<input type="number" id="bit-no2" step="any">
+</div>
+<div class="form-group">
+<label>Nitrato NO₃ (mg/L)</label>
+<input type="number" id="bit-no3" step="any">
+</div>
+<div class="form-group">
+<label>Alcalinidad (mg/L)</label>
+<input type="number" id="bit-alk" step="any">
+</div>
+<div class="form-group">
+<label>Dureza (mg/L)</label>
+<input type="number" id="bit-hard" step="any">
+</div>
+</div>
+</div>
+
+<div class="section-zoo">
+<div class="card-title" style="color:var(--yellow)"><div class="dot" style="background:var(--yellow)"></div>Datos Zootécnicos</div>
+<div class="grid-3">
+<div class="form-group">
+<label>Biomasa estanque (kg)</label>
+<input type="number" id="bit-biom" step="any">
+</div>
+<div class="form-group">
+<label>N° animales estimado</label>
+<input type="number" id="bit-nani">
+</div>
+<div class="form-group">
+<label>SGR (%/día)</label>
+<input type="number" id="bit-sgr" step="any">
+</div>
+<div class="form-group">
+<label>FCR acumulado</label>
+<input type="number" id="bit-fcra" step="any">
+</div>
+<div class="form-group">
+<label>Índice condición K</label>
+<input type="number" id="bit-k" step="any">
+</div>
+<div class="form-group">
+<label>CV% uniformidad</label>
+<input type="number" id="bit-cv" step="any">
+</div>
+</div>
+</div>
+
+<div class="form-group" style="margin-bottom:16px">
+<label>Observaciones</label>
+<textarea id="bit-obs" rows="2" placeholder="Notas adicionales..."></textarea>
+</div>
+
+<button class="btn btn-primary" onclick="saveBitacora()">Guardar Registro</button>
+</div>
+
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--blue)"></div>Registros</div>
+<div class="filters">
+<select id="bit-filter-pond" onchange="renderBitacora()">
+<option value="">Todos los estanques</option>
+</select>
+<select id="bit-filter-sp" onchange="renderBitacora()">
+<option value="">Todas las especies</option>
+</select>
+</div>
+<div id="bit-list"></div>
+</div>
+</div>
+
+<!-- TAB 2: SEGUIMIENTO -->
+<div class="tab-content" id="tab-2">
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Seguimiento Zootécnico</div>
+<div class="filters">
+<select id="seg-pond" onchange="renderChart()">
+<option value="">Todos estanques</option>
+</select>
+<select id="seg-sp" onchange="renderChart()">
+<option value="">Todas especies</option>
+</select>
+<select id="seg-param" onchange="renderChart()">
+<option value="o2">Oxígeno</option>
+<option value="temp">Temperatura</option>
+<option value="ph">pH</option>
+<option value="nh3">Amonio</option>
+<option value="no2">Nitrito</option>
+<option value="no3">Nitrato</option>
+<option value="alk">Alcalinidad</option>
+<option value="hard">Dureza</option>
+<option value="biom">Biomasa</option>
+<option value="weight">Peso muestreo</option>
+<option value="sgr">SGR</option>
+<option value="fcra">FCR acumulado</option>
+<option value="k">Índice K</option>
+<option value="cv">CV%</option>
+<option value="mort">Mortalidades</option>
+</select>
+</div>
+</div>
+
+<div class="chart-container">
+<div class="bar-chart" id="bar-chart"></div>
+</div>
+
+<div class="card" style="overflow-x:auto">
+<div class="card-title"><div class="dot" style="background:var(--yellow)"></div>Tabla de Datos</div>
+<table class="data-table" id="seg-table">
+<thead><tr>
+<th>Fecha</th><th>Estanque</th><th>Especie</th>
+<th>O₂</th><th>T°C</th><th>pH</th><th>NH₃</th><th>NO₂</th><th>NO₃</th>
+<th>Alc</th><th>Dur</th><th>Biom</th><th>Peso</th>
+<th>SGR</th><th>FCRa</th><th>K</th><th>CV%</th><th>Mort</th>
+</tr></thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+<!-- TAB 3: PARÁMETROS -->
+<div class="tab-content" id="tab-3">
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Parámetros por Especie</div>
+<div class="mini-tabs" id="param-tabs"></div>
+<div id="param-editor"></div>
+<button class="btn btn-secondary btn-small" onclick="resetParams()" style="margin-top:12px">↩️ Restaurar valores por defecto</button>
+</div>
+</div>
+
+<!-- TAB 4: MIS ESPECIES -->
+<div class="tab-content" id="tab-4">
+<div class="card">
+<div class="card-title"><div class="dot" style="background:var(--green)"></div>Mis Especies Personalizadas</div>
+<p style="font-size:12px;color:var(--text2);margin-bottom:16px">Puedes crear hasta 3 especies completamente personalizadas.</p>
+<div id="custom-species-list"></div>
+<button class="btn btn-primary btn-small" id="btn-new-species" onclick="openSpeciesModal()" style="margin-top:12px;width:auto">+ Nueva Especie</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL SPECIES -->
+<div class="modal-overlay" id="species-modal">
+<div class="modal">
+<h3 id="modal-species-title">Nueva Especie</h3>
+<div class="grid-2">
+<div class="form-group">
+<label>Nombre común</label>
+<input type="text" id="sp-name" placeholder="Ej: Mojarra">
+</div>
+<div class="form-group">
+<label>Nombre científico</label>
+<input type="text" id="sp-sci" placeholder="Ej: Oreochromis sp.">
+</div>
+<div class="form-group">
+<label>Emoji</label>
+<input type="text" id="sp-emoji" placeholder="🐟" maxlength="4">
+</div>
+<div class="form-group">
+<label>Densidad</label>
+<input type="number" id="sp-dens" step="any">
+</div>
+<div class="form-group">
+<label>Unidad densidad</label>
+<select id="sp-dunit">
+<option value="peces/m³">peces/m³</option>
+<option value="kg/m³">kg/m³</option>
+<option value="ind/m²">ind/m²</option>
+</select>
+</div>
+<div class="form-group">
+<label>Unidad volumen</label>
+<select id="sp-vunit">
+<option value="m³">m³</option>
+<option value="m²">m²</option>
+</select>
+</div>
+<div class="form-group">
+<label>Supervivencia (%)</label>
+<input type="number" id="sp-surv" step="any">
+</div>
+<div class="form-group">
+<label>FCR</label>
+<input type="number" id="sp-fcr" step="any">
+</div>
+<div class="form-group">
+<label>Tasa alimentación (%/día)</label>
+<input type="number" id="sp-rate" step="any">
+</div>
+<div class="form-group">
+<label>Comidas/día</label>
+<input type="number" id="sp-meals">
+</div>
+<div class="form-group">
+<label>GPD (g/día)</label>
+<input type="number" id="sp-gpd" step="any">
+</div>
+<div class="form-group">
+<label>Precio alimento (₡/kg)</label>
+<input type="number" id="sp-pfeed">
+</div>
+<div class="form-group">
+<label>Precio venta (₡/kg)</label>
+<input type="number" id="sp-psale">
+</div>
+<div class="form-group">
+<label>Peso inicial (g)</label>
+<input type="number" id="sp-wi" step="any">
+</div>
+<div class="form-group">
+<label>Peso cosecha (g)</label>
+<input type="number" id="sp-wf" step="any">
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:20px">
+<button class="btn btn-primary" onclick="saveCustomSpecies()">Guardar</button>
+<button class="btn btn-secondary" onclick="closeSpeciesModal()">Cancelar</button>
+</div>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBQVYs78jJcVPG34hqPwKgBZemk8mYWgQo",
+  authDomain: "acuacalweb.firebaseapp.com",
+  projectId: "acuacalweb",
+  storageBucket: "acuacalweb.firebasestorage.app",
+  messagingSenderId: "717276911914",
+  appId: "1:717276911914:web:96cd11b48d17b1d31b6653"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ---------- DEFAULTS ----------
+const DEFAULT_SPECIES = {
+  tilapia: { name:'Tilapia', sci:'O. niloticus', emoji:'🐟', density:20, dunit:'peces/m³', vunit:'m³', surv:90, fcr:1.4, rate:3, meals:3, gpd:3.5, pfeed:850, psale:2200, wi:5, wf:500 },
+  trucha: { name:'Trucha', sci:'O. mykiss', emoji:'🐠', density:30, dunit:'kg/m³', vunit:'m³', surv:88, fcr:1.2, rate:2, meals:4, gpd:2.8, pfeed:1100, psale:4500, wi:10, wf:350 },
+  camaron: { name:'Camarón', sci:'L. vannamei', emoji:'🦐', density:80, dunit:'ind/m²', vunit:'m²', surv:70, fcr:1.5, rate:4, meals:4, gpd:0.15, pfeed:1200, psale:8000, wi:0.1, wf:12 },
+  guapote: { name:'Guapote', sci:'Parachromis dovii', emoji:'🐡', density:5, dunit:'peces/m³', vunit:'m³', surv:85, fcr:1.8, rate:3.5, meals:2, gpd:2.0, pfeed:900, psale:3500, wi:10, wf:400 },
+  langostino: { name:'Langostino', sci:'M. rosenbergii', emoji:'🦞', density:8, dunit:'ind/m²', vunit:'m²', surv:65, fcr:1.8, rate:5, meals:2, gpd:0.3, pfeed:1400, psale:12000, wi:0.5, wf:40 },
+  pangasio: { name:'Pangasio', sci:'P. hypophthalmus', emoji:'🐟', density:40, dunit:'peces/m³', vunit:'m³', surv:92, fcr:1.3, rate:3.5, meals:3, gpd:5.0, pfeed:780, psale:1800, wi:5, wf:800 },
+  carpa: { name:'Carpa Herbívora', sci:'C. idella', emoji:'🐠', density:2, dunit:'peces/m³', vunit:'m³', surv:88, fcr:3.5, rate:6, meals:2, gpd:8.0, pfeed:200, psale:1500, wi:20, wf:1500 }
+};
+
+let currentUser = null;
+let userData = { name:'', farm:'', params:{}, bitacora:[], customSpecies:[] };
+let selectedCalcSpecies = null;
+let editingSpeciesIdx = -1;
+let currentParamSpecies = 'tilapia';
+let saveTimeout = null;
+
+// ---------- UTILS ----------
+function $(id){ return document.getElementById(id); }
+function showSpinner(){ $('spinner').classList.add('show'); }
+function hideSpinner(){ $('spinner').classList.remove('show'); }
+
+function toast(msg, type='success'){
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  $('toasts').appendChild(t);
+  setTimeout(()=>t.remove(), 3000);
+}
+
+function fmt(n, dec=1){
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  return Number(n).toLocaleString('es-CR',{minimumFractionDigits:0,maximumFractionDigits:dec});
+}
+
+function fmtMoney(n){
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  return '₡'+Number(n).toLocaleString('es-CR',{minimumFractionDigits:0,maximumFractionDigits:0});
+}
+
+// ---------- AUTH ----------
+window.switchAuthTab = function(tab){
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>{
+    t.classList.toggle('active', (tab==='login'?i===0:i===1));
+  });
+  $('login-form').style.display = tab==='login'?'block':'none';
+  $('register-form').style.display = tab==='register'?'block':'none';
+};
+
+window.doLogin = async function(){
+  const email=$('login-email').value.trim(), pass=$('login-pass').value;
+  $('login-error').textContent='';
+  if(!email||!pass){$('login-error').textContent='Complete todos los campos'; return;}
+  showSpinner();
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+  }catch(e){
+    $('login-error').textContent=parseFirebaseError(e.code);
+    hideSpinner();
+  }
+};
+
+window.doRegister = async function(){
+  const name=$('reg-name').value.trim(), farm=$('reg-farm').value.trim();
+  const email=$('reg-email').value.trim(), pass=$('reg-pass').value;
+  $('reg-error').textContent='';
+  if(!name||!farm||!email||!pass){$('reg-error').textContent='Complete todos los campos';return;}
+  if(pass.length<6){$('reg-error').textContent='Mínimo 6 caracteres';return;}
+  showSpinner();
+  try{
+    const cred = await createUserWithEmailAndPassword(auth,email,pass);
+    await setDoc(doc(db,'users',cred.user.uid),{
+      name, farm, params:{}, bitacora:[], customSpecies:[]
+    });
+    toast('Cuenta creada exitosamente');
+  }catch(e){
+    $('reg-error').textContent=parseFirebaseError(e.code);
+    hideSpinner();
+  }
+};
+
+window.doLogout = async function(){
+  await signOut(auth);
+  location.reload();
+};
+
+function parseFirebaseError(code){
+  const map={
+    'auth/email-already-in-use':'Correo ya registrado',
+    'auth/invalid-email':'Correo inválido',
+    'auth/weak-password':'Contraseña muy débil',
+    'auth/user-not-found':'Usuario no encontrado',
+    'auth/wrong-password':'Contraseña incorrecta',
+    'auth/invalid-credential':'Credenciales inválidas',
+    'auth/too-many-requests':'Demasiados intentos, intente después'
+  };
+  return map[code]||'Error: '+code;
+}
+
+onAuthStateChanged(auth, async user=>{
+  if(user){
+    currentUser=user;
+    showSpinner();
+    try{
+      const snap = await getDoc(doc(db,'users',user.uid));
+      if(snap.exists()){
+        const d=snap.data();
+        userData.name=d.name||'';
+        userData.farm=d.farm||'';
+        userData.params=d.params||{};
+        userData.bitacora=d.bitacora||[];
+        userData.customSpecies=d.customSpecies||[];
+      } else {
+        await setDoc(doc(db,'users',user.uid),{
+          name:'', farm:'', params:{}, bitacora:[], customSpecies:[]
+        });
+      }
+    }catch(e){ console.error(e); }
+    hideSpinner();
+    showApp();
+  } else {
+    currentUser=null;
+    $('auth-screen').style.display='flex';
+    $('app-screen').style.display='none';
+  }
+});
+
+// ---------- SAVE TO FIREBASE ----------
+function scheduleSave(){
+  clearTimeout(saveTimeout);
+  saveTimeout=setTimeout(async()=>{
+    if(!currentUser) return;
+    try{
+      await updateDoc(doc(db,'users',currentUser.uid),{
+        params: userData.params,
+        bitacora: userData.bitacora,
+        customSpecies: userData.customSpecies
+      });
+    }catch(e){ console.error('Save error',e); }
+  }, 800);
+}
+
+// ---------- GET ALL SPECIES ----------
+function getAllSpecies(){
+  const all={};
+  for(const [k,v] of Object.entries(DEFAULT_SPECIES)){
+    const p = userData.params[k]||{};
+    all[k]={...v, ...p, _custom:false};
+  }
+  (userData.customSpecies||[]).forEach((cs,i)=>{
+    const key='custom_'+i;
+    all[key]={...cs, _custom:true, _idx:i};
+  });
+  return all;
+}
+
+function getSpeciesParam(key, param){
+  const sp = getAllSpecies();
+  if(sp[key]) return sp[key][param];
+  return null;
+}
+
+// ---------- SHOW APP ----------
+function showApp(){
+  $('auth-screen').style.display='none';
+  $('app-screen').style.display='block';
+  $('header-user').textContent=userData.name||'Usuario';
+  $('header-farm').textContent=userData.farm||'';
+  $('header-email').textContent=currentUser.email;
+  $('bit-date').value = new Date().toISOString().split('T')[0];
+  renderCalcSpecies();
+  populateSpeciesSelects();
+  renderBitacora();
+  renderParamTabs();
+  renderCustomSpecies();
+}
+
+// ---------- TABS ----------
+window.switchTab = function(idx){
+  document.querySelectorAll('.tab-btn').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.tab-content').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  if(idx===2) renderChart();
+  if(idx===3) renderParamTabs();
+};
+
+// ========================
+// TAB 0: CALCULADORA
+// ========================
+function renderCalcSpecies(){
+  const grid=$('calc-species-grid');
+  grid.innerHTML='';
+  const spp = getAllSpecies();
+  for(const [k,sp] of Object.entries(spp)){
+    const card=document.createElement('div');
+    card.className='species-card'+(selectedCalcSpecies===k?' selected':'');
+    card.innerHTML=`
+      <span class="emoji">${sp.emoji}</span>
+      <div class="species-card-name">${sp.name}</div>
+      <div class="sci">${sp.sci}</div>
+      ${sp._custom?'<span class="badge-custom">CUSTOM</span>':''}
+    `;
+    card.onclick=()=>selectCalcSpecies(k);
+    grid.appendChild(card);
+  }
+}
+
+function selectCalcSpecies(key){
+  selectedCalcSpecies=key;
+  const sp=getAllSpecies()[key];
+  if(!sp) return;
+  $('calc-vol').value='';
+  $('calc-dens').value=sp.density;
+  $('calc-wi').value=sp.wi;
+  $('calc-wf').value=sp.wf;
+  $('calc-surv').value=sp.surv;
+  $('calc-fcr').value=sp.fcr;
+  $('calc-pfeed').value=sp.pfeed;
+  $('calc-psale').value=sp.psale;
+  $('lbl-vol').textContent = sp.vunit==='m²' ? 'Área (m²)' : 'Volumen (m³)';
+  renderCalcSpecies();
+  calcResults();
+}
+window.selectCalcSpecies = selectCalcSpecies;
+
+function calcResults(){
+  const vol=parseFloat($('calc-vol').value)||0;
+  const dens=parseFloat($('calc-dens').value)||0;
+  const wi=parseFloat($('calc-wi').value)||0;
+  const wf=parseFloat($('calc-wf').value)||0;
+  const surv=(parseFloat($('calc-surv').value)||0)/100;
+  const fcr=parseFloat($('calc-fcr').value)||0;
+  const pfeed=parseFloat($('calc-pfeed').value)||0;
+  const psale=parseFloat($('calc-psale').value)||0;
+
+  let sp = selectedCalcSpecies ? getAllSpecies()[selectedCalcSpecies] : null;
+  let gpd = sp ? sp.gpd : 3;
+
+  const totalAnimals = vol * dens;
+  const biomI = totalAnimals * wi / 1000;
+  const animHarv = totalAnimals * surv;
+  const biomH = animHarv * wf / 1000;
+  const gainKg = biomH - biomI;
+  const feedTotal = gainKg * fcr;
+  const costFeed = feedTotal * pfeed;
+  const income = biomH * psale;
+  const profit = income - costFeed;
+  const days = gpd > 0 ? (wf - wi) / gpd : 0;
+  const costPerKg = biomH > 0 ? costFeed / biomH : 0;
+
+  const r = $('calc-results');
+  r.innerHTML = `
+    ${ri('Total animales', fmt(totalAnimals,0))}
+    ${ri('Biomasa inicial', fmt(biomI,1)+' kg')}
+    ${ri('Animales a cosecha', fmt(animHarv,0))}
+    ${ri('Biomasa cosecha', fmt(biomH,1)+' kg','income')}
+    ${ri('Alimento total', fmt(feedTotal,1)+' kg')}
+    ${ri('Costo alimento', fmtMoney(costFeed),'warning')}
+    ${ri('Ingreso bruto', fmtMoney(income),'income')}
+    ${ri('Utilidad', fmtMoney(profit), profit>=0?'profit':'warning')}
+    ${ri('Días estimados', fmt(days,0)+' días')}
+    ${ri('GPD', fmt(gpd,2)+' g/día')}
+    ${ri('Costo/kg producido', fmtMoney(costPerKg))}
+  `;
+  calcRation();
+}
+window.calcResults = calcResults;
+
+function calcRation(){
+  const biomAct = parseFloat($('calc-biom-act').value)||0;
+  let sp = selectedCalcSpecies ? getAllSpecies()[selectedCalcSpecies] : null;
+  const rate = sp ? sp.rate : 3;
+  const meals = sp ? sp.meals : 3;
+  const rationDay = biomAct * (rate/100);
+  const rationMeal = meals > 0 ? rationDay / meals : 0;
+  $('ration-results').innerHTML = `
+    ${ri('Tasa alimentación', fmt(rate,1)+'%')}
+    ${ri('Ración/día', fmt(rationDay,2)+' kg')}
+    ${ri('Ración/comida', fmt(rationMeal,2)+' kg')}
+    ${ri('Comidas/día', fmt(meals,0))}
+  `;
+}
+window.calcRation = calcRation;
+
+function ri(label, value, cls=''){
+  return `<div class="result-item ${cls}"><label>${label}</label><div class="value mono">${value}</div></div>`;
+}
+
+// ========================
+// TAB 1: BITÁCORA
+// ========================
+function populateSpeciesSelects(){
+  const spp=getAllSpecies();
+  const opts = Object.entries(spp).map(([k,s])=>`<option value="${k}">${s.emoji} ${s.name}</option>`).join('');
+  $('bit-species').innerHTML = opts;
+  // filters
+  const bitPonds=[...new Set(userData.bitacora.map(b=>b.pond))];
+  $('bit-filter-pond').innerHTML='<option value="">Todos los estanques</option>'+bitPonds.map(p=>`<option value="${p}">${p}</option>`).join('');
+  const bitSp=[...new Set(userData.bitacora.map(b=>b.species))];
+  $('bit-filter-sp').innerHTML='<option value="">Todas las especies</option>'+bitSp.map(s=>`<option value="${s}">${s}</option>`).join('');
+  // seg filters
+  $('seg-pond').innerHTML='<option value="">Todos estanques</option>'+bitPonds.map(p=>`<option value="${p}">${p}</option>`).join('');
+  $('seg-sp').innerHTML='<option value="">Todas especies</option>'+bitSp.map(s=>`<option value="${s}">${s}</option>`).join('');
+}
+
+window.saveBitacora = function(){
+  const record={
+    date: $('bit-date').value,
+    pond: $('bit-pond').value.trim(),
+    species: $('bit-species').value,
+    feed: parseFloat($('bit-feed').value)||0,
+    mort: parseInt($('bit-mort').value)||0,
+    weight: parseFloat($('bit-weight').value)||0,
+    o2: parseFloat($('bit-o2').value)||null,
+    temp: parseFloat($('bit-temp').value)||null,
+    ph: parseFloat($('bit-ph').value)||null,
+    nh3: parseFloat($('bit-nh3').value)||null,
+    no2: parseFloat($('bit-no2').value)||null,
+    no3: parseFloat($('bit-no3').value)||null,
+    alk: parseFloat($('bit-alk').value)||null,
+    hard: parseFloat($('bit-hard').value)||null,
+    biom: parseFloat($('bit-biom').value)||null,
+    nani: parseInt($('bit-nani').value)||null,
+    sgr: parseFloat($('bit-sgr').value)||null,
+    fcra: parseFloat($('bit-fcra').value)||null,
+    k: parseFloat($('bit-k').value)||null,
+    cv: parseFloat($('bit-cv').value)||null,
+    obs: $('bit-obs').value.trim(),
+    ts: Date.now()
+  };
+  if(!record.date||!record.pond){
+    toast('Fecha y estanque son requeridos','error');
+    return;
+  }
+  userData.bitacora.push(record);
+  scheduleSave();
+  toast('Registro guardado');
+  // Clear some fields
+  ['bit-feed','bit-mort','bit-weight','bit-o2','bit-temp','bit-ph','bit-nh3','bit-no2','bit-no3','bit-alk','bit-hard','bit-biom','bit-nani','bit-sgr','bit-fcra','bit-k','bit-cv','bit-obs'].forEach(id=>{
+    const el=$(id); if(el) el.value='';
+  });
+  populateSpeciesSelects();
+  renderBitacora();
+};
+
+function renderBitacora(){
+  const fp=$('bit-filter-pond').value;
+  const fs=$('bit-filter-sp').value;
+  let records=[...userData.bitacora];
+  if(fp) records=records.filter(r=>r.pond===fp);
+  if(fs) records=records.filter(r=>r.species===fs);
+  records.sort((a,b)=>b.ts-a.ts);
+  const spp=getAllSpecies();
+  const list=$('bit-list');
+  if(!records.length){
+    list.innerHTML='<p style="color:var(--text2);font-size:13px;text-align:center;padding:20px">No hay registros</p>';
+    return;
+  }
+  list.innerHTML=records.map((r,i)=>{
+    const origIdx=userData.bitacora.indexOf(r);
+    const sp=spp[r.species];
+    const spName=sp?sp.emoji+' '+sp.name:r.species;
+    let details=[];
+    if(r.feed) details.push(`<b>Alimento:</b> ${r.feed}kg`);
+    if(r.mort) details.push(`<b>Mort:</b> ${r.mort}`);
+    if(r.weight) details.push(`<b>Peso:</b> ${r.weight}g`);
+    if(r.o2!==null) details.push(`<b>O₂:</b> ${r.o2}`);
+    if(r.temp!==null) details.push(`<b>T°:</b> ${r.temp}`);
+    if(r.ph!==null) details.push(`<b>pH:</b> ${r.ph}`);
+    if(r.nh3!==null) details.push(`<b>NH₃:</b> ${r.nh3}`);
+    if(r.no2!==null) details.push(`<b>NO₂:</b> ${r.no2}`);
+    if(r.no3!==null) details.push(`<b>NO₃:</b> ${r.no3}`);
+    if(r.biom!==null) details.push(`<b>Biom:</b> ${r.biom}kg`);
+    if(r.sgr!==null) details.push(`<b>SGR:</b> ${r.sgr}`);
+    if(r.fcra!==null) details.push(`<b>FCRa:</b> ${r.fcra}`);
+    if(r.k!==null) details.push(`<b>K:</b> ${r.k}`);
+    if(r.cv!==null) details.push(`<b>CV:</b> ${r.cv}%`);
+    if(r.obs) details.push(`<b>Obs:</b> ${r.obs}`);
+    return `<div class="bit-record">
+      <div class="bit-head">
+        <span>${r.date} · ${r.pond} · ${spName}</span>
+        <button class="btn-delete" onclick="deleteBit(${origIdx})">🗑 Eliminar</button>
+      </div>
+      <div class="bit-detail">${details.join(' &nbsp;|&nbsp; ')}</div>
+    </div>`;
+  }).join('');
+}
+
+window.deleteBit = function(idx){
+  if(!confirm('¿Eliminar este registro?')) return;
+  userData.bitacora.splice(idx,1);
+  scheduleSave();
+  toast('Registro eliminado','info');
+  populateSpeciesSelects();
+  renderBitacora();
+};
+
+// ========================
+// TAB 2: SEGUIMIENTO
+// ========================
+function renderChart(){
+  const fp=$('seg-pond').value;
+  const fs=$('seg-sp').value;
+  const param=$('seg-param').value;
+  let records=[...userData.bitacora];
+  if(fp) records=records.filter(r=>r.pond===fp);
+  if(fs) records=records.filter(r=>r.species===fs);
+  records.sort((a,b)=>(a.ts||0)-(b.ts||0));
+  records=records.slice(-30);
+
+  const colors=['var(--green)','var(--blue)','var(--yellow)'];
+  const vals=records.map(r=>r[param]).filter(v=>v!==null&&v!==undefined&&!isNaN(v));
+  const maxVal=vals.length?Math.max(...vals):1;
+
+  const chart=$('bar-chart');
+  if(!records.length){
+    chart.innerHTML='<p style="color:var(--text2);text-align:center;padding:40px;font-size:13px">Sin datos para graficar</p>';
+  } else {
+    chart.innerHTML=records.map((r,i)=>{
+      const v=r[param];
+      if(v===null||v===undefined) return '';
+      const pct=maxVal>0?(v/maxVal*100):0;
+      const c=colors[i%3];
+      return `<div class="bar-row">
+        <div class="bar-label">${r.date?r.date.slice(5):''}</div>
+        <div class="bar-fill" style="width:${Math.max(pct,1)}%;background:${c}"></div>
+        <div class="bar-value">${fmt(v,2)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Table
+  const tbody=$('seg-table').querySelector('tbody');
+  tbody.innerHTML=records.map(r=>`<tr>
+    <td>${r.date||''}</td><td>${r.pond||''}</td><td>${r.species||''}</td>
+    <td>${r.o2??''}</td><td>${r.temp??''}</td><td>${r.ph??''}</td>
+    <td>${r.nh3??''}</td><td>${r.no2??''}</td><td>${r.no3??''}</td>
+    <td>${r.alk??''}</td><td>${r.hard??''}</td><td>${r.biom??''}</td>
+    <td>${r.weight??''}</td><td>${r.sgr??''}</td><td>${r.fcra??''}</td>
+    <td>${r.k??''}</td><td>${r.cv??''}</td><td>${r.mort??''}</td>
+  </tr>`).join('');
+}
+window.renderChart = renderChart;
+
+// ========================
+// TAB 3: PARÁMETROS
+// ========================
+function renderParamTabs(){
+  const spp=getAllSpecies();
+  const tabs=$('param-tabs');
+  tabs.innerHTML='';
+  for(const [k,sp] of Object.entries(spp)){
+    const t=document.createElement('div');
+    t.className='mini-tab'+(currentParamSpecies===k?' active':'');
+    t.textContent=sp.emoji+' '+sp.name;
+    t.onclick=()=>{ currentParamSpecies=k; renderParamTabs(); };
+    tabs.appendChild(t);
+  }
+  renderParamEditor();
+}
+
+function renderParamEditor(){
+  const key=currentParamSpecies;
+  const spp=getAllSpecies();
+  const sp=spp[key];
+  if(!sp){ $('param-editor').innerHTML=''; return; }
+  const def = sp._custom ? sp : DEFAULT_SPECIES[key];
+  const fields=[
+    {f:'density',label:'Densidad',unit:sp.dunit||'u'},
+    {f:'surv',label:'Supervivencia',unit:'%'},
+    {f:'fcr',label:'FCR',unit:'ratio'},
+    {f:'rate',label:'Tasa alimentación',unit:'%/día'},
+    {f:'meals',label:'Comidas/día',unit:'veces'},
+    {f:'gpd',label:'GPD',unit:'g/día'},
+    {f:'pfeed',label:'Precio alimento',unit:'₡/kg'},
+    {f:'psale',label:'Precio venta',unit:'₡/kg'},
+    {f:'wi',label:'Peso inicial',unit:'g'},
+    {f:'wf',label:'Peso cosecha',unit:'g'},
+  ];
+  $('param-editor').innerHTML = fields.map(fd=>{
+    const curVal = sp[fd.f];
+    const defVal = def?def[fd.f]:'';
+    return `<div class="param-row">
+      <div class="param-name">${fd.label}</div>
+      <div class="param-unit">${fd.unit}</div>
+      <input type="number" step="any" value="${curVal??''}" onchange="updateParam('${key}','${fd.f}',this.value)">
+      <div class="param-default">def: ${defVal}</div>
+    </div>`;
+  }).join('');
+}
+
+window.updateParam = function(speciesKey, field, value){
+  const v=parseFloat(value);
+  if(isNaN(v)) return;
+  // Check if custom species
+  const spp=getAllSpecies();
+  const sp=spp[speciesKey];
+  if(sp && sp._custom){
+    const idx=sp._idx;
+    userData.customSpecies[idx][field]=v;
+  } else {
+    if(!userData.params[speciesKey]) userData.params[speciesKey]={};
+    userData.params[speciesKey][field]=v;
+  }
+  scheduleSave();
+  toast('Parámetro actualizado','info');
+  // Refresh calc if same species
+  if(selectedCalcSpecies===speciesKey) selectCalcSpecies(speciesKey);
+};
+
+window.resetParams = function(){
+  if(!confirm('¿Restaurar todos los parámetros a valores por defecto?')) return;
+  userData.params={};
+  scheduleSave();
+  toast('Parámetros restaurados');
+  renderParamTabs();
+  if(selectedCalcSpecies) selectCalcSpecies(selectedCalcSpecies);
+};
+
+// ========================
+// TAB 4: CUSTOM SPECIES
+// ========================
+function renderCustomSpecies(){
+  const list=$('custom-species-list');
+  const customs=userData.customSpecies||[];
+  if(!customs.length){
+    list.innerHTML='<p style="color:var(--text2);font-size:13px;text-align:center;padding:20px">No tienes especies personalizadas</p>';
+  } else {
+    list.innerHTML=customs.map((cs,i)=>`
+      <div class="card" style="background:var(--bg)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div>
+            <span style="font-size:24px">${cs.emoji}</span>
+            <b style="margin-left:8px">${cs.name}</b>
+            <i style="color:var(--text2);font-size:11px;margin-left:6px">${cs.sci}</i>
+            <span class="badge-custom" style="position:static;margin-left:8px">CUSTOM</span>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-secondary btn-small" onclick="editCustomSpecies(${i})">✏️</button>
+            <button class="btn-delete" onclick="deleteCustomSpecies(${i})">🗑</button>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:2">
+          Densidad: <b>${cs.density} ${cs.dunit}</b> · Surv: <b>${cs.surv}%</b> · FCR: <b>${cs.fcr}</b> · GPD: <b>${cs.gpd}g</b> · Tasa: <b>${cs.rate}%</b> · Comidas: <b>${cs.meals}</b><br>
+          Alimento: <b>₡${cs.pfeed}/kg</b> · Venta: <b>₡${cs.psale}/kg</b> · Peso: <b>${cs.wi}g → ${cs.wf}g</b>
+        </div>
+      </div>
+    `).join('');
+  }
+  $('btn-new-species').style.display = customs.length>=3?'none':'inline-block';
+}
+
+window.openSpeciesModal = function(idx){
+  editingSpeciesIdx = idx!==undefined ? idx : -1;
+  $('modal-species-title').textContent = editingSpeciesIdx>=0 ? 'Editar Especie' : 'Nueva Especie';
+  if(editingSpeciesIdx>=0){
+    const cs=userData.customSpecies[editingSpeciesIdx];
+    $('sp-name').value=cs.name||'';
+    $('sp-sci').value=cs.sci||'';
+    $('sp-emoji').value=cs.emoji||'';
+    $('sp-dens').value=cs.density||'';
+    $('sp-dunit').value=cs.dunit||'peces/m³';
+    $('sp-vunit').value=cs.vunit||'m³';
+    $('sp-surv').value=cs.surv||'';
+    $('sp-fcr').value=cs.fcr||'';
+    $('sp-rate').value=cs.rate||'';
+    $('sp-meals').value=cs.meals||'';
+    $('sp-gpd').value=cs.gpd||'';
+    $('sp-pfeed').value=cs.pfeed||'';
+    $('sp-psale').value=cs.psale||'';
+    $('sp-wi').value=cs.wi||'';
+    $('sp-wf').value=cs.wf||'';
+  } else {
+    ['sp-name','sp-sci','sp-emoji','sp-dens','sp-surv','sp-fcr','sp-rate','sp-meals','sp-gpd','sp-pfeed','sp-psale','sp-wi','sp-wf'].forEach(id=>$(id).value='');
+    $('sp-dunit').value='peces/m³';
+    $('sp-vunit').value='m³';
+  }
+  $('species-modal').classList.add('show');
+};
+
+window.closeSpeciesModal = function(){
+  $('species-modal').classList.remove('show');
+};
+
+window.editCustomSpecies = function(idx){
+  openSpeciesModal(idx);
+};
+
+window.deleteCustomSpecies = function(idx){
+  if(!confirm('¿Eliminar esta especie?')) return;
+  userData.customSpecies.splice(idx,1);
+  scheduleSave();
+  toast('Especie eliminada','info');
+  refreshAll();
+};
+
+window.saveCustomSpecies = function(){
+  const cs={
+    name: $('sp-name').value.trim(),
+    sci: $('sp-sci').value.trim(),
+    emoji: $('sp-emoji').value.trim()||'🐟',
+    density: parseFloat($('sp-dens').value)||10,
+    dunit: $('sp-dunit').value,
+    vunit: $('sp-vunit').value,
+    surv: parseFloat($('sp-surv').value)||80,
+    fcr: parseFloat($('sp-fcr').value)||1.5,
+    rate: parseFloat($('sp-rate').value)||3,
+    meals: parseInt($('sp-meals').value)||3,
+    gpd: parseFloat($('sp-gpd').value)||2,
+    pfeed: parseFloat($('sp-pfeed').value)||800,
+    psale: parseFloat($('sp-psale').value)||2000,
+    wi: parseFloat($('sp-wi').value)||5,
+    wf: parseFloat($('sp-wf').value)||500
+  };
+  if(!cs.name){toast('Nombre requerido','error');return;}
+  if(!userData.customSpecies) userData.customSpecies=[];
+  if(editingSpeciesIdx>=0){
+    userData.customSpecies[editingSpeciesIdx]=cs;
+  } else {
+    if(userData.customSpecies.length>=3){toast('Máximo 3 especies','error');return;}
+    userData.customSpecies.push(cs);
+  }
+  scheduleSave();
+  toast(editingSpeciesIdx>=0?'Especie actualizada':'Especie creada');
+  closeSpeciesModal();
+  refreshAll();
+};
+
+function refreshAll(){
+  renderCalcSpecies();
+  populateSpeciesSelects();
+  renderBitacora();
+  renderParamTabs();
+  renderCustomSpecies();
+}
+
+</script>
+</body>
+</html>
