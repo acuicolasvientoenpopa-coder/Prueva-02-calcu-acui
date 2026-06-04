@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AquaCalc CR — Herramienta de Campo para Acuicultura</title>
+<title>AquaCalc — Herramienta de Campo para Acuicultura</title>
 <meta name="description" content="AquaCalc CR es la herramienta de campo para acuicultores en Costa Rica. Calculadora de biomasa, FCR, SGR, calidad de agua, bitácora de campo y más. Funciona sin internet.">
 <meta name="keywords" content="acuicultura Costa Rica, calculadora tilapia, FCR peces, calidad agua estanque, AquaCalc, acuicultura herramienta campo">
 <meta name="author" content="AquaCalc CR">
-<meta property="og:title" content="AquaCalc CR — Herramienta de Campo para Acuicultura">
+<meta property="og:title" content="AquaCalc — Herramienta de Campo para Acuicultura">
 <meta property="og:description" content="Registros de calidad de agua, bitácora de campo, calculadoras acuícolas. Funciona sin internet.">
 <meta property="og:type" content="website">
 <link rel="manifest" id="pwa-manifest">
@@ -231,7 +231,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="auth-box">
     <div class="auth-logo">
       <div class="icon">🐟</div>
-      <h1>AquaCalc CR <span class="version-badge">v3.0</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.1</span></h1>
       <span>HERRAMIENTA DE CAMPO · ACUICULTURA CR</span>
     </div>
     <div id="email-verify-banner" class="email-verify-banner">
@@ -320,7 +320,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc CR <span class="version-badge">v3.0</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.1</span></h1>
       <span id="header-finca">ACUICULTURA · CR</span>
     </div>
   </div>
@@ -992,24 +992,13 @@ window.instalarPWA = async () => {
   deferredInstallPrompt = null;
 };
 
-// Crear service worker dinámicamente
-const swCode = `
-const CACHE='aquacalc-v3.1';
-const ASSETS=['/'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener('fetch',e=>e.respondWith(
-  fetch(e.request).catch(()=>caches.match(e.request))
-));
-`;
 if ('serviceWorker' in navigator) {
-  const blob = new Blob([swCode], {type:'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
 }
 
 // Crear manifest dinámico
 const manifest = {
-  name:'AquaCalc CR',
+  name:'AquaCalc',
   short_name:'AquaCalc',
   description:'Herramienta de campo para acuicultura en Costa Rica',
   start_url:'/',
