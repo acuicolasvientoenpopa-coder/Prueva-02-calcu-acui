@@ -518,52 +518,52 @@ textarea{resize:vertical;min-height:70px;}
       <div class="obs-section">
         <div class="obs-title">👀 Observaciones de Campo</div>
         <div class="obs-checks" id="obs-checks-container">
-          <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_activa')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_activa',event)">
             <input type="checkbox" value="alimentacion_activa">
             <span class="obs-check-icon">🍽️</span>
             <span class="obs-check-label">Alimentación activa</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_reducida')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_reducida',event)">
             <input type="checkbox" value="alimentacion_reducida">
             <span class="obs-check-icon">⬇️</span>
             <span class="obs-check-label">Alimentación reducida</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'boqueo')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'boqueo',event)">
             <input type="checkbox" value="boqueo">
             <span class="obs-check-icon">😮</span>
             <span class="obs-check-label">Boqueo en superficie</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'agua_verde')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'agua_verde',event)">
             <input type="checkbox" value="agua_verde">
             <span class="obs-check-icon">🟢</span>
             <span class="obs-check-label">Agua verde (bloom)</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'agua_cafe')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'agua_cafe',event)">
             <input type="checkbox" value="agua_cafe">
             <span class="obs-check-icon">🟤</span>
             <span class="obs-check-label">Agua café/turbia</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'agua_clara')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'agua_clara',event)">
             <input type="checkbox" value="agua_clara">
             <span class="obs-check-icon">💧</span>
             <span class="obs-check-label">Agua clara</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'espuma')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'espuma',event)">
             <input type="checkbox" value="espuma">
             <span class="obs-check-icon">🫧</span>
             <span class="obs-check-label">Espuma excesiva</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'mortalidades_observadas')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'mortalidades_observadas',event)">
             <input type="checkbox" value="mortalidades_observadas">
             <span class="obs-check-icon">💀</span>
             <span class="obs-check-label">Mortalidades visibles</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'peces_lentos')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'peces_lentos',event)">
             <input type="checkbox" value="peces_lentos">
             <span class="obs-check-icon">🐢</span>
             <span class="obs-check-label">Peces lentos/inactivos</span>
           </label>
-          <label class="obs-check" onclick="toggleObsCheck(this,'nado_errático')">
+          <label class="obs-check" onclick="toggleObsCheck(this,'nado_errático',event)">
             <input type="checkbox" value="nado_erratico">
             <span class="obs-check-icon">🌀</span>
             <span class="obs-check-label">Nado errático</span>
@@ -1349,7 +1349,8 @@ function validarFormBitacora() {
 // ============================================================
 // OBS CHECKS
 // ============================================================
-window.toggleObsCheck = (el, val) => {
+window.toggleObsCheck = (el, val, event) => {
+  if (event) event.preventDefault();
   el.classList.toggle('selected');
 };
 
