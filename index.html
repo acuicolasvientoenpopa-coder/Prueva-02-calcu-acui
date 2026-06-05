@@ -231,7 +231,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="auth-box">
     <div class="auth-logo">
       <div class="icon">🐟</div>
-      <h1>AquaCalc <span class="version-badge">v3.1</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
       <span>HERRAMIENTA DE CAMPO · ACUICULTURA CR</span>
     </div>
     <div id="email-verify-banner" class="email-verify-banner">
@@ -320,11 +320,16 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc <span class="version-badge">v3.1</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
       <span id="header-finca">ACUICULTURA · CR</span>
     </div>
   </div>
   <div class="header-right">
+      <select id="sel-idioma" onchange="cambiarIdioma()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 10px;font-size:12px;font-family:'Syne',sans-serif;cursor:pointer;">
+        <option value="es">🇪🇸 ES</option>
+        <option value="en">🇺🇸 EN</option>
+        <option value="pt">🇧🇷 PT</option>
+      </select>
     <button class="install-btn" id="btn-instalar" onclick="instalarPWA()">📱 Instalar AquaCalc</button>
     <div class="user-badge" onclick="abrirModalPerfil()" title="Editar perfil">👤 <strong id="header-user">—</strong> ✏️</div>
     <button class="btn btn-secondary btn-sm" onclick="doLogout()">Salir</button>
@@ -337,6 +342,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="tab" onclick="showTab('zootecnico',this)">🔬 Zootécnico</div>
   <div class="tab" onclick="showTab('params',this)">⚙️ Parámetros</div>
   <div class="tab" onclick="showTab('especies',this)">🐠 Mis Especies</div>
+  <div class="tab" onclick="showTab('formulas',this)">📐 Fórmulas</div>
 </div>
 
 <div class="content">
@@ -383,10 +389,29 @@ textarea{resize:vertical;min-height:70px;}
           <div class="input-group"><input type="number" step="0.1" id="inp-fcr" placeholder="0.0" oninput="calcular()"><span class="input-unit">ratio</span></div>
           <div class="tooltip-card" id="tip-fcr"><strong>FCR (Factor de Conversión Alimenticia)</strong> indica cuántos kg de alimento se necesitan para producir 1 kg de carne. Un FCR de 1.4 significa que se usan 1.4 kg de alimento por cada kg de ganancia de peso. Menor es mejor.</div>
         </div>
-        <div class="field"><label>Precio alimento (₡/kg)</label>
-          <div class="input-group"><input type="number" id="inp-precio-alimento" placeholder="0" oninput="calcular()"><span class="input-unit">₡/kg</span></div></div>
-        <div class="field"><label>Precio venta (₡/kg)</label>
-          <div class="input-group"><input type="number" id="inp-precio-venta" placeholder="0" oninput="calcular()"><span class="input-unit">₡/kg</span></div></div>
+        <div class="field"><label>Moneda</label>
+          <select id="sel-moneda" onchange="cambiarMoneda()" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;">
+            <option value="USD">🇺🇸 USD — Dólar ($)</option>
+            <option value="CRC" selected>🇨🇷 CRC — Colón (₡)</option>
+            <option value="MXN">🇲🇽 MXN — Peso mexicano ($)</option>
+            <option value="COP">🇨🇴 COP — Peso colombiano ($)</option>
+            <option value="PEN">🇵🇪 PEN — Sol (S/)</option>
+            <option value="CLP">🇨🇱 CLP — Peso chileno ($)</option>
+            <option value="ARS">🇦🇷 ARS — Peso argentino ($)</option>
+            <option value="BRL">🇧🇷 BRL — Real (R$)</option>
+            <option value="GTQ">🇬🇹 GTQ — Quetzal (Q)</option>
+            <option value="HNL">🇭🇳 HNL — Lempira (L)</option>
+            <option value="NIO">🇳🇮 NIO — Córdoba (C$)</option>
+            <option value="PYG">🇵🇾 PYG — Guaraní (₲)</option>
+            <option value="BOB">🇧🇴 BOB — Boliviano (Bs)</option>
+            <option value="UYU">🇺🇾 UYU — Peso uruguayo ($U)</option>
+            <option value="DOP">🇩🇴 DOP — Peso dominicano ($)</option>
+            <option value="VES">🇻🇪 VES — Bolívar (Bs.S)</option>
+          </select></div>
+        <div class="field"><label id="lbl-precio-alimento">Precio alimento (₡/kg)</label>
+          <div class="input-group"><input type="number" id="inp-precio-alimento" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-precio-alimento">₡/kg</span></div></div>
+        <div class="field"><label id="lbl-precio-venta">Precio venta (₡/kg)</label>
+          <div class="input-group"><input type="number" id="inp-precio-venta" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-precio-venta">₡/kg</span></div></div>
       </div>
     </div>
     <div class="card">
@@ -397,9 +422,9 @@ textarea{resize:vertical;min-height:70px;}
         <div class="result-card h2"><div class="result-value" id="r-biomasa-cosecha">—</div><div class="result-label">Biomasa cosecha (kg)</div></div>
         <div class="result-card h2"><div class="result-value" id="r-supervivientes">—</div><div class="result-label">Animales cosecha</div></div>
         <div class="result-card h3"><div class="result-value" id="r-alimento-total">—</div><div class="result-label">Alimento total (kg)</div></div>
-        <div class="result-card h3"><div class="result-value" id="r-costo-alimento">—</div><div class="result-label">Costo alimento (₡)</div></div>
-        <div class="result-card h1"><div class="result-value" id="r-ingreso">—</div><div class="result-label">Ingreso bruto (₡)</div></div>
-        <div class="result-card h2"><div class="result-value" id="r-utilidad">—</div><div class="result-label">Utilidad (₡)</div></div>
+        <div class="result-card h3"><div class="result-value" id="r-costo-alimento">—</div><div class="result-label"><span id="lbl-r-costo">Costo alimento</span></div></div>
+        <div class="result-card h1"><div class="result-value" id="r-ingreso">—</div><div class="result-label"><span id="lbl-r-ingreso">Ingreso bruto</span></div></div>
+        <div class="result-card h2"><div class="result-value" id="r-utilidad">—</div><div class="result-label"><span id="lbl-r-utilidad">Utilidad</span></div></div>
       </div>
       <div class="divider"></div>
       <div class="grid-3">
@@ -685,6 +710,70 @@ textarea{resize:vertical;min-height:70px;}
       <button class="btn btn-primary" id="btn-nueva-especie" onclick="abrirModalEspecie(null)">＋ Nueva Especie</button>
     </div>
     <div id="custom-species-list"></div>
+  </div>
+
+  <!-- FÓRMULAS -->
+  <div id="panel-formulas" class="panel">
+    <div class="section-header">
+      <div><div class="section-title" id="txt-formulas-title">📐 Fórmulas Utilizadas</div><div class="section-sub" id="txt-formulas-sub">Referencia de todas las fórmulas que usa AquaCalc</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">⚖️ Biomasa</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Biomasa (kg) = N° animales × Peso promedio (g) ÷ 1000</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-biomasa">Indica el peso total de los animales en el sistema. Ejemplo: 1000 peces × 300g = 300 kg de biomasa.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🍽️ FCR — Factor de Conversión Alimenticia</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">FCR = Alimento consumido (kg) ÷ Ganancia de peso (kg)</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-fcr">Mide la eficiencia alimenticia. Un FCR de 1.5 significa que se necesitan 1.5 kg de alimento para producir 1 kg de carne. Menor es mejor.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 SGR — Tasa de Crecimiento Específico</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">SGR (%/día) = [(ln Pf − ln Pi) ÷ días] × 100</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-sgr">Indica el porcentaje de ganancia de peso por día relativo al peso corporal. Pf = peso final, Pi = peso inicial.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">✅ Supervivencia</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Supervivencia (%) = (Animales finales ÷ Animales iniciales) × 100</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-supervivencia">Porcentaje de animales que sobreviven durante el ciclo de producción.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🐟 Factor de Condición (K)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">K = (Peso (g) ÷ Longitud (cm)³) × 100</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-k">Indica el estado de bienestar del pez. Valores cercanos a 1 son normales. Valores menores pueden indicar desnutrición.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Coeficiente de Variación (CV)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">CV (%) = (Desviación estándar ÷ Media) × 100</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-cv">Mide la uniformidad del lote. CV menor a 20% indica lote uniforme. Mayor a 35% sugiere heterogeneidad problemática.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🌊 Tasa de Alimentación</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Ración diaria (kg) = Biomasa (kg) × Tasa (%) ÷ 100</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-tasa">La tasa de alimentación varía según especie, temperatura y etapa de crecimiento. Generalmente entre 1% y 6% de la biomasa por día.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏗️ Densidad de Siembra</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Densidad = N° animales ÷ Volumen (m³ o m²)</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-densidad">Define cuántos animales se colocan por unidad de volumen o área. Afecta directamente la calidad del agua y el crecimiento.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">💰 Costo por kg Producido</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Costo/kg = Costo total alimento ÷ Biomasa cosechada (kg)</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-costo">Indica cuánto cuesta producir cada kilogramo de producto. Es el principal indicador de rentabilidad.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📉 Utilidad</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Utilidad = Ingreso bruto − Costo de alimento</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-utilidad">Ingreso bruto = Biomasa cosechada × Precio de venta. Nota: no incluye otros costos operativos.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">⏱️ Días al Mercado</div>
+        <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Días = (Peso cosecha − Peso inicial) ÷ GPD</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-dias">GPD = Ganancia de peso diaria (g/día). Estima el tiempo necesario para alcanzar el peso de cosecha.</div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -1242,6 +1331,80 @@ window.seleccionarEspecie = (id) => {
 // ============================================================
 // CALCULADORA
 // ============================================================
+// ============================================================
+// MONEDAS E IDIOMA
+// ============================================================
+const MONEDAS = {
+  USD:{simbolo:'$',nombre:'USD',locale:'en-US'},
+  CRC:{simbolo:'₡',nombre:'CRC',locale:'es-CR'},
+  MXN:{simbolo:'$',nombre:'MXN',locale:'es-MX'},
+  COP:{simbolo:'$',nombre:'COP',locale:'es-CO'},
+  PEN:{simbolo:'S/',nombre:'PEN',locale:'es-PE'},
+  CLP:{simbolo:'$',nombre:'CLP',locale:'es-CL'},
+  ARS:{simbolo:'$',nombre:'ARS',locale:'es-AR'},
+  BRL:{simbolo:'R$',nombre:'BRL',locale:'pt-BR'},
+  GTQ:{simbolo:'Q',nombre:'GTQ',locale:'es-GT'},
+  HNL:{simbolo:'L',nombre:'HNL',locale:'es-HN'},
+  NIO:{simbolo:'C$',nombre:'NIO',locale:'es-NI'},
+  PYG:{simbolo:'₲',nombre:'PYG',locale:'es-PY'},
+  BOB:{simbolo:'Bs',nombre:'BOB',locale:'es-BO'},
+  UYU:{simbolo:'$U',nombre:'UYU',locale:'es-UY'},
+  DOP:{simbolo:'$',nombre:'DOP',locale:'es-DO'},
+  VES:{simbolo:'Bs.S',nombre:'VES',locale:'es-VE'},
+};
+
+let monedaActual = 'CRC';
+
+window.cambiarMoneda = () => {
+  monedaActual = document.getElementById('sel-moneda').value;
+  const m = MONEDAS[monedaActual];
+  const unit = m.simbolo+'/kg';
+  const el1=document.getElementById('unit-precio-alimento');
+  const el2=document.getElementById('unit-precio-venta');
+  const lbl1=document.getElementById('lbl-precio-alimento');
+  const lbl2=document.getElementById('lbl-precio-venta');
+  if(el1) el1.textContent=unit;
+  if(el2) el2.textContent=unit;
+  if(lbl1) lbl1.textContent='Precio alimento ('+unit+')';
+  if(lbl2) lbl2.textContent='Precio venta ('+unit+')';
+  calcular();
+};
+
+const IDIOMAS = {
+  es:{
+    calc:'🧮 Calculadora',bitacora:'📋 Bitácora',zootecnico:'🔬 Zootécnico',
+    params:'⚙️ Parámetros',especies:'🐠 Mis Especies',formulas:'📐 Fórmulas',
+    moneda:'Moneda',precioAlim:'Precio alimento',precioVenta:'Precio venta',
+    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referencia de todas las fórmulas que usa AquaCalc'
+  },
+  en:{
+    calc:'🧮 Calculator',bitacora:'📋 Logbook',zootecnico:'🔬 Zootechnical',
+    params:'⚙️ Parameters',especies:'🐠 My Species',formulas:'📐 Formulas',
+    moneda:'Currency',precioAlim:'Feed price',precioVenta:'Sale price',
+    formulasTitle:'📐 Formulas Used',formulasSub:'Reference of all formulas used by AquaCalc'
+  },
+  pt:{
+    calc:'🧮 Calculadora',bitacora:'📋 Diário',zootecnico:'🔬 Zootécnico',
+    params:'⚙️ Parâmetros',especies:'🐠 Minhas Espécies',formulas:'📐 Fórmulas',
+    moneda:'Moeda',precioAlim:'Preço ração',precioVenta:'Preço venda',
+    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referência de todas as fórmulas usadas pelo AquaCalc'
+  }
+};
+
+let idiomaActual = 'es';
+
+window.cambiarIdioma = () => {
+  idiomaActual = document.getElementById('sel-idioma').value;
+  const t = IDIOMAS[idiomaActual];
+  const tabs = document.querySelectorAll('.tab');
+  const ids = ['calc','bitacora','zootecnico','params','especies','formulas'];
+  tabs.forEach((tab,i)=>{ if(ids[i]&&t[ids[i]]) tab.textContent=t[ids[i]]; });
+  const ft=document.getElementById('txt-formulas-title');
+  const fs=document.getElementById('txt-formulas-sub');
+  if(ft) ft.textContent=t.formulasTitle;
+  if(fs) fs.textContent=t.formulasSub;
+};
+
 window.calcular = () => {
   const g = id => parseFloat(document.getElementById(id)?.value)||0;
   const vol=g('inp-volumen'),dens=g('inp-densidad'),sup=g('inp-supervivencia');
@@ -1263,7 +1426,7 @@ window.calcular = () => {
   const dias=gpd>0?(pc-pi)/gpd:0,costoKg=bioCosecha>0?costoAlim/bioCosecha:0;
 
   const fmt=(n,d=0)=>isNaN(n)||!isFinite(n)?'—':n.toLocaleString('es-CR',{minimumFractionDigits:d,maximumFractionDigits:d});
-  const fmtM=n=>isNaN(n)||!isFinite(n)?'—':'₡'+n.toLocaleString('es-CR',{maximumFractionDigits:0});
+  const m=MONEDAS[monedaActual]||MONEDAS.CRC;const fmtM=n=>isNaN(n)||!isFinite(n)?'—':m.simbolo+n.toLocaleString(m.locale,{maximumFractionDigits:0});
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set('r-total-animales',fmt(totalAnim));set('r-biomasa-inicial',fmt(bioInicial,1));
   set('r-biomasa-cosecha',fmt(bioCosecha,1));set('r-supervivientes',fmt(surv));
