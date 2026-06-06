@@ -331,17 +331,24 @@ textarea{resize:vertical;min-height:70px;}
 <!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-box">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
+      <select id="sel-idioma-auth" onchange="cambiarIdiomaAuth()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 10px;font-size:12px;font-family:'Syne',sans-serif;cursor:pointer;">
+        <option value="es">🇪🇸 ES</option>
+        <option value="en">🇺🇸 EN</option>
+        <option value="pt">🇧🇷 PT</option>
+      </select>
+    </div>
     <div class="auth-logo">
       <div class="icon">🐟</div>
-      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.3</span></h1>
       <span>HERRAMIENTA DE CAMPO · ACUICULTURA CR</span>
     </div>
     <div id="email-verify-banner" class="email-verify-banner">
       ⚠️ Tu correo aún no está verificado. Revisá tu bandeja de entrada o <a onclick="reenviarVerificacion()">reenviar correo</a>.
     </div>
     <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchAuth('login')">Iniciar Sesión</div>
-      <div class="auth-tab" onclick="switchAuth('register')">Registrarse</div>
+      <div class="auth-tab active" onclick="switchAuth('login')" data-i18n="auth.login">Iniciar Sesión</div>
+      <div class="auth-tab" onclick="switchAuth('register')" data-i18n="auth.register">Registrarse</div>
     </div>
     <div class="auth-error" id="auth-error"></div>
     <div class="auth-success" id="auth-success"></div>
@@ -349,56 +356,56 @@ textarea{resize:vertical;min-height:70px;}
     <!-- LOGIN -->
     <div id="form-login">
       <div class="field">
-        <label>Correo electrónico</label>
-        <input type="email" id="l-email" placeholder="correo@ejemplo.com" oninput="clearFieldError('l-email')">
+        <label data-i18n="auth.email">Correo electrónico</label>
+        <input type="email" id="l-email" placeholder="correo@ejemplo.com" oninput="clearFieldError('l-email')" data-i18n-placeholder="auth.emailPlaceholder">
         <div class="field-error" id="err-l-email"></div>
       </div>
       <div class="field">
-        <label>Contraseña</label>
+        <label data-i18n="auth.password">Contraseña</label>
         <input type="password" id="l-pass" placeholder="••••••••" oninput="clearFieldError('l-pass')">
         <div class="field-error" id="err-l-pass"></div>
-        <div class="forgot-link"><a onclick="showForgotPassword()">¿Olvidaste tu contraseña?</a></div>
+        <div class="forgot-link"><a onclick="showForgotPassword()" data-i18n="auth.forgot">¿Olvidaste tu contraseña?</a></div>
       </div>
-      <button class="btn btn-primary btn-full" onclick="doLogin()" id="btn-login">Entrar</button>
+      <button class="btn btn-primary btn-full" onclick="doLogin()" id="btn-login" data-i18n="auth.enter">Entrar</button>
     </div>
 
     <!-- FORGOT PASSWORD -->
     <div id="form-forgot" style="display:none">
-      <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Ingresá tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px" data-i18n="auth.forgotDesc">Ingresá tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
       <div class="field">
-        <label>Correo electrónico</label>
+        <label data-i18n="auth.email">Correo electrónico</label>
         <input type="email" id="f-email" placeholder="correo@ejemplo.com">
         <div class="field-error" id="err-f-email"></div>
       </div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-secondary" style="flex:1" onclick="showLogin()">Volver</button>
-        <button class="btn btn-primary" style="flex:1" onclick="doForgotPassword()" id="btn-forgot">Enviar correo</button>
+        <button class="btn btn-secondary" style="flex:1" onclick="showLogin()" data-i18n="auth.back">Volver</button>
+        <button class="btn btn-primary" style="flex:1" onclick="doForgotPassword()" id="btn-forgot" data-i18n="auth.sendEmail">Enviar correo</button>
       </div>
     </div>
 
     <!-- REGISTER -->
     <div id="form-register" style="display:none">
       <div class="field">
-        <label>Nombre completo</label>
+        <label data-i18n="auth.fullName">Nombre completo</label>
         <input type="text" id="r-nombre" placeholder="Juan Pérez" oninput="clearFieldError('r-nombre')">
         <div class="field-error" id="err-r-nombre"></div>
       </div>
       <div class="field">
-        <label>Nombre de finca / empresa</label>
+        <label data-i18n="auth.farmName">Nombre de finca / empresa</label>
         <input type="text" id="r-finca" placeholder="Finca Las Tilapias" oninput="clearFieldError('r-finca')">
         <div class="field-error" id="err-r-finca"></div>
       </div>
       <div class="field">
-        <label>Correo electrónico</label>
+        <label data-i18n="auth.email">Correo electrónico</label>
         <input type="email" id="r-email" placeholder="correo@ejemplo.com" oninput="clearFieldError('r-email')">
         <div class="field-error" id="err-r-email"></div>
       </div>
       <div class="field">
-        <label>Contraseña</label>
+        <label data-i18n="auth.password">Contraseña</label>
         <input type="password" id="r-pass" placeholder="Mínimo 6 caracteres" oninput="clearFieldError('r-pass')">
         <div class="field-error" id="err-r-pass"></div>
       </div>
-      <button class="btn btn-primary btn-full" onclick="doRegister()" id="btn-register">Crear cuenta</button>
+      <button class="btn btn-primary btn-full" onclick="doRegister()" id="btn-register" data-i18n="auth.createAccount">Crear cuenta</button>
     </div>
   </div>
 </div>
@@ -422,7 +429,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.3</span></h1>
       <span id="header-finca">ACUICULTURA · CR</span>
     </div>
   </div>
@@ -434,17 +441,17 @@ textarea{resize:vertical;min-height:70px;}
       </select>
     <button class="install-btn" id="btn-instalar" onclick="instalarPWA()">📱 Instalar AquaCalc</button>
     <div class="user-badge" onclick="abrirModalPerfil()" title="Editar perfil">👤 <strong id="header-user">—</strong> ✏️</div>
-    <button class="btn btn-secondary btn-sm" onclick="doLogout()">Salir</button>
+    <button class="btn btn-secondary btn-sm" onclick="doLogout()" data-i18n="header.logout">Salir</button>
   </div>
 </header>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('calc',this)">🧮 Calculadora</div>
-  <div class="tab" onclick="showTab('bitacora',this)">📋 Bitácora</div>
-  <div class="tab" onclick="showTab('zootecnico',this)">🔬 Zootécnico</div>
-  <div class="tab" onclick="showTab('params',this)">⚙️ Parámetros</div>
-  <div class="tab" onclick="showTab('especies',this)">🐠 Mis Especies</div>
-  <div class="tab" onclick="showTab('formulas',this)">📐 Fórmulas</div>
+  <div class="tab active" onclick="showTab('calc',this)" data-i18n="tabs.calc">🧮 Calculadora</div>
+  <div class="tab" onclick="showTab('bitacora',this)" data-i18n="tabs.bitacora">📋 Bitácora</div>
+  <div class="tab" onclick="showTab('zootecnico',this)" data-i18n="tabs.zootecnico">🔬 Zootécnico</div>
+  <div class="tab" onclick="showTab('params',this)" data-i18n="tabs.params">⚙️ Parámetros</div>
+  <div class="tab" onclick="showTab('especies',this)" data-i18n="tabs.especies">🐠 Mis Especies</div>
+  <div class="tab" onclick="showTab('formulas',this)" data-i18n="tabs.formulas">📐 Fórmulas</div>
 </div>
 
 <div class="content">
@@ -452,32 +459,32 @@ textarea{resize:vertical;min-height:70px;}
   <!-- CALCULADORA -->
   <div id="panel-calc" class="panel active">
     <div class="section-header">
-      <div><div class="section-title">Calculadora</div><div class="section-sub">Seleccione especie e ingrese datos del estanque</div></div>
+      <div><div class="section-title" data-i18n="calc.title">Calculadora</div><div class="section-sub" data-i18n="calc.sub">Seleccione especie e ingrese datos del estanque</div></div>
     </div>
     <div class="card">
-      <div class="card-title">🐠 Especie</div>
+      <div class="card-title" data-i18n="calc.speciesCard">🐠 Especie</div>
       <div class="species-grid" id="speciesGrid"></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-title">🏊 Datos del Estanque</div>
-        <div class="field"><label>Volumen / Área</label>
+        <div class="card-title" data-i18n="calc.pondCard">🏊 Datos del Estanque</div>
+        <div class="field"><label data-i18n="calc.volArea">Volumen / Área</label>
           <div class="input-group"><input type="number" id="inp-volumen" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-volumen">m³</span></div>
           <div class="field-error" id="err-volumen"></div></div>
-        <div class="field"><label>Densidad de siembra</label>
+        <div class="field"><label data-i18n="calc.density">Densidad de siembra</label>
           <div class="input-group"><input type="number" id="inp-densidad" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-densidad">peces/m³</span></div>
           <div class="field-error" id="err-densidad"></div></div>
-        <div class="field"><label>Peso inicial (g)</label>
+        <div class="field"><label data-i18n="calc.initialWeight">Peso inicial (g)</label>
           <div class="input-group"><input type="number" id="inp-peso-inicial" placeholder="0" oninput="calcular()"><span class="input-unit">g</span></div>
           <div class="field-error" id="err-peso-inicial"></div></div>
-        <div class="field"><label>Peso de cosecha (g)</label>
+        <div class="field"><label data-i18n="calc.harvestWeight">Peso de cosecha (g)</label>
           <div class="input-group"><input type="number" id="inp-peso-cosecha" placeholder="0" oninput="calcular()"><span class="input-unit">g</span></div>
           <div class="field-error" id="err-peso-cosecha"></div></div>
       </div>
       <div class="card">
-        <div class="card-title">📊 Parámetros</div>
+        <div class="card-title" data-i18n="calc.paramsCard">📊 Parámetros</div>
         <div class="field">
-          <label>Supervivencia (%)
+          <label data-i18n="calc.survival">Supervivencia (%)
             <span class="info-btn" onclick="toggleTooltip('tip-supervivencia')">ℹ</span>
           </label>
           <div class="input-group"><input type="number" id="inp-supervivencia" placeholder="0" oninput="calcular()"><span class="input-unit">%</span></div>
@@ -517,22 +524,22 @@ textarea{resize:vertical;min-height:70px;}
       </div>
     </div>
     <div class="card">
-      <div class="card-title">📈 Resultados</div>
+      <div class="card-title" data-i18n="calc.resultsCard">📈 Resultados</div>
       <div class="grid-4">
-        <div class="result-card h1"><div class="result-value" id="r-total-animales">—</div><div class="result-label">Total animales</div></div>
-        <div class="result-card h1"><div class="result-value" id="r-biomasa-inicial">—</div><div class="result-label">Biomasa inicial (kg)</div></div>
-        <div class="result-card h2"><div class="result-value" id="r-biomasa-cosecha">—</div><div class="result-label">Biomasa cosecha (kg)</div></div>
-        <div class="result-card h2"><div class="result-value" id="r-supervivientes">—</div><div class="result-label">Animales cosecha</div></div>
-        <div class="result-card h3"><div class="result-value" id="r-alimento-total">—</div><div class="result-label">Alimento total (kg)</div></div>
-        <div class="result-card h3"><div class="result-value" id="r-costo-alimento">—</div><div class="result-label"><span id="lbl-r-costo">Costo alimento</span></div></div>
-        <div class="result-card h1"><div class="result-value" id="r-ingreso">—</div><div class="result-label"><span id="lbl-r-ingreso">Ingreso bruto</span></div></div>
-        <div class="result-card h2"><div class="result-value" id="r-utilidad">—</div><div class="result-label"><span id="lbl-r-utilidad">Utilidad</span></div></div>
+        <div class="result-card h1"><div class="result-value" id="r-total-animales">—</div><div class="result-label" data-i18n="calc.totalAnimals">Total animales</div></div>
+        <div class="result-card h1"><div class="result-value" id="r-biomasa-inicial">—</div><div class="result-label" data-i18n="calc.initialBiomass">Biomasa inicial (kg)</div></div>
+        <div class="result-card h2"><div class="result-value" id="r-biomasa-cosecha">—</div><div class="result-label" data-i18n="calc.harvestBiomass">Biomasa cosecha (kg)</div></div>
+        <div class="result-card h2"><div class="result-value" id="r-supervivientes">—</div><div class="result-label" data-i18n="calc.harvestAnimals">Animales cosecha</div></div>
+        <div class="result-card h3"><div class="result-value" id="r-alimento-total">—</div><div class="result-label" data-i18n="calc.totalFeed">Alimento total (kg)</div></div>
+        <div class="result-card h3"><div class="result-value" id="r-costo-alimento">—</div><div class="result-label"><span id="lbl-r-costo" data-i18n="calc.feedCost">Costo alimento</span></div></div>
+        <div class="result-card h1"><div class="result-value" id="r-ingreso">—</div><div class="result-label"><span id="lbl-r-ingreso" data-i18n="calc.grossIncome">Ingreso bruto</span></div></div>
+        <div class="result-card h2"><div class="result-value" id="r-utilidad">—</div><div class="result-label"><span id="lbl-r-utilidad" data-i18n="calc.profit">Utilidad</span></div></div>
       </div>
       <div class="divider"></div>
       <div class="grid-3">
         <div class="result-card">
           <div class="result-value" id="r-dias">—</div>
-          <div class="result-label">Días estimados
+      <div class="result-label">Días estimados
             <span class="info-btn" onclick="toggleTooltip('tip-sgr-info')" style="display:inline-flex;width:14px;height:14px;font-size:9px;">ℹ</span>
           </div>
         </div>
@@ -548,13 +555,13 @@ textarea{resize:vertical;min-height:70px;}
       <div class="tooltip-card" id="tip-gpd-info" style="margin-top:8px"><strong>GPD (Ganancia de Peso Diaria)</strong> es cuántos gramos en promedio gana cada animal por día. Se calcula como (Peso final − Peso inicial) ÷ días de cultivo.</div>
     </div>
     <div class="card">
-      <div class="card-title">🍽️ Ración Diaria</div>
-      <div class="field"><label>Biomasa actual (kg)</label>
+      <div class="card-title" data-i18n="calc.rationCard">🍽️ Ración Diaria</div>
+      <div class="field"><label data-i18n="calc.currentBiomass">Biomasa actual (kg)</label>
         <div class="input-group"><input type="number" id="inp-biomasa-actual" placeholder="0" oninput="calcRacion()"><span class="input-unit">kg</span></div></div>
       <div class="grid-3" style="margin-top:12px">
-        <div class="result-card h1"><div class="result-value" id="r-racion-dia">—</div><div class="result-label">Ración/día (kg)</div></div>
-        <div class="result-card h2"><div class="result-value" id="r-racion-comida">—</div><div class="result-label">Por comida (kg)</div></div>
-        <div class="result-card h3"><div class="result-value" id="r-tasa-alim">—</div><div class="result-label">Tasa alimentación (%)</div></div>
+        <div class="result-card h1"><div class="result-value" id="r-racion-dia">—</div><div class="result-label" data-i18n="calc.rationDay">Ración/día (kg)</div></div>
+        <div class="result-card h2"><div class="result-value" id="r-racion-comida">—</div><div class="result-label" data-i18n="calc.rationMeal">Por comida (kg)</div></div>
+        <div class="result-card h3"><div class="result-value" id="r-tasa-alim">—</div><div class="result-label" data-i18n="calc.feedRate">Tasa alimentación (%)</div></div>
       </div>
     </div>
   </div>
@@ -1059,6 +1066,7 @@ window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 
 function updateSyncBar() {
+  if (typeof updateSyncBarTranslated === 'function') { updateSyncBarTranslated(); return; }
   const bar = document.getElementById('sync-bar');
   const dot = document.getElementById('sync-dot');
   const txt = document.getElementById('sync-status-text');
@@ -1107,12 +1115,12 @@ async function guardarDatos() {
       state.pendingSync = [];
       state.lastSync = new Date().toISOString();
       guardarLocal();
-      showToast('☁️ Guardado en la nube');
+      showToast(T('toastCloud')||'☁️ Guardado en la nube');
     } catch(e) {
-      showToast('💾 Guardado localmente', '#f0a500');
+      showToast(T('toastLocal')||'💾 Guardado localmente', '#f0a500');
     }
   } else {
-    showToast('💾 Guardado localmente', '#f0a500');
+    showToast(T('toastLocal')||'💾 Guardado localmente', '#f0a500');
   }
   updateSyncBar();
 }
@@ -1129,12 +1137,14 @@ async function guardarDatosConPendiente(registro) {
 
 window.sincronizarManual = () => {
   const pendingCount = state.pendingSync?.length || 0;
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
   document.getElementById('sync-pending-count').textContent = pendingCount;
   if (state.lastSync) {
     const d = new Date(state.lastSync);
-    document.getElementById('sync-last-time').textContent = 'Última sincronización: ' + d.toLocaleString('es-CR',{dateStyle:'long',timeStyle:'short'});
+    const locale = idiomaActual==='pt'?'pt-BR':idiomaActual==='en'?'en-US':'es-CR';
+    document.getElementById('sync-last-time').textContent = (t.syncModalUltima||'Última sincronización: ') + d.toLocaleString(locale,{dateStyle:'long',timeStyle:'short'});
   } else {
-    document.getElementById('sync-last-time').textContent = 'No se han sincronizado datos aún.';
+    document.getElementById('sync-last-time').textContent = t.syncModalNone||'No se han sincronizado datos aún.';
   }
   document.getElementById('modal-sync').style.display = 'flex';
 };
@@ -1151,7 +1161,7 @@ window.confirmarSincronizacion = async () => {
     state.pendingSync = [];
     state.lastSync = new Date().toISOString();
     guardarLocal();
-    showToast('✅ Datos sincronizados correctamente');
+    showToast(T('toastSynced')||'✅ Datos sincronizados correctamente');
     document.getElementById('modal-sync').style.display = 'none';
     renderBitacora();
     updateSyncBar();
@@ -1178,7 +1188,7 @@ window.instalarPWA = async () => {
   const result = await deferredInstallPrompt.userChoice;
   if (result.outcome === 'accepted') {
     document.getElementById('btn-instalar').style.display = 'none';
-    showToast('✅ AquaCalc instalado en tu dispositivo');
+    showToast(T('toastInstalled')||'✅ AquaCalc instalado en tu dispositivo');
   }
   deferredInstallPrompt = null;
 };
@@ -1235,16 +1245,16 @@ window.doForgotPassword = async () => {
   btn.disabled=true; btn.textContent='Enviando...';
   try {
     await sendPasswordResetEmail(auth, email);
-    showAuthSuccess('✅ Correo enviado. Revisá tu bandeja de entrada.');
+    showAuthSuccess(T('authSuccessForgot')||'✅ Correo enviado. Revisá tu bandeja de entrada.');
     document.getElementById('form-forgot').style.display='none';
   } catch(e) { showAuthError(traducirError(e.code)); }
-  btn.disabled=false; btn.textContent='Enviar correo';
+  btn.disabled=false; btn.textContent=T('authSendEmail')||'Enviar correo';
 };
 
 window.reenviarVerificacion = async () => {
   if (auth.currentUser) {
     await sendEmailVerification(auth.currentUser);
-    showToast('📧 Correo de verificación enviado');
+    showToast(T('toastVerifySent')||'📧 Correo de verificación enviado');
   }
 };
 
@@ -1262,7 +1272,7 @@ window.doLogin = async () => {
     await signInWithEmailAndPassword(auth, email, pass);
   } catch(e) {
     showAuthError(traducirError(e.code));
-    btn.disabled=false; btn.textContent='Entrar';
+    btn.disabled=false; btn.textContent=T('authEnter')||'Entrar';
   }
 };
 
@@ -1286,10 +1296,10 @@ window.doRegister = async () => {
     // Enviar verificación de correo
     await sendEmailVerification(cred.user);
     await setDoc(doc(db,'usuarios',cred.user.uid), {nombre,finca,email,params:state.params,bitacora:[],customSpecies:[],pendingSync:[],creadoEn:new Date().toISOString()});
-    showAuthSuccess('✅ Cuenta creada. Revisá tu correo para verificar tu cuenta.');
+    showAuthSuccess(T('authSuccessReg')||'✅ Cuenta creada. Revisá tu correo para verificar tu cuenta.');
   } catch(e) {
     showAuthError(traducirError(e.code));
-    btn.disabled=false; btn.textContent='Crear cuenta';
+    btn.disabled=false; btn.textContent=T('authCreateAccount')||'Crear cuenta';
   }
 };
 
@@ -1305,7 +1315,7 @@ onAuthStateChanged(auth, async(user) => {
       try {
         await cargarDatosNube(user.uid);
       } catch(e) {
-        showToast('📱 Usando datos locales', '#f0a500');
+        showToast(T('toastLocalData')||'📱 Usando datos locales', '#f0a500');
       }
     }
     document.getElementById('auth-screen').style.display = 'none';
@@ -1361,10 +1371,10 @@ window.guardarPerfil = async () => {
   if (state.isOnline) {
     try {
       await updateDoc(doc(db,'usuarios',state.user.uid),{nombre,finca});
-      showToast('✅ Perfil actualizado');
-    } catch(e) { showToast('💾 Perfil guardado localmente','#f0a500'); }
+      showToast(T('toastProfileUpdated')||'✅ Perfil actualizado');
+    } catch(e) { showToast(T('toastProfileLocal')||'💾 Perfil guardado localmente','#f0a500'); }
   } else {
-    showToast('💾 Perfil guardado localmente','#f0a500');
+    showToast(T('toastProfileLocal')||'💾 Perfil guardado localmente','#f0a500');
   }
 };
 
@@ -1389,6 +1399,7 @@ function initApp() {
   renderCustomSpeciesList();
   document.getElementById('b-fecha').valueAsDate = new Date();
   updateSyncBar();
+  aplicarIdioma();
 }
 
 window.showTab = (tab, el) => {
@@ -1403,14 +1414,18 @@ window.showTab = (tab, el) => {
 // SPECIES
 // ============================================================
 function renderSpeciesGrid() {
-  document.getElementById('speciesGrid').innerHTML = getAllSpecies().map(e=>`
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
+  document.getElementById('speciesGrid').innerHTML = getAllSpecies().map(e=>{
+    const nombre = (!e.custom && t['sp_'+e.id]) ? t['sp_'+e.id] : e.nombre;
+    return `
     <div class="species-card ${state.especieSeleccionada===e.id?'selected':''}" onclick="seleccionarEspecie('${e.id}')">
       ${e.custom?`<button class="edit-btn" onclick="event.stopPropagation();abrirModalEspecie('${e.id}')">✏️</button>`:''}
       ${e.custom?`<div class="custom-badge">CUSTOM</div>`:''}
       <div class="emoji">${e.emoji}</div>
-      <div class="name">${e.nombre}</div>
+      <div class="name">${nombre}</div>
       <div class="sci">${e.sci}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 window.seleccionarEspecie = (id) => {
@@ -1474,50 +1489,797 @@ window.cambiarMoneda = () => {
 
 const IDIOMAS = {
   es:{
+    // Tabs
     calc:'🧮 Calculadora',bitacora:'📋 Bitácora',zootecnico:'🔬 Zootécnico',
     params:'⚙️ Parámetros',especies:'🐠 Mis Especies',formulas:'📐 Fórmulas',
-    moneda:'Moneda',precioAlim:'Precio alimento',precioVenta:'Precio venta',
-    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referencia de todas las fórmulas que usa AquaCalc'
-  },
+    // Auth
+    authSubtitle:'HERRAMIENTA DE CAMPO · ACUICULTURA CR',
+    authLogin:'Iniciar Sesión', authRegister:'Registrarse',
+    authEmail:'Correo electrónico', authPass:'Contraseña',
+    authEnter:'Entrar', authEntering:'Entrando...',
+    authForgot:'¿Olvidaste tu contraseña?',
+    authFullName:'Nombre completo', authFarm:'Nombre de finca / empresa',
+    authCreateAccount:'Crear cuenta', authCreating:'Creando cuenta...',
+    authForgotTitle:'Ingresá tu correo y te enviaremos un enlace para restablecer tu contraseña.',
+    authBack:'Volver', authSendEmail:'Enviar correo', authSending:'Enviando...',
+    authVerifyBanner:'⚠️ Tu correo aún no está verificado. Revisá tu bandeja de entrada o',
+    authResend:'reenviar correo',
+    // Header
+    installBtn:'📱 Instalar AquaCalc', logoutBtn:'Salir',
+    // Sync bar
+    syncOffline:'Sin conexión — trabajando localmente',
+    syncPending1:'registro pendiente de sincronizar',
+    syncPendingN:'registros pendientes de sincronizar',
+    syncConnected:'Conectado — datos sincronizados',
+    syncBtn:'☁️ Sincronizar', syncLastSync:'Última sync:',
+    // Calculadora
+    calcTitle:'Calculadora', calcSub:'Seleccione especie e ingrese datos del estanque',
+    speciesCard:'🐠 Especie',
+    pondCard:'🏊 Datos del Estanque',
+    volArea:'Volumen / Área', seedDensity:'Densidad de siembra',
+    initialWeight:'Peso inicial (g)', harvestWeight:'Peso de cosecha (g)',
+    paramsCard:'📊 Parámetros',
+    survival:'Supervivencia (%)', fcr:'FCR', currency:'Moneda',
+    precioAlim:'Precio alimento', precioVenta:'Precio venta',
+    resultsCard:'📈 Resultados',
+    rTotalAnimals:'Total animales', rInitialBiomass:'Biomasa inicial (kg)',
+    rHarvestBiomass:'Biomasa cosecha (kg)', rHarvestAnimals:'Animales cosecha',
+    rTotalFeed:'Alimento total (kg)', rFeedCost:'Costo alimento',
+    rGrossIncome:'Ingreso bruto', rProfit:'Utilidad',
+    rEstDays:'Días estimados', rGpd:'GPD (g/día)', rFeedCostKg:'Costo alimento/kg',
+    dailyRationCard:'🍽️ Ración Diaria',
+    currentBiomass:'Biomasa actual (kg)',
+    rDailyRation:'Ración/día (kg)', rPerMeal:'Por comida (kg)', rFeedRate:'Tasa alimentación (%)',
+    // Bitácora
+    bitacoraTitle:'Bitácora', bitacoraSub:'Registro diario de operaciones de campo',
+    newRecord:'＋ Nuevo Registro', newRecordTitle:'📝 Nuevo Registro',
+    date:'Fecha', pond:'Estanque', species:'Especie',
+    feed:'Alimento (kg)', mortality:'Mortalidades', sampleWeight:'Peso muestreo (g)',
+    waterQuality:'💧 Calidad de Agua',
+    dissolvedO2:'Oxígeno disuelto (mg/L)', temperature:'Temperatura (°C)',
+    ph:'pH', ammonium:'Amonio NH₃ (mg/L)', nitrite:'Nitrito NO₂ (mg/L)',
+    nitrate:'Nitrato NO₃ (mg/L)', alkalinity:'Alcalinidad (mg/L CaCO₃)',
+    salinity:'Salinidad (ppt)', hardness:'Dureza (mg/L)',
+    fieldObs:'👀 Observaciones de Campo',
+    freeObs:'Observaciones libres', obsPlaceholder:'Notas adicionales, tratamientos, incidencias...',
+    zooSection:'🔬 Datos Zootécnicos',
+    biomassLog:'Biomasa estanque (kg)', nAnimals:'N° animales estimado',
+    sgrLog:'SGR (%/día)', kFactor:'Factor K (condición)',
+    cvUniform:'CV% Uniformidad', accFcr:'FCR Acumulado',
+    saveRecord:'💾 Guardar Registro', cancel:'Cancelar',
+    selectSpecies:'Seleccionar...',
+    emptyBitacora:'Sin registros aún. ¡Agregá tu primera entrada!',
+    // Obs checks
+    obs_alimentacion_activa:'Alimentación activa', obs_alimentacion_reducida:'Alimentación reducida',
+    obs_boqueo:'Boqueo en superficie', obs_agua_verde:'Agua verde (bloom)',
+    obs_agua_cafe:'Agua café/turbia', obs_agua_clara:'Agua clara',
+    obs_espuma:'Espuma excesiva', obs_mortalidades_observadas:'Mortalidades visibles',
+    obs_peces_lentos:'Peces lentos/inactivos', obs_nado_erratico:'Nado errático',
+    // Zootécnico
+    zootecnicoTitle:'Análisis Zootécnico', zootecnicoSub:'Seguimiento de indicadores productivos',
+    variable:'Variable', filterSpecies:'Especie',
+    chartTitle:'📊 Gráfico', tableTitle:'📋 Tabla Zootécnica',
+    // Parámetros
+    paramsTitle:'Parámetros por Especie', paramsSub:'Modifique según su sistema de producción',
+    restoreBtn:'↺ Restaurar',
+    // Mis Especies
+    speciesTitle:'Mis Especies Personalizadas', speciesSub:'Hasta 3 especies con parámetros propios',
+    newSpeciesBtn:'＋ Nueva Especie',
+    // Fórmulas
+    formulasTitle:'📐 Fórmulas Utilizadas', formulasSub:'Referencia de todas las fórmulas que usa AquaCalc',
+    descBiomasa:'Indica el peso total de los animales en el sistema. Ejemplo: 1000 peces × 300g = 300 kg de biomasa.',
+    descFcr:'Mide la eficiencia alimenticia. Un FCR de 1.5 significa que se necesitan 1.5 kg de alimento para producir 1 kg de carne. Menor es mejor.',
+    descSgr:'Indica el porcentaje de ganancia de peso por día relativo al peso corporal. Pf = peso final, Pi = peso inicial.',
+    descSupervivencia:'Porcentaje de animales que sobreviven durante el ciclo de producción.',
+    descK:'Indica el estado de bienestar del pez. Valores cercanos a 1 son normales. Valores menores pueden indicar desnutrición.',
+    descCv:'Mide la uniformidad del lote. CV menor a 20% indica lote uniforme. Mayor a 35% sugiere heterogeneidad problemática.',
+    descTasa:'La tasa de alimentación varía según especie, temperatura y etapa de crecimiento. Generalmente entre 1% y 6% de la biomasa por día.',
+    descDensidad:'Define cuántos animales se colocan por unidad de volumen o área. Afecta directamente la calidad del agua y el crecimiento.',
+    descCosto:'Indica cuánto cuesta producir cada kilogramo de producto. Es el principal indicador de rentabilidad.',
+    descUtilidad:'Ingreso bruto = Biomasa cosechada × Precio de venta. Nota: no incluye otros costos operativos.',
+    descDias:'GPD = Ganancia de peso diaria (g/día). Estima el tiempo necesario para alcanzar el peso de cosecha.',
+    // Modal perfil
+    editProfile:'👤 Editar Perfil', fullName:'Nombre completo', farmName:'Nombre de finca / empresa',
+    saveBtn:'Guardar',
+    // Modal especie
+    newSpecies:'Nueva Especie', editSpecies:'Editar Especie',
+    commonName:'Nombre común', sciName:'Nombre científico', emoji:'Emoji',
+    density:'Densidad', densityUnit:'Unidad densidad',
+    feedRate:'Tasa alimentación (%)', mealsDay:'Comidas/día',
+    gpd:'GPD (g/día)', feedPrice:'Precio alimento (₡/kg)', salePrice:'Precio venta (₡/kg)',
+    initialWeightG:'Peso inicial (g)', harvestWeightG:'Peso cosecha (g)', volUnit:'Unidad volumen',
+    // Modal sync
+    syncTitle:'☁️ Sincronizar datos',
+    syncPendingText1:'Tenés', syncPendingText2:'registros pendientes de sincronizar.',
+    syncWifiTip:'📶 Se recomienda conectarse a Wi-Fi antes de sincronizar para evitar uso de datos móviles.',
+    syncNow:'☁️ Sincronizar ahora', syncNowDoing:'Sincronizando...',
+    // Instalación
+    installToast:'✅ AquaCalc instalado en tu dispositivo',
+    // Nombres de especies default
+    sp_tilapia:'Tilapia', sp_trucha:'Trucha', sp_camaron:'Camarón',
+    sp_guapote:'Guapote', sp_langostino:'Langostino', sp_pangasio:'Pangasio', sp_carpa:'Carpa Herbívora',
+    // Validaciones calculadora
+    val_negativo:'No puede ser negativo', val_densidad:'Ingresá la densidad',
+    val_supervivencia:'Debe estar entre 0 y 100%', val_pesoCosecha:'Debe ser mayor al peso inicial',
+    // Validaciones bitácora
+    val_fechaReq:'Fecha requerida', val_fechaFutura:'La fecha no puede ser futura',
+    val_estanqueReq:'Estanque requerido',
+    val_negativo2:'No puede ser negativo',
+    val_ph:'pH debe estar entre 0 y 14',
+    val_oxigeno:'⚠️ Valor fuera de rango normal (2–20 mg/L)',
+    val_temperatura:'⚠️ Valor fuera de rango (5–45°C)',
+    val_amonio:'⚠️ Amonio elevado (>0.5 mg/L)',
+    val_nitrito:'⚠️ Nitrito elevado (>0.3 mg/L)',
+    // Auth errores
+    authErrEmail:'Ingresá tu correo', authErrEmailFmt:'Formato de correo inválido',
+    authErrPass:'Ingresá tu contraseña', authErrNombre:'Ingresá tu nombre',
+    authErrFinca:'Ingresá el nombre de tu finca', authErrPassMin:'Mínimo 6 caracteres',
+    authSuccessReg:'✅ Cuenta creada. Revisá tu correo para verificar tu cuenta.',
+    authSuccessForgot:'✅ Correo enviado. Revisá tu bandeja de entrada.',
+    // Toasts
+    toastCloud:'☁️ Guardado en la nube', toastLocal:'💾 Guardado localmente',
+    toastSynced:'✅ Datos sincronizados correctamente',
+    toastSpeciesSaved:'✅ Especie guardada', toastSpeciesDeleted:'🗑️ Especie eliminada',
+    toastMaxSpecies:'⚠️ Máximo 3 especies', toastProfileUpdated:'✅ Perfil actualizado',
+    toastProfileLocal:'💾 Perfil guardado localmente',
+    toastInstalled:'✅ AquaCalc instalado en tu dispositivo',
+    toastVerifySent:'📧 Correo de verificación enviado',
+    toastLocalData:'📱 Usando datos locales',
+    toastSyncError:'⚠️ Error al sincronizar: ',
+    // Modal especie
+    modalEspecieNueva:'Nueva Especie', modalEspecieEditar:'Editar Especie',
+    modalEspecieNombreReq:'Ingresá un nombre',
+    confirmEliminarEspecie:'¿Eliminar esta especie?',
+    // Perfil
+    perfilNombreReq:'Ingresá tu nombre', perfilFincaReq:'Ingresá el nombre de tu finca',
+    // Sync modal
+    syncModalNone:'No se han sincronizado datos aún.',
+    syncModalUltima:'Última sincronización: ',
+    syncModalHaciendo:'Sincronizando...',
   en:{
     calc:'🧮 Calculator',bitacora:'📋 Logbook',zootecnico:'🔬 Zootechnical',
     params:'⚙️ Parameters',especies:'🐠 My Species',formulas:'📐 Formulas',
-    moneda:'Currency',precioAlim:'Feed price',precioVenta:'Sale price',
-    formulasTitle:'📐 Formulas Used',formulasSub:'Reference of all formulas used by AquaCalc'
-  },
+    authSubtitle:'FIELD TOOL · AQUACULTURE',
+    authLogin:'Log In', authRegister:'Sign Up',
+    authEmail:'Email address', authPass:'Password',
+    authEnter:'Enter', authEntering:'Logging in...',
+    authForgot:'Forgot your password?',
+    authFullName:'Full name', authFarm:'Farm / company name',
+    authCreateAccount:'Create account', authCreating:'Creating account...',
+    authForgotTitle:'Enter your email and we will send you a link to reset your password.',
+    authBack:'Back', authSendEmail:'Send email', authSending:'Sending...',
+    authVerifyBanner:'⚠️ Your email is not verified yet. Check your inbox or',
+    authResend:'resend email',
+    installBtn:'📱 Install AquaCalc', logoutBtn:'Logout',
+    syncOffline:'Offline — working locally',
+    syncPending1:'record pending sync',
+    syncPendingN:'records pending sync',
+    syncConnected:'Connected — data synced',
+    syncBtn:'☁️ Sync', syncLastSync:'Last sync:',
+    calcTitle:'Calculator', calcSub:'Select species and enter pond data',
+    speciesCard:'🐠 Species',
+    pondCard:'🏊 Pond Data',
+    volArea:'Volume / Area', seedDensity:'Stocking density',
+    initialWeight:'Initial weight (g)', harvestWeight:'Harvest weight (g)',
+    paramsCard:'📊 Parameters',
+    survival:'Survival (%)', fcr:'FCR', currency:'Currency',
+    precioAlim:'Feed price', precioVenta:'Sale price',
+    resultsCard:'📈 Results',
+    rTotalAnimals:'Total animals', rInitialBiomass:'Initial biomass (kg)',
+    rHarvestBiomass:'Harvest biomass (kg)', rHarvestAnimals:'Harvest animals',
+    rTotalFeed:'Total feed (kg)', rFeedCost:'Feed cost',
+    rGrossIncome:'Gross income', rProfit:'Profit',
+    rEstDays:'Estimated days', rGpd:'GPD (g/day)', rFeedCostKg:'Feed cost/kg',
+    dailyRationCard:'🍽️ Daily Ration',
+    currentBiomass:'Current biomass (kg)',
+    rDailyRation:'Daily ration (kg)', rPerMeal:'Per meal (kg)', rFeedRate:'Feeding rate (%)',
+    bitacoraTitle:'Logbook', bitacoraSub:'Daily field operations record',
+    newRecord:'＋ New Record', newRecordTitle:'📝 New Record',
+    date:'Date', pond:'Pond', species:'Species',
+    feed:'Feed (kg)', mortality:'Mortalities', sampleWeight:'Sample weight (g)',
+    waterQuality:'💧 Water Quality',
+    dissolvedO2:'Dissolved oxygen (mg/L)', temperature:'Temperature (°C)',
+    ph:'pH', ammonium:'Ammonium NH₃ (mg/L)', nitrite:'Nitrite NO₂ (mg/L)',
+    nitrate:'Nitrate NO₃ (mg/L)', alkalinity:'Alkalinity (mg/L CaCO₃)',
+    salinity:'Salinity (ppt)', hardness:'Hardness (mg/L)',
+    fieldObs:'👀 Field Observations',
+    freeObs:'Free observations', obsPlaceholder:'Additional notes, treatments, incidents...',
+    zooSection:'🔬 Zootechnical Data',
+    biomassLog:'Pond biomass (kg)', nAnimals:'Estimated animals',
+    sgrLog:'SGR (%/day)', kFactor:'Condition factor K',
+    cvUniform:'CV% Uniformity', accFcr:'Accumulated FCR',
+    saveRecord:'💾 Save Record', cancel:'Cancel',
+    selectSpecies:'Select...',
+    emptyBitacora:'No records yet. Add your first entry!',
+    obs_alimentacion_activa:'Active feeding', obs_alimentacion_reducida:'Reduced feeding',
+    obs_boqueo:'Surface gasping', obs_agua_verde:'Green water (bloom)',
+    obs_agua_cafe:'Brown/turbid water', obs_agua_clara:'Clear water',
+    obs_espuma:'Excessive foam', obs_mortalidades_observadas:'Visible mortalities',
+    obs_peces_lentos:'Slow/inactive fish', obs_nado_erratico:'Erratic swimming',
+    zootecnicoTitle:'Zootechnical Analysis', zootecnicoSub:'Monitoring of production indicators',
+    variable:'Variable', filterSpecies:'Species',
+    chartTitle:'📊 Chart', tableTitle:'📋 Zootechnical Table',
+    paramsTitle:'Parameters by Species', paramsSub:'Modify according to your production system',
+    restoreBtn:'↺ Restore',
+    speciesTitle:'My Custom Species', speciesSub:'Up to 3 species with custom parameters',
+    newSpeciesBtn:'＋ New Species',
+    formulasTitle:'📐 Formulas Used', formulasSub:'Reference of all formulas used by AquaCalc',
+    descBiomasa:'Indicates the total weight of animals in the system. Example: 1000 fish × 300g = 300 kg biomass.',
+    descFcr:'Measures feed efficiency. FCR of 1.5 means 1.5 kg of feed needed to produce 1 kg of meat. Lower is better.',
+    descSgr:'Indicates percentage weight gain per day relative to body weight. Pf = final weight, Pi = initial weight.',
+    descSupervivencia:'Percentage of animals that survive during the production cycle.',
+    descK:'Indicates fish welfare status. Values near 1 are normal. Lower values may indicate malnutrition.',
+    descCv:'Measures batch uniformity. CV below 20% indicates uniform batch. Above 35% suggests problematic heterogeneity.',
+    descTasa:'Feeding rate varies by species, temperature and growth stage. Generally 1%–6% of biomass per day.',
+    descDensidad:'Defines how many animals are placed per unit of volume or area. Directly affects water quality and growth.',
+    descCosto:'Indicates how much it costs to produce each kilogram of product. It is the main profitability indicator.',
+    descUtilidad:'Gross income = Harvested biomass × Sale price. Note: does not include other operating costs.',
+    descDias:'GPD = Daily weight gain (g/day). Estimates time needed to reach harvest weight.',
+    editProfile:'👤 Edit Profile', fullName:'Full name', farmName:'Farm / company name',
+    saveBtn:'Save',
+    newSpecies:'New Species', editSpecies:'Edit Species',
+    commonName:'Common name', sciName:'Scientific name', emoji:'Emoji',
+    density:'Density', densityUnit:'Density unit',
+    feedRate:'Feeding rate (%)', mealsDay:'Meals/day',
+    gpd:'GPD (g/day)', feedPrice:'Feed price ($/kg)', salePrice:'Sale price ($/kg)',
+    initialWeightG:'Initial weight (g)', harvestWeightG:'Harvest weight (g)', volUnit:'Volume unit',
+    syncTitle:'☁️ Sync data',
+    syncPendingText1:'You have', syncPendingText2:'records pending sync.',
+    syncWifiTip:'📶 Connect to Wi-Fi before syncing to avoid mobile data usage.',
+    syncNow:'☁️ Sync now', syncNowDoing:'Syncing...',
+    installToast:'✅ AquaCalc installed on your device',
+    moneda:'Moneda',precioAlim2:'Feed price',precioVenta2:'Sale price',
+    // Species names
+    sp_tilapia:'Tilapia', sp_trucha:'Trout', sp_camaron:'Shrimp',
+    sp_guapote:'Guapote', sp_langostino:'Freshwater Prawn', sp_pangasio:'Pangasius', sp_carpa:'Grass Carp',
+    // Calc validations
+    val_negativo:'Cannot be negative', val_densidad:'Enter the density',
+    val_supervivencia:'Must be between 0 and 100%', val_pesoCosecha:'Must be greater than initial weight',
+    // Bitácora validations
+    val_fechaReq:'Date required', val_fechaFutura:'Date cannot be in the future',
+    val_estanqueReq:'Pond required',
+    val_negativo2:'Cannot be negative',
+    val_ph:'pH must be between 0 and 14',
+    val_oxigeno:'⚠️ Value out of normal range (2–20 mg/L)',
+    val_temperatura:'⚠️ Value out of range (5–45°C)',
+    val_amonio:'⚠️ High ammonia (>0.5 mg/L)',
+    val_nitrito:'⚠️ High nitrite (>0.3 mg/L)',
+    // Auth errors
+    authErrEmail:'Enter your email', authErrEmailFmt:'Invalid email format',
+    authErrPass:'Enter your password', authErrNombre:'Enter your name',
+    authErrFinca:'Enter your farm name', authErrPassMin:'Minimum 6 characters',
+    authSuccessReg:'✅ Account created. Check your email to verify your account.',
+    authSuccessForgot:'✅ Email sent. Check your inbox.',
+    // Toasts
+    toastCloud:'☁️ Saved to cloud', toastLocal:'💾 Saved locally',
+    toastSynced:'✅ Data synced successfully',
+    toastSpeciesSaved:'✅ Species saved', toastSpeciesDeleted:'🗑️ Species deleted',
+    toastMaxSpecies:'⚠️ Maximum 3 species', toastProfileUpdated:'✅ Profile updated',
+    toastProfileLocal:'💾 Profile saved locally',
+    toastInstalled:'✅ AquaCalc installed on your device',
+    toastVerifySent:'📧 Verification email sent',
+    toastLocalData:'📱 Using local data',
+    toastSyncError:'⚠️ Sync error: ',
+    // Modal species
+    modalEspecieNueva:'New Species', modalEspecieEditar:'Edit Species',
+    modalEspecieNombreReq:'Enter a name',
+    confirmEliminarEspecie:'Delete this species?',
+    // Profile
+    perfilNombreReq:'Enter your name', perfilFincaReq:'Enter your farm name',
+    // Sync modal
+    syncModalNone:'No data has been synced yet.',
+    syncModalUltima:'Last sync: ',
+    syncModalHaciendo:'Syncing...',
   pt:{
     calc:'🧮 Calculadora',bitacora:'📋 Diário',zootecnico:'🔬 Zootécnico',
     params:'⚙️ Parâmetros',especies:'🐠 Minhas Espécies',formulas:'📐 Fórmulas',
-    moneda:'Moeda',precioAlim:'Preço ração',precioVenta:'Preço venda',
-    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referência de todas as fórmulas usadas pelo AquaCalc'
-  }
+    authSubtitle:'FERRAMENTA DE CAMPO · AQUICULTURA',
+    authLogin:'Entrar', authRegister:'Cadastrar',
+    authEmail:'E-mail', authPass:'Senha',
+    authEnter:'Entrar', authEntering:'Entrando...',
+    authForgot:'Esqueceu sua senha?',
+    authFullName:'Nome completo', authFarm:'Nome da fazenda / empresa',
+    authCreateAccount:'Criar conta', authCreating:'Criando conta...',
+    authForgotTitle:'Insira seu e-mail e enviaremos um link para redefinir sua senha.',
+    authBack:'Voltar', authSendEmail:'Enviar e-mail', authSending:'Enviando...',
+    authVerifyBanner:'⚠️ Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada ou',
+    authResend:'reenviar e-mail',
+    installBtn:'📱 Instalar AquaCalc', logoutBtn:'Sair',
+    syncOffline:'Sem conexão — trabalhando localmente',
+    syncPending1:'registro pendente de sincronização',
+    syncPendingN:'registros pendentes de sincronização',
+    syncConnected:'Conectado — dados sincronizados',
+    syncBtn:'☁️ Sincronizar', syncLastSync:'Última sync:',
+    calcTitle:'Calculadora', calcSub:'Selecione a espécie e insira os dados do viveiro',
+    speciesCard:'🐠 Espécie',
+    pondCard:'🏊 Dados do Viveiro',
+    volArea:'Volume / Área', seedDensity:'Densidade de estocagem',
+    initialWeight:'Peso inicial (g)', harvestWeight:'Peso de colheita (g)',
+    paramsCard:'📊 Parâmetros',
+    survival:'Sobrevivência (%)', fcr:'FCR', currency:'Moeda',
+    precioAlim:'Preço ração', precioVenta:'Preço venda',
+    resultsCard:'📈 Resultados',
+    rTotalAnimals:'Total de animais', rInitialBiomass:'Biomassa inicial (kg)',
+    rHarvestBiomass:'Biomassa colheita (kg)', rHarvestAnimals:'Animais colheita',
+    rTotalFeed:'Ração total (kg)', rFeedCost:'Custo ração',
+    rGrossIncome:'Receita bruta', rProfit:'Lucro',
+    rEstDays:'Dias estimados', rGpd:'GPD (g/dia)', rFeedCostKg:'Custo ração/kg',
+    dailyRationCard:'🍽️ Ração Diária',
+    currentBiomass:'Biomassa atual (kg)',
+    rDailyRation:'Ração/dia (kg)', rPerMeal:'Por refeição (kg)', rFeedRate:'Taxa alimentação (%)',
+    bitacoraTitle:'Diário de Campo', bitacoraSub:'Registro diário de operações de campo',
+    newRecord:'＋ Novo Registro', newRecordTitle:'📝 Novo Registro',
+    date:'Data', pond:'Viveiro', species:'Espécie',
+    feed:'Ração (kg)', mortality:'Mortalidades', sampleWeight:'Peso amostra (g)',
+    waterQuality:'💧 Qualidade da Água',
+    dissolvedO2:'Oxigênio dissolvido (mg/L)', temperature:'Temperatura (°C)',
+    ph:'pH', ammonium:'Amônia NH₃ (mg/L)', nitrite:'Nitrito NO₂ (mg/L)',
+    nitrate:'Nitrato NO₃ (mg/L)', alkalinity:'Alcalinidade (mg/L CaCO₃)',
+    salinity:'Salinidade (ppt)', hardness:'Dureza (mg/L)',
+    fieldObs:'👀 Observações de Campo',
+    freeObs:'Observações livres', obsPlaceholder:'Notas adicionais, tratamentos, incidências...',
+    zooSection:'🔬 Dados Zootécnicos',
+    biomassLog:'Biomassa do viveiro (kg)', nAnimals:'Animais estimados',
+    sgrLog:'SGR (%/dia)', kFactor:'Fator de condição K',
+    cvUniform:'CV% Uniformidade', accFcr:'FCR Acumulado',
+    saveRecord:'💾 Salvar Registro', cancel:'Cancelar',
+    selectSpecies:'Selecionar...',
+    emptyBitacora:'Sem registros ainda. Adicione sua primeira entrada!',
+    obs_alimentacion_activa:'Alimentação ativa', obs_alimentacion_reducida:'Alimentação reduzida',
+    obs_boqueo:'Boquejar na superfície', obs_agua_verde:'Água verde (bloom)',
+    obs_agua_cafe:'Água turva/marrom', obs_agua_clara:'Água clara',
+    obs_espuma:'Espuma excessiva', obs_mortalidades_observadas:'Mortalidades visíveis',
+    obs_peces_lentos:'Peixes lentos/inativos', obs_nado_erratico:'Natação errática',
+    zootecnicoTitle:'Análise Zootécnica', zootecnicoSub:'Monitoramento de indicadores produtivos',
+    variable:'Variável', filterSpecies:'Espécie',
+    chartTitle:'📊 Gráfico', tableTitle:'📋 Tabela Zootécnica',
+    paramsTitle:'Parâmetros por Espécie', paramsSub:'Modifique conforme seu sistema de produção',
+    restoreBtn:'↺ Restaurar',
+    speciesTitle:'Minhas Espécies Personalizadas', speciesSub:'Até 3 espécies com parâmetros próprios',
+    newSpeciesBtn:'＋ Nova Espécie',
+    formulasTitle:'📐 Fórmulas Utilizadas', formulasSub:'Referência de todas as fórmulas usadas pelo AquaCalc',
+    descBiomasa:'Indica o peso total dos animais no sistema. Exemplo: 1000 peixes × 300g = 300 kg de biomassa.',
+    descFcr:'Mede a eficiência alimentar. FCR de 1,5 significa que são necessários 1,5 kg de ração para produzir 1 kg de carne. Menor é melhor.',
+    descSgr:'Indica a porcentagem de ganho de peso por dia em relação ao peso corporal. Pf = peso final, Pi = peso inicial.',
+    descSupervivencia:'Porcentagem de animais que sobrevivem durante o ciclo de produção.',
+    descK:'Indica o estado de bem-estar do peixe. Valores próximos a 1 são normais. Valores menores podem indicar desnutrição.',
+    descCv:'Mede a uniformidade do lote. CV abaixo de 20% indica lote uniforme. Acima de 35% sugere heterogeneidade problemática.',
+    descTasa:'A taxa de alimentação varia conforme espécie, temperatura e fase de crescimento. Geralmente entre 1% e 6% da biomassa por dia.',
+    descDensidad:'Define quantos animais são colocados por unidade de volume ou área. Afeta diretamente a qualidade da água e o crescimento.',
+    descCosto:'Indica quanto custa produzir cada quilograma de produto. É o principal indicador de rentabilidade.',
+    descUtilidad:'Receita bruta = Biomassa colhida × Preço de venda. Nota: não inclui outros custos operacionais.',
+    descDias:'GPD = Ganho de peso diário (g/dia). Estima o tempo necessário para atingir o peso de colheita.',
+    editProfile:'👤 Editar Perfil', fullName:'Nome completo', farmName:'Nome da fazenda / empresa',
+    saveBtn:'Salvar',
+    newSpecies:'Nova Espécie', editSpecies:'Editar Espécie',
+    commonName:'Nome comum', sciName:'Nome científico', emoji:'Emoji',
+    density:'Densidade', densityUnit:'Unidade de densidade',
+    feedRate:'Taxa de alimentação (%)', mealsDay:'Refeições/dia',
+    gpd:'GPD (g/dia)', feedPrice:'Preço ração (R$/kg)', salePrice:'Preço venda (R$/kg)',
+    initialWeightG:'Peso inicial (g)', harvestWeightG:'Peso colheita (g)', volUnit:'Unidade de volume',
+    syncTitle:'☁️ Sincronizar dados',
+    syncPendingText1:'Você tem', syncPendingText2:'registros pendentes de sincronização.',
+    syncWifiTip:'📶 Recomenda-se conectar ao Wi-Fi antes de sincronizar para evitar uso de dados móveis.',
+    syncNow:'☁️ Sincronizar agora', syncNowDoing:'Sincronizando...',
+    installToast:'✅ AquaCalc instalado no seu dispositivo',
+    moneda:'Moeda',precioAlim2:'Preço ração',precioVenta2:'Preço venda',
+    // Species names
+    sp_tilapia:'Tilápia', sp_trucha:'Truta', sp_camaron:'Camarão',
+    sp_guapote:'Guapote', sp_langostino:'Camarão-de-água-doce', sp_pangasio:'Panga', sp_carpa:'Carpa Herbívora',
+    // Calc validations
+    val_negativo:'Não pode ser negativo', val_densidad:'Insira a densidade',
+    val_supervivencia:'Deve estar entre 0 e 100%', val_pesoCosecha:'Deve ser maior que o peso inicial',
+    // Bitácora validations
+    val_fechaReq:'Data obrigatória', val_fechaFutura:'A data não pode ser futura',
+    val_estanqueReq:'Viveiro obrigatório',
+    val_negativo2:'Não pode ser negativo',
+    val_ph:'O pH deve estar entre 0 e 14',
+    val_oxigeno:'⚠️ Valor fora do intervalo normal (2–20 mg/L)',
+    val_temperatura:'⚠️ Valor fora do intervalo (5–45°C)',
+    val_amonio:'⚠️ Amônia elevada (>0,5 mg/L)',
+    val_nitrito:'⚠️ Nitrito elevado (>0,3 mg/L)',
+    // Auth errors
+    authErrEmail:'Insira seu e-mail', authErrEmailFmt:'Formato de e-mail inválido',
+    authErrPass:'Insira sua senha', authErrNombre:'Insira seu nome',
+    authErrFinca:'Insira o nome da sua fazenda', authErrPassMin:'Mínimo 6 caracteres',
+    authSuccessReg:'✅ Conta criada. Verifique seu e-mail para confirmar a conta.',
+    authSuccessForgot:'✅ E-mail enviado. Verifique sua caixa de entrada.',
+    // Toasts
+    toastCloud:'☁️ Salvo na nuvem', toastLocal:'💾 Salvo localmente',
+    toastSynced:'✅ Dados sincronizados com sucesso',
+    toastSpeciesSaved:'✅ Espécie salva', toastSpeciesDeleted:'🗑️ Espécie excluída',
+    toastMaxSpecies:'⚠️ Máximo 3 espécies', toastProfileUpdated:'✅ Perfil atualizado',
+    toastProfileLocal:'💾 Perfil salvo localmente',
+    toastInstalled:'✅ AquaCalc instalado no seu dispositivo',
+    toastVerifySent:'📧 E-mail de verificação enviado',
+    toastLocalData:'📱 Usando dados locais',
+    toastSyncError:'⚠️ Erro ao sincronizar: ',
+    // Modal species
+    modalEspecieNueva:'Nova Espécie', modalEspecieEditar:'Editar Espécie',
+    modalEspecieNombreReq:'Insira um nome',
+    confirmEliminarEspecie:'Excluir esta espécie?',
+    // Profile
+    perfilNombreReq:'Insira seu nome', perfilFincaReq:'Insira o nome da sua fazenda',
+    // Sync modal
+    syncModalNone:'Nenhum dado foi sincronizado ainda.',
+    syncModalUltima:'Última sincronização: ',
+    syncModalHaciendo:'Sincronizando...',
 };
 
 let idiomaActual = 'es';
 
+function T(key){ return (IDIOMAS[idiomaActual]||IDIOMAS.es)[key] || (IDIOMAS.es[key]||key); }
+
+function setText(id, text){ const el=document.getElementById(id); if(el) el.textContent=text; }
+function setLabelText(labelFor, text){
+  const el=document.querySelector('label[for="'+labelFor+'"]');
+  if(el) el.childNodes[0].textContent=text+' ';
+}
+function setHTML(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
+function setPlaceholder(id, text){ const el=document.getElementById(id); if(el) el.placeholder=text; }
+function setAttr(id, attr, val){ const el=document.getElementById(id); if(el) el.setAttribute(attr,val); }
+
+// Sincronizar ambos selectores de idioma
+function sincronizarSelectoresIdioma(lang) {
+  const s1 = document.getElementById('sel-idioma');
+  const s2 = document.getElementById('sel-idioma-auth');
+  if(s1) s1.value = lang;
+  if(s2) s2.value = lang;
+}
+
+window.cambiarIdiomaAuth = () => {
+  idiomaActual = document.getElementById('sel-idioma-auth').value;
+  sincronizarSelectoresIdioma(idiomaActual);
+  aplicarIdioma();
+};
+
 window.cambiarIdioma = () => {
   idiomaActual = document.getElementById('sel-idioma').value;
-  const t = IDIOMAS[idiomaActual];
-  const tabs = document.querySelectorAll('.tab');
-  const ids = ['calc','bitacora','zootecnico','params','especies','formulas'];
-  tabs.forEach((tab,i)=>{ if(ids[i]&&t[ids[i]]) tab.textContent=t[ids[i]]; });
-  const ft=document.getElementById('txt-formulas-title');
-  const fs=document.getElementById('txt-formulas-sub');
-  if(ft) ft.textContent=t.formulasTitle;
-  if(fs) fs.textContent=t.formulasSub;
+  sincronizarSelectoresIdioma(idiomaActual);
+  aplicarIdioma();
 };
+
+// Llamar aplicarIdioma al cargar la página (antes del login)
+document.addEventListener('DOMContentLoaded', () => {
+  aplicarIdioma();
+});
+
+function aplicarIdioma() {
+  const t = IDIOMAS[idiomaActual] || IDIOMAS.es;
+
+  // ── TABS ──────────────────────────────────────────────
+  const tabs = document.querySelectorAll('.tab');
+  const tabKeys = ['calc','bitacora','zootecnico','params','especies','formulas'];
+  tabs.forEach((tab,i)=>{ if(tabKeys[i]) tab.textContent=t[tabKeys[i]]||tab.textContent; });
+
+  // ── AUTH ──────────────────────────────────────────────
+  const authSubEl = document.querySelector('.auth-logo span');
+  if(authSubEl) authSubEl.textContent = t.authSubtitle||'';
+  const authTabs = document.querySelectorAll('.auth-tab');
+  if(authTabs[0]) authTabs[0].textContent = t.authLogin;
+  if(authTabs[1]) authTabs[1].textContent = t.authRegister;
+  // Login form labels
+  const loginLabels = document.querySelectorAll('#form-login label');
+  if(loginLabels[0]) loginLabels[0].textContent = t.authEmail;
+  if(loginLabels[1]) loginLabels[1].textContent = t.authPass;
+  const btnLogin = document.getElementById('btn-login');
+  if(btnLogin && btnLogin.textContent !== (t.authEntering||'')) btnLogin.textContent = t.authEnter;
+  const forgotLink = document.querySelector('.forgot-link a');
+  if(forgotLink) forgotLink.textContent = t.authForgot;
+  // Forgot form
+  const forgotDesc = document.querySelector('#form-forgot p');
+  if(forgotDesc) forgotDesc.textContent = t.authForgotTitle;
+  const forgotLabels = document.querySelectorAll('#form-forgot label');
+  if(forgotLabels[0]) forgotLabels[0].textContent = t.authEmail;
+  const btnBack = document.querySelector('#form-forgot .btn-secondary');
+  if(btnBack) btnBack.textContent = t.authBack;
+  const btnForgot = document.getElementById('btn-forgot');
+  if(btnForgot && btnForgot.textContent !== (t.authSending||'')) btnForgot.textContent = t.authSendEmail;
+  // Register form labels
+  const regLabels = document.querySelectorAll('#form-register label');
+  if(regLabels[0]) regLabels[0].textContent = t.authFullName;
+  if(regLabels[1]) regLabels[1].textContent = t.authFarm;
+  if(regLabels[2]) regLabels[2].textContent = t.authEmail;
+  if(regLabels[3]) regLabels[3].textContent = t.authPass;
+  const btnReg = document.getElementById('btn-register');
+  if(btnReg && btnReg.textContent !== (t.authCreating||'')) btnReg.textContent = t.authCreateAccount;
+  // Email verify banner
+  const verifyBanner = document.getElementById('email-verify-banner');
+  if(verifyBanner){
+    const resendLink = verifyBanner.querySelector('a');
+    const resendText = resendLink ? resendLink.outerHTML.replace(resendLink.textContent, t.authResend||'reenviar correo') : '';
+    if(resendLink) resendLink.textContent = t.authResend||'reenviar correo';
+    const firstText = verifyBanner.childNodes[0];
+    if(firstText && firstText.nodeType===3) firstText.textContent = (t.authVerifyBanner||'') + ' ';
+  }
+
+  // ── HEADER ────────────────────────────────────────────
+  const btnInstall = document.getElementById('btn-instalar');
+  if(btnInstall) btnInstall.textContent = t.installBtn;
+  const btnLogout = document.querySelector('button[onclick="doLogout()"]');
+  if(btnLogout) btnLogout.textContent = t.logoutBtn;
+
+  // ── SYNC BAR ──────────────────────────────────────────
+  // Dynamic, handled in updateSyncBar; just re-call it
+  updateSyncBarTranslated();
+
+  // ── CALCULADORA ───────────────────────────────────────
+  const calcPanel = document.getElementById('panel-calc');
+  if(calcPanel){
+    const secTitle = calcPanel.querySelector('.section-title');
+    const secSub = calcPanel.querySelector('.section-sub');
+    if(secTitle) secTitle.textContent = t.calcTitle;
+    if(secSub) secSub.textContent = t.calcSub;
+    const cardTitles = calcPanel.querySelectorAll('.card-title');
+    if(cardTitles[0]) cardTitles[0].textContent = t.speciesCard;
+    if(cardTitles[1]) cardTitles[1].textContent = t.pondCard;
+    if(cardTitles[2]) cardTitles[2].textContent = t.paramsCard;
+    if(cardTitles[3]) cardTitles[3].textContent = t.resultsCard;
+    if(cardTitles[4]) cardTitles[4].textContent = t.dailyRationCard;
+    // Pond fields labels
+    const pondLabels = calcPanel.querySelectorAll('.grid-2 .card:first-child label');
+    if(pondLabels[0]) pondLabels[0].textContent = t.volArea;
+    if(pondLabels[1]) pondLabels[1].textContent = t.seedDensity;
+    if(pondLabels[2]) pondLabels[2].textContent = t.initialWeight;
+    if(pondLabels[3]) pondLabels[3].textContent = t.harvestWeight;
+    // Params labels
+    const survLabel = calcPanel.querySelector('label[for]');
+    const paramLabels = calcPanel.querySelectorAll('.grid-2 .card:last-child label');
+    // FCR and survival labels contain info buttons, update text node only
+    calcPanel.querySelectorAll('.grid-2 .card:last-child .field').forEach((field,i)=>{
+      const lbl = field.querySelector('label');
+      if(!lbl) return;
+      const textNode = lbl.childNodes[0];
+      const keys = [t.survival, t.fcr, t.currency];
+      if(i<3 && textNode && textNode.nodeType===3) {
+        textNode.textContent = keys[i] + (lbl.querySelector('.info-btn') ? ' ' : '');
+      } else if(i===3){
+        const m = MONEDAS[monedaActual]||MONEDAS.CRC;
+        const unit = m.simbolo+'/kg';
+        lbl.textContent = t.precioAlim + ' ('+unit+')';
+        document.getElementById('lbl-precio-alimento').textContent = t.precioAlim + ' ('+unit+')';
+      } else if(i===4){
+        const m = MONEDAS[monedaActual]||MONEDAS.CRC;
+        const unit = m.simbolo+'/kg';
+        lbl.textContent = t.precioVenta + ' ('+unit+')';
+        document.getElementById('lbl-precio-venta').textContent = t.precioVenta + ' ('+unit+')';
+      }
+    });
+    // Results labels
+    const rlabels = {
+      'r-total-animales': t.rTotalAnimals, 'r-biomasa-inicial': t.rInitialBiomass,
+      'r-biomasa-cosecha': t.rHarvestBiomass, 'r-supervivientes': t.rHarvestAnimals,
+      'r-alimento-total': t.rTotalFeed,
+    };
+    Object.entries(rlabels).forEach(([id, text])=>{
+      const card = document.getElementById(id)?.closest('.result-card');
+      if(card){ const rl=card.querySelector('.result-label'); if(rl) rl.textContent=text; }
+    });
+    setText('lbl-r-costo', t.rFeedCost);
+    setText('lbl-r-ingreso', t.rGrossIncome);
+    setText('lbl-r-utilidad', t.rProfit);
+    // Days / GPD
+    const rcards = calcPanel.querySelectorAll('.grid-3 .result-card');
+    if(rcards[0]){ const rl=rcards[0].querySelector('.result-label'); if(rl){ const tn=rl.childNodes[0]; if(tn&&tn.nodeType===3) tn.textContent=t.rEstDays+' '; } }
+    if(rcards[1]){ const rl=rcards[1].querySelector('.result-label'); if(rl){ const tn=rl.childNodes[0]; if(tn&&tn.nodeType===3) tn.textContent=t.rGpd+' '; } }
+    if(rcards[2]){ const rl=rcards[2].querySelector('.result-label'); if(rl) rl.textContent=t.rFeedCostKg; }
+    // Daily ration
+    const racCards = calcPanel.querySelectorAll('.grid-3 ~ .grid-3 .result-card, .card:last-child .grid-3 .result-card');
+    calcPanel.querySelectorAll('.card').forEach(card=>{
+      const ct = card.querySelector('.card-title');
+      if(ct && ct.textContent.includes('Ración') || ct && ct.textContent.includes('Ration') || ct && ct.textContent.includes('Diária')){
+        const bmLabel = card.querySelector('label');
+        if(bmLabel) bmLabel.textContent = t.currentBiomass;
+        const rcs = card.querySelectorAll('.result-card .result-label');
+        if(rcs[0]) rcs[0].textContent = t.rDailyRation;
+        if(rcs[1]) rcs[1].textContent = t.rPerMeal;
+        if(rcs[2]) rcs[2].textContent = t.rFeedRate;
+      }
+    });
+  }
+
+  // ── BITÁCORA ──────────────────────────────────────────
+  const bitPanel = document.getElementById('panel-bitacora');
+  if(bitPanel){
+    const sh = bitPanel.querySelector('.section-header');
+    if(sh){
+      const st = sh.querySelector('.section-title'); if(st) st.textContent = t.bitacoraTitle;
+      const ss = sh.querySelector('.section-sub'); if(ss) ss.textContent = t.bitacoraSub;
+      const btnNew = sh.querySelector('button'); if(btnNew) btnNew.textContent = t.newRecord;
+    }
+    const formTitle = bitPanel.querySelector('#form-bitacora .card-title');
+    if(formTitle) formTitle.textContent = t.newRecordTitle;
+    // Grid labels
+    const grid3labels = bitPanel.querySelectorAll('#form-bitacora .grid-3:first-of-type label');
+    if(grid3labels[0]) grid3labels[0].textContent = t.date;
+    if(grid3labels[1]) grid3labels[1].textContent = t.pond;
+    if(grid3labels[2]) grid3labels[2].textContent = t.species;
+    const grid3labels2 = bitPanel.querySelectorAll('#form-bitacora .grid-3:nth-of-type(2) label');
+    if(grid3labels2[0]) grid3labels2[0].textContent = t.feed;
+    if(grid3labels2[1]) grid3labels2[1].textContent = t.mortality;
+    if(grid3labels2[2]) grid3labels2[2].textContent = t.sampleWeight;
+    // Water quality title
+    const wqTitle = bitPanel.querySelector('.agua-title');
+    if(wqTitle) wqTitle.textContent = t.waterQuality;
+    const wqFields = bitPanel.querySelectorAll('.agua-section .field');
+    wqFields.forEach((field,i)=>{
+      const lbl = field.querySelector('label');
+      if(!lbl) return;
+      const tn = lbl.childNodes[0];
+      const keys = [t.dissolvedO2, t.temperature, t.ph, t.ammonium, t.nitrite, t.nitrate, t.alkalinity, t.salinity, t.hardness];
+      if(tn && tn.nodeType===3 && keys[i]) tn.textContent = keys[i] + (lbl.querySelector('.info-btn')?' ':' ');
+    });
+    // Obs section title
+    const obsTitle = bitPanel.querySelector('.obs-title');
+    if(obsTitle) obsTitle.textContent = t.fieldObs;
+    // Obs checkboxes
+    const obsChecks = bitPanel.querySelectorAll('.obs-check');
+    const obsKeyMap = {
+      'alimentacion_activa':'obs_alimentacion_activa','alimentacion_reducida':'obs_alimentacion_reducida',
+      'boqueo':'obs_boqueo','agua_verde':'obs_agua_verde','agua_cafe':'obs_agua_cafe',
+      'agua_clara':'obs_agua_clara','espuma':'obs_espuma','mortalidades_observadas':'obs_mortalidades_observadas',
+      'peces_lentos':'obs_peces_lentos','nado_erratico':'obs_nado_erratico'
+    };
+    obsChecks.forEach(check=>{
+      const inp = check.querySelector('input');
+      const lbl2 = check.querySelector('.obs-check-label');
+      if(inp && lbl2 && obsKeyMap[inp.value]) lbl2.textContent = t[obsKeyMap[inp.value]]||lbl2.textContent;
+    });
+    const obsFreeLbl = bitPanel.querySelector('.obs-section .field label');
+    if(obsFreeLbl) obsFreeLbl.textContent = t.freeObs;
+    const obsTextarea = bitPanel.querySelector('#b-observaciones');
+    if(obsTextarea) obsTextarea.placeholder = t.obsPlaceholder;
+    // Zoo section
+    const zooTitle = bitPanel.querySelector('.zoo-title');
+    if(zooTitle){ const tn=zooTitle.childNodes[0]; if(tn&&tn.nodeType===3) tn.textContent=t.zooSection+' '; }
+    const zooFields = bitPanel.querySelectorAll('.zoo-section .field');
+    const zooKeys = [t.biomassLog, t.nAnimals, t.sgrLog, t.kFactor, t.cvUniform, t.accFcr];
+    zooFields.forEach((field,i)=>{
+      const lbl=field.querySelector('label');
+      if(lbl && zooKeys[i]){
+        const tn=lbl.childNodes[0];
+        if(tn&&tn.nodeType===3) tn.textContent=zooKeys[i]+(lbl.querySelector('.info-btn')?' ':' ');
+        else lbl.textContent=zooKeys[i];
+      }
+    });
+    // Buttons
+    const formActions = bitPanel.querySelectorAll('#form-bitacora button');
+    formActions.forEach(btn=>{
+      if(btn.onclick && btn.onclick.toString().includes('guardar')) btn.textContent=t.saveRecord;
+      if(btn.onclick && btn.onclick.toString().includes('toggle')) btn.textContent=t.cancel;
+    });
+    // Save/cancel via text match
+    bitPanel.querySelectorAll('#form-bitacora .btn').forEach(btn=>{
+      const txt = btn.textContent.trim();
+      if(txt.includes('Guardar')||txt.includes('Save')||txt.includes('Salvar')) btn.textContent=t.saveRecord;
+      if(txt==='Cancelar'||txt==='Cancel'||txt==='Cancelar') btn.textContent=t.cancel;
+    });
+    // Select placeholder
+    const bEspSelect = document.getElementById('b-especie');
+    if(bEspSelect && bEspSelect.options[0]) bEspSelect.options[0].text = t.selectSpecies;
+  }
+
+  // ── ZOOTÉCNICO ────────────────────────────────────────
+  const zooPanel = document.getElementById('panel-zootecnico');
+  if(zooPanel){
+    const st = zooPanel.querySelector('.section-title'); if(st) st.textContent = t.zootecnicoTitle;
+    const ss = zooPanel.querySelector('.section-sub'); if(ss) ss.textContent = t.zootecnicoSub;
+    const varLabel = zooPanel.querySelector('.field label');
+    if(varLabel) varLabel.textContent = t.variable;
+    const specLabel = zooPanel.querySelector('.field:last-child label');
+    if(specLabel) specLabel.textContent = t.filterSpecies;
+    setText('z-chart-title', t.chartTitle);
+    const tableTitle = zooPanel.querySelector('.card:last-child .card-title');
+    if(tableTitle) tableTitle.textContent = t.tableTitle;
+  }
+
+  // ── PARÁMETROS ────────────────────────────────────────
+  const parPanel = document.getElementById('panel-params');
+  if(parPanel){
+    const st = parPanel.querySelector('.section-title'); if(st) st.textContent = t.paramsTitle;
+    const ss = parPanel.querySelector('.section-sub'); if(ss) ss.textContent = t.paramsSub;
+    const btnRestore = parPanel.querySelector('button'); if(btnRestore) btnRestore.textContent = t.restoreBtn;
+  }
+
+  // ── MIS ESPECIES ──────────────────────────────────────
+  const espPanel = document.getElementById('panel-especies');
+  if(espPanel){
+    const st = espPanel.querySelector('.section-title'); if(st) st.textContent = t.speciesTitle;
+    const ss = espPanel.querySelector('.section-sub'); if(ss) ss.textContent = t.speciesSub;
+    const btnNew = document.getElementById('btn-nueva-especie'); if(btnNew) btnNew.textContent = t.newSpeciesBtn;
+  }
+
+  // ── FÓRMULAS ──────────────────────────────────────────
+  setText('txt-formulas-title', t.formulasTitle);
+  setText('txt-formulas-sub', t.formulasSub);
+  const descIds = ['desc-biomasa','desc-fcr','desc-sgr','desc-supervivencia','desc-k','desc-cv','desc-tasa','desc-densidad','desc-costo','desc-utilidad','desc-dias'];
+  const descKeys = ['descBiomasa','descFcr','descSgr','descSupervivencia','descK','descCv','descTasa','descDensidad','descCosto','descUtilidad','descDias'];
+  descIds.forEach((id,i)=>setText(id,t[descKeys[i]]||''));
+
+  // ── MODAL PERFIL ──────────────────────────────────────
+  const mPerfil = document.getElementById('modal-perfil');
+  if(mPerfil){
+    const mt = mPerfil.querySelector('.modal-title'); if(mt) mt.textContent = t.editProfile;
+    const labels = mPerfil.querySelectorAll('label');
+    if(labels[0]) labels[0].textContent = t.fullName;
+    if(labels[1]) labels[1].textContent = t.farmName;
+    const actions = mPerfil.querySelectorAll('.modal-actions button');
+    if(actions[0]) actions[0].textContent = t.cancel;
+    if(actions[1]) actions[1].textContent = t.saveBtn;
+  }
+
+  // ── MODAL ESPECIE ─────────────────────────────────────
+  const mEspecie = document.getElementById('modal-especie');
+  if(mEspecie){
+    const labels = mEspecie.querySelectorAll('label');
+    const labelKeys = [t.commonName, t.sciName, t.emoji, t.density, t.densityUnit, t.survival, t.fcr, t.feedRate, t.mealsDay, t.gpd, t.feedPrice, t.salePrice, t.initialWeightG, t.harvestWeightG, t.volUnit];
+    labels.forEach((lbl,i)=>{ if(labelKeys[i]) lbl.textContent=labelKeys[i]; });
+    const actions = mEspecie.querySelectorAll('.modal-actions button');
+    if(actions[0]) actions[0].textContent = t.cancel;
+    if(actions[1]) actions[1].textContent = t.saveBtn;
+  }
+
+  // ── MODAL SYNC ────────────────────────────────────────
+  const mSync = document.getElementById('modal-sync');
+  if(mSync){
+    const mt = mSync.querySelector('.modal-title'); if(mt) mt.textContent = t.syncTitle;
+    const tip = mSync.querySelector('.sync-wifi-tip, [style*="accent3"]');
+    if(tip) tip.textContent = t.syncWifiTip;
+    const actions = mSync.querySelectorAll('.modal-actions button');
+    if(actions[0]) actions[0].textContent = t.cancel;
+    const btnConfirm = document.getElementById('btn-confirm-sync');
+    if(btnConfirm && btnConfirm.textContent !== (t.syncNowDoing||'')) btnConfirm.textContent = t.syncNow;
+  }
+
+  // ── ACTUALIZAR GRID Y SELECTS DE ESPECIES ─────────────
+  // Solo si la app ya está inicializada
+  if(document.getElementById('speciesGrid')?.innerHTML) {
+    renderSpeciesGrid();
+    poblarSelectsEspecie();
+  }
+}
+
+function updateSyncBarTranslated() {
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
+  const bar = document.getElementById('sync-bar');
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-status-text');
+  const btnSync = document.getElementById('btn-sync');
+  const lastTxt = document.getElementById('last-sync-text');
+  if (!bar) return;
+  const pendingCount = state.pendingSync?.length || 0;
+  if (!state.isOnline) {
+    bar.style.display='flex'; dot.className='offline-dot';
+    txt.textContent = t.syncOffline + (pendingCount>0?` (${pendingCount} ${pendingCount===1?t.syncPending1:t.syncPendingN})`:'');
+    btnSync.disabled=true;
+  } else if (pendingCount>0) {
+    bar.style.display='flex'; dot.className='offline-dot'; dot.style.background='var(--accent3)';
+    txt.textContent = `${pendingCount} ${pendingCount===1?t.syncPending1:t.syncPendingN}`;
+    btnSync.disabled=false;
+  } else {
+    bar.style.display='flex'; dot.className='online-dot';
+    txt.textContent = t.syncConnected; btnSync.disabled=true;
+  }
+  if(btnSync) btnSync.textContent = t.syncBtn;
+  if(state.lastSync){
+    const d=new Date(state.lastSync);
+    const locale = idiomaActual==='pt'?'pt-BR':idiomaActual==='en'?'en-US':'es-CR';
+    lastTxt.textContent = t.syncLastSync+' '+d.toLocaleString(locale,{dateStyle:'short',timeStyle:'short'});
+  }
+}
 
 window.calcular = () => {
   const g = id => parseFloat(document.getElementById(id)?.value)||0;
   const vol=g('inp-volumen'),dens=g('inp-densidad'),sup=g('inp-supervivencia');
   const fcr=g('inp-fcr'),pi=g('inp-peso-inicial'),pc=g('inp-peso-cosecha');
   const pa=g('inp-precio-alimento'),pv=g('inp-precio-venta');
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
 
   let errores=false;
-  if(vol<0){showFieldError('volumen','No puede ser negativo');errores=true;}else clearFieldError('volumen');
-  if(dens<=0&&vol>0){showFieldError('densidad','Ingresá la densidad');errores=true;}else clearFieldError('densidad');
-  if(sup<0||sup>100){showFieldError('supervivencia','Debe estar entre 0 y 100%');errores=true;}else clearFieldError('supervivencia');
-  if(pc>0&&pi>0&&pc<=pi){showFieldError('peso-cosecha','Debe ser mayor al peso inicial');errores=true;}else clearFieldError('peso-cosecha');
+  if(vol<0){showFieldError('volumen',t.val_negativo||'No puede ser negativo');errores=true;}else clearFieldError('volumen');
+  if(dens<=0&&vol>0){showFieldError('densidad',t.val_densidad||'Ingresá la densidad');errores=true;}else clearFieldError('densidad');
+  if(sup<0||sup>100){showFieldError('supervivencia',t.val_supervivencia||'Debe estar entre 0 y 100%');errores=true;}else clearFieldError('supervivencia');
+  if(pc>0&&pi>0&&pc<=pi){showFieldError('peso-cosecha',t.val_pesoCosecha||'Debe ser mayor al peso inicial');errores=true;}else clearFieldError('peso-cosecha');
   if(errores) return;
 
   const gpd = state.especieSeleccionada?(state.params[state.especieSeleccionada]?.gpd||0):0;
@@ -1556,25 +2318,26 @@ window.validarCampoLive = (id) => {
   const raw = document.getElementById('b-'+id.replace('b-',''))?.value || document.getElementById(id)?.value;
   const val = parseFloat(raw)||0;
   const campo = id.replace('b-','');
-  if(campo==='alimento'&&val<0){showFieldError('b-alimento','No puede ser negativo');return;}
-  if(campo==='mortalidad'&&val<0){showFieldError('b-mortalidad','No puede ser negativo');return;}
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
+  if(campo==='alimento'&&val<0){showFieldError('b-alimento',t.val_negativo2||'No puede ser negativo');return;}
+  if(campo==='mortalidad'&&val<0){showFieldError('b-mortalidad',t.val_negativo2||'No puede ser negativo');return;}
   if(campo==='oxigeno'){
     clearFieldError('b-oxigeno');
-    if(val>0&&(val<2||val>20)){showFieldWarning('b-oxigeno','⚠️ Valor fuera de rango normal (2–20 mg/L)');return;}
+    if(val>0&&(val<2||val>20)){showFieldWarning('b-oxigeno',t.val_oxigeno||'⚠️ Valor fuera de rango normal (2–20 mg/L)');return;}
     clearFieldWarning('b-oxigeno');
   }
   if(campo==='temperatura'){
     clearFieldError('b-temperatura');
-    if(val>0&&(val<5||val>45)){showFieldWarning('b-temperatura','⚠️ Valor fuera de rango (5–45°C)');return;}
+    if(val>0&&(val<5||val>45)){showFieldWarning('b-temperatura',t.val_temperatura||'⚠️ Valor fuera de rango (5–45°C)');return;}
     clearFieldWarning('b-temperatura');
   }
   if(campo==='ph'){
-    if(val>0&&(val<0||val>14)){showFieldError('b-ph','pH debe estar entre 0 y 14');return;}
+    if(val>0&&(val<0||val>14)){showFieldError('b-ph',t.val_ph||'pH debe estar entre 0 y 14');return;}
     clearFieldError('b-ph');
   }
-  if(campo==='amonio'&&val>0.5){showFieldWarning('b-amonio','⚠️ Amonio elevado (>0.5 mg/L)');return;}
+  if(campo==='amonio'&&val>0.5){showFieldWarning('b-amonio',t.val_amonio||'⚠️ Amonio elevado (>0.5 mg/L)');return;}
   if(campo==='amonio') clearFieldWarning('b-amonio');
-  if(campo==='nitrito'&&val>0.3){showFieldWarning('b-nitrito','⚠️ Nitrito elevado (>0.3 mg/L)');return;}
+  if(campo==='nitrito'&&val>0.3){showFieldWarning('b-nitrito',t.val_nitrito||'⚠️ Nitrito elevado (>0.3 mg/L)');return;}
   if(campo==='nitrito') clearFieldWarning('b-nitrito');
 };
 
@@ -1584,19 +2347,20 @@ function validarFormBitacora() {
   const ph = parseFloat(document.getElementById('b-ph').value)||0;
   const alimento = parseFloat(document.getElementById('b-alimento').value)||0;
   const mortalidad = parseFloat(document.getElementById('b-mortalidad').value)||0;
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
   let valid = true;
-  if(!fecha){showFieldError('b-fecha','Fecha requerida');valid=false;}
+  if(!fecha){showFieldError('b-fecha',t.val_fechaReq||'Fecha requerida');valid=false;}
   else {
     const hoy=new Date();hoy.setHours(0,0,0,0);
     const fechaD=new Date(fecha+'T00:00:00');
-    if(fechaD>hoy){showFieldError('b-fecha','La fecha no puede ser futura');valid=false;}
+    if(fechaD>hoy){showFieldError('b-fecha',t.val_fechaFutura||'La fecha no puede ser futura');valid=false;}
     else clearFieldError('b-fecha');
   }
-  if(!estanque){showFieldError('b-estanque','Estanque requerido');valid=false;}
+  if(!estanque){showFieldError('b-estanque',t.val_estanqueReq||'Estanque requerido');valid=false;}
   else clearFieldError('b-estanque');
-  if(alimento<0){showFieldError('b-alimento','No puede ser negativo');valid=false;}
-  if(mortalidad<0){showFieldError('b-mortalidad','No puede ser negativo');valid=false;}
-  if(ph>0&&(ph<0||ph>14)){showFieldError('b-ph','pH debe estar entre 0 y 14');valid=false;}
+  if(alimento<0){showFieldError('b-alimento',t.val_negativo2||'No puede ser negativo');valid=false;}
+  if(mortalidad<0){showFieldError('b-mortalidad',t.val_negativo2||'No puede ser negativo');valid=false;}
+  if(ph>0&&(ph<0||ph>14)){showFieldError('b-ph',t.val_ph||'pH debe estar entre 0 y 14');valid=false;}
   return valid;
 }
 
@@ -1748,11 +2512,16 @@ function renderBitacora() {
 }
 
 function poblarSelectsEspecie() {
-  const opts = getAllSpecies().map(e=>`<option value="${e.id}">${e.emoji} ${e.nombre}</option>`).join('');
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
+  const opts = getAllSpecies().map(e=>{
+    const nombre = (!e.custom && t['sp_'+e.id]) ? t['sp_'+e.id] : e.nombre;
+    return `<option value="${e.id}">${e.emoji} ${nombre}</option>`;
+  }).join('');
   ['b-especie','filtro-especie','z-filtro-especie'].forEach(id=>{
     const el = document.getElementById(id);
     if(!el) return;
-    const prefix = id.includes('filtro')?'<option value="">Todas</option>':'<option value="">Seleccionar...</option>';
+    const allLabel = t.selectSpecies||'Seleccionar...';
+    const prefix = id.includes('filtro')?`<option value="">${t.filterSpecies||'Todas'}</option>`:`<option value="">${allLabel}</option>`;
     el.innerHTML = prefix+opts;
   });
 }
@@ -1845,11 +2614,14 @@ window.updateParam = async (espId,key,value) => {
 };
 
 window.resetParams = async () => {
-  if(!confirm('¿Restaurar parámetros predeterminados?')) return;
+  const t = IDIOMAS[idiomaActual]||IDIOMAS.es;
+  const msg = idiomaActual==='en'?'Restore default parameters?':idiomaActual==='pt'?'Restaurar parâmetros padrão?':'¿Restaurar parámetros predeterminados?';
+  if(!confirm(msg)) return;
   ESPECIES_DEFAULT.forEach(e=>{state.params[e.id]={...e.params};});
   renderParamContent();
   await guardarDatos();
-  showToast('↺ Parámetros restaurados','#0099ff');
+  const restMsg = idiomaActual==='en'?'↺ Parameters restored':idiomaActual==='pt'?'↺ Parâmetros restaurados':'↺ Parámetros restaurados';
+  showToast(restMsg,'#0099ff');
   if(state.especieSeleccionada) calcular();
 };
 
@@ -1893,7 +2665,7 @@ window.abrirModalEspecie = (id) => {
   document.getElementById('ce-index').value = id||'';
   if(id){
     const e = state.customSpecies.find(e=>e.id===id);if(!e) return;
-    tit.textContent = 'Editar Especie';
+    tit.textContent = T('modalEspecieEditar')||'Editar Especie';
     const fill=(el,val)=>{const e=document.getElementById(el);if(e)e.value=val;};
     fill('ce-nombre',e.nombre);fill('ce-sci',e.sci);fill('ce-emoji',e.emoji);
     fill('ce-densidad',e.params.densidad);fill('ce-densidad-unit',e.params.densidadUnit);
@@ -1903,7 +2675,7 @@ window.abrirModalEspecie = (id) => {
     fill('ce-precio-venta',e.params.precioVenta);fill('ce-peso-inicial',e.params.pesoInicial);
     fill('ce-peso-cosecha',e.params.pesoCosecha);fill('ce-vol-unit',e.params.volumenUnit||'m³');
   } else {
-    tit.textContent = 'Nueva Especie';
+    tit.textContent = T('modalEspecieNueva')||'Nueva Especie';
     ['ce-nombre','ce-sci','ce-densidad','ce-supervivencia','ce-fcr','ce-tasa-alim',
      'ce-comidas','ce-gpd','ce-precio-alimento','ce-precio-venta','ce-peso-inicial','ce-peso-cosecha']
      .forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
@@ -1946,7 +2718,7 @@ window.guardarEspecie = async () => {
     const idx = state.customSpecies.findIndex(e=>e.id===id_existente);
     if(idx>=0) state.customSpecies[idx]=nueva;
   } else {
-    if(state.customSpecies.length>=3){showToast('⚠️ Máximo 3 especies','#f0a500');return;}
+    if(state.customSpecies.length>=3){showToast(T('toastMaxSpecies')||'⚠️ Máximo 3 especies','#f0a500');return;}
     state.customSpecies.push(nueva);
   }
   state.params[nueva.id] = {...nueva.params};
@@ -1956,17 +2728,17 @@ window.guardarEspecie = async () => {
   renderCustomSpeciesList();
   renderParamTabs();
   poblarSelectsEspecie();
-  showToast('✅ Especie guardada');
+  showToast(T('toastSpeciesSaved')||'✅ Especie guardada');
 };
 
 window.eliminarEspecie = async (id) => {
-  if(!confirm('¿Eliminar esta especie?')) return;
+  if(!confirm(T('confirmEliminarEspecie')||'¿Eliminar esta especie?')) return;
   state.customSpecies = state.customSpecies.filter(e=>e.id!==id);
   delete state.params[id];
   if(state.especieSeleccionada===id) state.especieSeleccionada=null;
   await guardarDatos();
   renderSpeciesGrid();renderCustomSpeciesList();renderParamTabs();poblarSelectsEspecie();
-  showToast('🗑️ Especie eliminada','#ff4d6d');
+  showToast(T('toastSpeciesDeleted')||'🗑️ Especie eliminada','#ff4d6d');
 };
 
 // ============================================================
