@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AquaCalc — Herramienta de Campo para Acuicultura</title>
-<meta name="description" content="AquaCalc CR es la herramienta de campo para acuicultores en Costa Rica. Calculadora de biomasa, FCR, SGR, calidad de agua, bitácora de campo y más. Funciona sin internet.">
-<meta name="keywords" content="acuicultura Costa Rica, calculadora tilapia, FCR peces, calidad agua estanque, AquaCalc, acuicultura herramienta campo">
-<meta name="author" content="AquaCalc CR">
+<meta name="description" content="AquaCalc es la herramienta de campo para acuicultores de Latinoamérica. Calculadora de biomasa, FCR, SGR, calidad de agua, bitácora de campo y más. Funciona sin internet.">
+<meta name="keywords" content="acuicultura latinoamerica, calculadora tilapia, FCR peces, calidad agua estanque, AquaCalc, acuicultura herramienta campo">
+<meta name="author" content="AquaCalc">
 <meta property="og:title" content="AquaCalc — Herramienta de Campo para Acuicultura">
-<meta property="og:description" content="Registros de calidad de agua, bitácora de campo, calculadoras acuícolas. Funciona sin internet.">
+<meta property="og:description" content="Registros de calidad de agua, bitácora de campo, calculadoras acuícolas para toda Latinoamérica. Funciona sin internet.">
 <meta property="og:type" content="website">
 <link rel="manifest" id="pwa-manifest">
 <meta name="theme-color" content="#0a1628">
@@ -84,6 +84,7 @@ header{background:linear-gradient(135deg,#0a1628,#0f2a4a);border-bottom:1px soli
 .btn-sm{padding:5px 10px;font-size:12px;}
 .btn-full{width:100%;justify-content:center;padding:12px;font-size:15px;}
 .btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important;}
+.card-active{border-color:var(--accent)!important;background:rgba(0,200,150,0.04)!important;}
 .btn-sync{background:rgba(0,153,255,0.15);color:var(--accent2);border:1px solid rgba(0,153,255,0.3);border-radius:20px;padding:5px 12px;font-size:11px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;}
 .btn-sync:hover{background:rgba(0,153,255,0.25);}
 .btn-sync:disabled{opacity:0.5;cursor:not-allowed;}
@@ -320,8 +321,8 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
-      <span id="header-finca">ACUICULTURA · CR</span>
+      <h1>AquaCalc <span class="version-badge">v3.3</span></h1>
+      <span id="header-finca">ACUICULTURA</span>
     </div>
   </div>
   <div class="header-right">
@@ -343,6 +344,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="tab" onclick="showTab('params',this)">⚙️ Parámetros</div>
   <div class="tab" onclick="showTab('especies',this)">🐠 Mis Especies</div>
   <div class="tab" onclick="showTab('formulas',this)">📐 Fórmulas</div>
+  <div class="tab" onclick="showTab('fincas',this)">🏠 Mis Fincas</div>
 </div>
 
 <div class="content">
@@ -460,8 +462,11 @@ textarea{resize:vertical;min-height:70px;}
   <!-- BITÁCORA -->
   <div id="panel-bitacora" class="panel">
     <div class="section-header">
-      <div><div class="section-title">Bitácora</div><div class="section-sub">Registro diario de operaciones de campo</div></div>
-      <button class="btn btn-primary" onclick="toggleFormBitacora()">＋ Nuevo Registro</button>
+      <div><div class="section-title" id="txt-bitacora-title">Bitácora</div><div class="section-sub" id="txt-bitacora-sub">Registro diario de operaciones de campo</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="exportarPDF()" id="btn-pdf">📄 Exportar PDF</button>
+        <button class="btn btn-primary" onclick="toggleFormBitacora()" id="btn-nuevo-registro">＋ Nuevo Registro</button>
+      </div>
     </div>
     <div class="card" id="form-bitacora" style="display:none">
       <div class="card-title">📝 Nuevo Registro</div>
@@ -776,7 +781,39 @@ textarea{resize:vertical;min-height:70px;}
     </div>
   </div>
 
+  <!-- FINCAS -->
+  <div id="panel-fincas" class="panel">
+    <div class="section-header">
+      <div><div class="section-title" id="txt-fincas-title">🏠 Mis Fincas</div><div class="section-sub" id="txt-fincas-sub">Gestioná múltiples fincas o unidades productivas</div></div>
+      <button class="btn btn-primary" onclick="abrirModalFinca(null)" id="btn-nueva-finca">＋ Nueva Finca</button>
+    </div>
+    <div class="card" style="margin-bottom:16px;background:rgba(0,153,255,0.05);border-color:rgba(0,153,255,0.2)">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:13px;color:var(--text2)" id="txt-finca-activa-label">Finca activa:</span>
+        <select id="sel-finca-activa" onchange="cambiarFincaActiva()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:14px;flex:1;min-width:200px;">
+        </select>
+      </div>
+    </div>
+    <div id="fincas-list"></div>
+  </div>
+
 </div>
+</div>
+
+<!-- MODAL FINCA -->
+<div class="modal-overlay" id="modal-finca" style="display:none">
+  <div class="modal">
+    <div class="modal-title">🏠 <span id="modal-finca-titulo">Nueva Finca</span></div>
+    <input type="hidden" id="mf-index">
+    <div class="field"><label id="txt-label-nombre-finca">Nombre de la finca</label><input type="text" id="mf-nombre" placeholder="Ej: Finca El Roble">
+      <div class="field-error" id="err-mf-nombre"></div></div>
+    <div class="field"><label id="txt-label-ubicacion">Ubicación</label><input type="text" id="mf-ubicacion" placeholder="Ej: Alajuela, Costa Rica"></div>
+    <div class="field"><label id="txt-label-desc-finca">Descripción</label><textarea id="mf-descripcion" placeholder="Descripción opcional de la finca..." style="min-height:60px"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="cerrarModalFinca()" id="btn-cancelar-finca">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarFinca()" id="btn-guardar-finca">Guardar</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL PERFIL -->
@@ -904,10 +941,12 @@ let state = {
   params: {},
   bitacora: [],
   customSpecies: [],
+  fincas: [],
+  fincaActiva: null,
   paramActivo: 'tilapia',
   isOnline: navigator.onLine,
-  pendingSync: [],      // registros guardados localmente sin sincronizar
-  lastSync: null        // timestamp de la última sync exitosa
+  pendingSync: [],
+  lastSync: null
 };
 ESPECIES_DEFAULT.forEach(e => { state.params[e.id] = {...e.params}; });
 const getAllSpecies = () => [...ESPECIES_DEFAULT, ...state.customSpecies];
@@ -924,6 +963,8 @@ function guardarLocal() {
       params: state.params,
       bitacora: state.bitacora,
       customSpecies: state.customSpecies,
+      fincas: state.fincas,
+      fincaActiva: state.fincaActiva,
       perfil: state.perfil,
       pendingSync: state.pendingSync,
       lastSync: state.lastSync
@@ -939,6 +980,8 @@ function cargarLocal(uid) {
     if (data.params) state.params = data.params;
     if (data.bitacora) state.bitacora = data.bitacora;
     if (data.customSpecies) state.customSpecies = data.customSpecies;
+    if (data.fincas) state.fincas = data.fincas;
+    if (data.fincaActiva) state.fincaActiva = data.fincaActiva;
     if (data.perfil) state.perfil = data.perfil;
     if (data.pendingSync) state.pendingSync = data.pendingSync;
     if (data.lastSync) state.lastSync = data.lastSync;
@@ -999,13 +1042,15 @@ async function guardarDatos() {
       await updateDoc(doc(db, 'usuarios', state.user.uid), {
         params: state.params,
         bitacora: state.bitacora,
-        customSpecies: state.customSpecies
+        customSpecies: state.customSpecies,
+        fincas: state.fincas,
+        fincaActiva: state.fincaActiva || null
       });
-      // Limpiar pendientes
       state.pendingSync = [];
       state.lastSync = new Date().toISOString();
       guardarLocal();
-      showToast('☁️ Guardado en la nube');
+      const t = IDIOMAS[idiomaActual];
+      showToast(t.guardadoNube||'☁️ Guardado en la nube');
     } catch(e) {
       showToast('💾 Guardado localmente', '#f0a500');
     }
@@ -1089,7 +1134,7 @@ if ('serviceWorker' in navigator) {
 const manifest = {
   name:'AquaCalc',
   short_name:'AquaCalc',
-  description:'Herramienta de campo para acuicultura en Costa Rica',
+  description:'Herramienta de campo para acuicultura en Latinoamérica',
   start_url:'/',
   display:'standalone',
   background_color:'#0a1628',
@@ -1229,7 +1274,8 @@ async function cargarDatosNube(uid) {
     if (data.params) state.params = data.params;
     if (data.bitacora) state.bitacora = data.bitacora;
     if (data.customSpecies) state.customSpecies = data.customSpecies;
-    // Merge pendientes locales con datos en nube
+    if (data.fincas) state.fincas = data.fincas;
+    if (data.fincaActiva) state.fincaActiva = data.fincaActiva;
     state.pendingSync = [];
     state.lastSync = new Date().toISOString();
     guardarLocal();
@@ -1285,6 +1331,7 @@ function initApp() {
   renderBitacora();
   renderZootecnico();
   renderCustomSpeciesList();
+  renderFincas();
   document.getElementById('b-fecha').valueAsDate = new Date();
   updateSyncBar();
 }
@@ -1295,6 +1342,7 @@ window.showTab = (tab, el) => {
   document.getElementById('panel-'+tab).classList.add('active');
   el.classList.add('active');
   if(tab==='zootecnico') renderZootecnico();
+  if(tab==='fincas') renderFincas();
 };
 
 // ============================================================
@@ -1372,22 +1420,256 @@ window.cambiarMoneda = () => {
 
 const IDIOMAS = {
   es:{
+    // TABS
     calc:'🧮 Calculadora',bitacora:'📋 Bitácora',zootecnico:'🔬 Zootécnico',
-    params:'⚙️ Parámetros',especies:'🐠 Mis Especies',formulas:'📐 Fórmulas',
-    moneda:'Moneda',precioAlim:'Precio alimento',precioVenta:'Precio venta',
-    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referencia de todas las fórmulas que usa AquaCalc'
+    params:'⚙️ Parámetros',especies:'🐠 Mis Especies',formulas:'📐 Fórmulas',fincas:'🏠 Mis Fincas',
+    // AUTH
+    iniciarSesion:'Iniciar Sesión',registrarse:'Registrarse',
+    entrar:'Entrar',crearCuenta:'Crear cuenta',enviando:'Enviando...',entrando:'Entrando...',creando:'Creando cuenta...',
+    nombreCompleto:'Nombre completo',nombreFinca:'Nombre de la finca / empresa',
+    correo:'Correo electrónico',contrasena:'Contraseña',minSeis:'Mínimo 6 caracteres',
+    olvidaste:'¿Olvidaste tu contraseña?',volver:'Volver',enviarCorreo:'Enviar correo',
+    correoEnviado:'✅ Correo enviado. Revisá tu bandeja de entrada.',
+    // HEADER
+    salir:'Salir',
+    // CALCULADORA
+    calculadoraTitle:'Calculadora',calculadoraSub:'Seleccione especie e ingrese datos del estanque',
+    especie:'🐠 Especie',datosEstanque:'🏊 Datos del Estanque',parametros:'📊 Parámetros',
+    volumenArea:'Volumen / Área',densidadSiembra:'Densidad de siembra',
+    pesoInicial:'Peso inicial (g)',pesoCosecha:'Peso de cosecha (g)',
+    supervivencia:'Supervivencia (%)',fcr:'FCR',moneda:'Moneda',
+    precioAlim:'Precio alimento',precioVenta:'Precio venta',
+    resultados:'📈 Resultados',totalAnimales:'Total animales',biomasaInicial:'Biomasa inicial (kg)',
+    biomasaCosecha:'Biomasa cosecha (kg)',animalesCosecha:'Animales cosecha',
+    alimentoTotal:'Alimento total (kg)',costoAlimento:'Costo alimento',
+    ingresoBruto:'Ingreso bruto',utilidad:'Utilidad',
+    diasEstimados:'Días estimados',gpd:'GPD (g/día)',costoAlimKg:'Costo alimento/kg',
+    racionDiaria:'🍽️ Ración Diaria',biomasaActual:'Biomasa actual (kg)',
+    racionDia:'Ración/día (kg)',porComida:'Por comida (kg)',tasaAlim:'Tasa alimentación (%)',
+    // BITÁCORA
+    bitacoraTitle:'Bitácora',bitacoraSub:'Registro diario de operaciones de campo',
+    exportarPDF:'📄 Exportar PDF',nuevoRegistro:'＋ Nuevo Registro',
+    nuevoRegistroTitle:'📝 Nuevo Registro',fecha:'Fecha',estanque:'Estanque',
+    alimento:'Alimento (kg)',mortalidades:'Mortalidades',pesoMuestreo:'Peso muestreo (g)',
+    calidadAgua:'💧 Calidad de Agua',oxigeno:'Oxígeno disuelto (mg/L)',temperatura:'Temperatura (°C)',
+    ph:'pH',amonio:'Amonio NH₃ (mg/L)',nitrito:'Nitrito NO₂ (mg/L)',nitrato:'Nitrato NO₃ (mg/L)',
+    alcalinidad:'Alcalinidad (mg/L)',salinidad:'Salinidad (ppt)',dureza:'Dureza (mg/L)',
+    datosZoo:'🔬 Datos Zootécnicos',biomasaEstanque:'Biomasa estanque (kg)',
+    nAnimales:'N° animales estimado',sgrLabel:'SGR (%/día)',fcrAcum:'FCR acumulado',
+    condicion:'Índice condición (K)',cv:'CV% uniformidad',observaciones:'Observaciones',
+    cancelar:'Cancelar',guardarRegistro:'Guardar Registro',
+    filtrarEstanque:'Estanque',filtrarEspecie:'Especie',
+    todasEspecies:'Todas',seleccionar:'Seleccionar...',entradas:'entradas',pendientes:'pendientes',
+    sinRegistros:'Sin registros. Presioná "+ Nuevo Registro".',
+    // ZOOTÉCNICO
+    zootecnicoTitle:'Seguimiento Zootécnico',zootecnicoSub:'Historial de calidad de agua y parámetros productivos',
+    filtrar:'🔍 Filtrar',parametroGraficar:'Parámetro a graficar',sinDatos:'Sin datos para graficar.',
+    tablaTitle:'📋 Tabla Zootécnica',
+    // PARÁMETROS
+    paramsTitle:'Parámetros por Especie',paramsSub:'Modifique según su sistema de producción',
+    restaurar:'↺ Restaurar',
+    // ESPECIES
+    especiesTitle:'Mis Especies Personalizadas',especiesSub:'Hasta 3 especies con parámetros propios',
+    nuevaEspecie:'＋ Nueva Especie',sinEspecies:'No hay especies personalizadas.<br>Creá hasta 3 con parámetros propios.',
+    editar:'✏️ Editar',eliminar:'🗑️',
+    // FÓRMULAS
+    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referencia de todas las fórmulas que usa AquaCalc',
+    // FINCAS
+    fincasTitle:'🏠 Mis Fincas',fincasSub:'Gestioná múltiples fincas o unidades productivas',
+    fincaActiva:'Finca activa:',nuevaFinca:'＋ Nueva Finca',
+    nombreDeFinca:'Nombre de la finca',ubicacion:'Ubicación',descripcionFinca:'Descripción',
+    sinFincas:'No hay fincas registradas. Creá tu primera finca.',
+    fincaGuardada:'✅ Finca guardada',fincaEliminada:'🗑️ Finca eliminada',
+    // PERFIL
+    editarPerfil:'👤 Editar Perfil',guardar:'Guardar',
+    // TOASTS / MENSAJES
+    guardadoNube:'☁️ Guardado en la nube',errorGuardar:'⚠️ Error al guardar',
+    datosLocales:'📱 Usando datos locales',perfilActualizado:'✅ Perfil actualizado',
+    perfilLocal:'💾 Perfil guardado localmente',especieGuardada:'✅ Especie guardada',
+    especieEliminada:'🗑️ Especie eliminada',maxEspecies:'⚠️ Máximo 3 especies',
+    paramsRestaurados:'↺ Parámetros restaurados',aquacalcInstalado:'✅ AquaCalc instalado en tu dispositivo',
+    // VALIDACIONES
+    campoRequerido:'Campo requerido',fechaNoFutura:'La fecha no puede ser futura',
+    noNegativo:'No puede ser negativo',phInvalido:'pH debe estar entre 0 y 14',
+    fueraRangoOxigeno:'⚠️ Valor fuera de rango normal (2–20 mg/L)',
+    fueraRangoTemp:'⚠️ Valor fuera de rango (5–45°C)',
+    amonioElevado:'⚠️ Amonio elevado (>0.5 mg/L)',nitritoElevado:'⚠️ Nitrito elevado (>0.3 mg/L)',
+    densidadRequerida:'Ingresá la densidad',supervivenciaRango:'Debe estar entre 0 y 100%',
+    pesoCosechaMayor:'Debe ser mayor al peso inicial',
+    correoRequerido:'Ingresá tu correo',correoInvalido:'Formato de correo inválido',
+    passRequerida:'Ingresá tu contraseña',passMinima:'Mínimo 6 caracteres',
+    nombreRequerido:'Ingresá tu nombre',fincaRequerida:'Ingresá el nombre de tu finca',
+    nombreEspecieRequerido:'Ingresá un nombre',
+    confirmarEliminarRegistro:'¿Eliminar este registro?',
+    confirmarEliminarEspecie:'¿Eliminar esta especie?',
+    confirmarEliminarFinca:'¿Eliminar esta finca?',
+    confirmarRestaurar:'¿Restaurar parámetros predeterminados?',
+    // PDF
+    pdfTitulo:'Bitácora de Producción',pdfFinca:'Finca',pdfFecha:'Fecha de exportación',
+    pdfGenerando:'📄 Generando PDF...',pdfListo:'✅ PDF descargado',
+    // OBS CHECKS
+    alimentacion_activa:'🍽️ Alimentación activa',alimentacion_reducida:'⬇️ Alimentación reducida',
+    boqueo:'😮 Boqueo en superficie',agua_verde:'🟢 Agua verde',agua_cafe:'🟤 Agua turbia',
+    agua_clara:'💧 Agua clara',espuma:'🫧 Espuma',mortalidades_observadas:'💀 Mortalidades visibles',
+    peces_lentos:'🐢 Peces inactivos',nado_erratico:'🌀 Nado errático'
   },
   en:{
     calc:'🧮 Calculator',bitacora:'📋 Logbook',zootecnico:'🔬 Zootechnical',
-    params:'⚙️ Parameters',especies:'🐠 My Species',formulas:'📐 Formulas',
-    moneda:'Currency',precioAlim:'Feed price',precioVenta:'Sale price',
-    formulasTitle:'📐 Formulas Used',formulasSub:'Reference of all formulas used by AquaCalc'
+    params:'⚙️ Parameters',especies:'🐠 My Species',formulas:'📐 Formulas',fincas:'🏠 My Farms',
+    iniciarSesion:'Sign In',registrarse:'Sign Up',
+    entrar:'Sign In',crearCuenta:'Create Account',enviando:'Sending...',entrando:'Signing in...',creando:'Creating account...',
+    nombreCompleto:'Full name',nombreFinca:'Farm / company name',
+    correo:'Email',contrasena:'Password',minSeis:'At least 6 characters',
+    olvidaste:'Forgot your password?',volver:'Back',enviarCorreo:'Send email',
+    correoEnviado:'✅ Email sent. Check your inbox.',
+    salir:'Logout',
+    calculadoraTitle:'Calculator',calculadoraSub:'Select species and enter pond data',
+    especie:'🐠 Species',datosEstanque:'🏊 Pond Data',parametros:'📊 Parameters',
+    volumenArea:'Volume / Area',densidadSiembra:'Stocking density',
+    pesoInicial:'Initial weight (g)',pesoCosecha:'Harvest weight (g)',
+    supervivencia:'Survival (%)',fcr:'FCR',moneda:'Currency',
+    precioAlim:'Feed price',precioVenta:'Sale price',
+    resultados:'📈 Results',totalAnimales:'Total animals',biomasaInicial:'Initial biomass (kg)',
+    biomasaCosecha:'Harvest biomass (kg)',animalesCosecha:'Harvest animals',
+    alimentoTotal:'Total feed (kg)',costoAlimento:'Feed cost',
+    ingresoBruto:'Gross income',utilidad:'Profit',
+    diasEstimados:'Estimated days',gpd:'DWG (g/day)',costoAlimKg:'Feed cost/kg',
+    racionDiaria:'🍽️ Daily Ration',biomasaActual:'Current biomass (kg)',
+    racionDia:'Ration/day (kg)',porComida:'Per feeding (kg)',tasaAlim:'Feeding rate (%)',
+    bitacoraTitle:'Logbook',bitacoraSub:'Daily field operations record',
+    exportarPDF:'📄 Export PDF',nuevoRegistro:'＋ New Record',
+    nuevoRegistroTitle:'📝 New Record',fecha:'Date',estanque:'Pond',
+    alimento:'Feed (kg)',mortalidades:'Mortalities',pesoMuestreo:'Sample weight (g)',
+    calidadAgua:'💧 Water Quality',oxigeno:'Dissolved oxygen (mg/L)',temperatura:'Temperature (°C)',
+    ph:'pH',amonio:'Ammonia NH₃ (mg/L)',nitrito:'Nitrite NO₂ (mg/L)',nitrato:'Nitrate NO₃ (mg/L)',
+    alcalinidad:'Alkalinity (mg/L)',salinidad:'Salinity (ppt)',dureza:'Hardness (mg/L)',
+    datosZoo:'🔬 Zootechnical Data',biomasaEstanque:'Pond biomass (kg)',
+    nAnimales:'Estimated animals',sgrLabel:'SGR (%/day)',fcrAcum:'Cumulative FCR',
+    condicion:'Condition factor (K)',cv:'CV% uniformity',observaciones:'Observations',
+    cancelar:'Cancel',guardarRegistro:'Save Record',
+    filtrarEstanque:'Pond',filtrarEspecie:'Species',
+    todasEspecies:'All',seleccionar:'Select...',entradas:'records',pendientes:'pending',
+    sinRegistros:'No records. Press "+ New Record".',
+    zootecnicoTitle:'Zootechnical Tracking',zootecnicoSub:'Water quality and production parameters history',
+    filtrar:'🔍 Filter',parametroGraficar:'Parameter to chart',sinDatos:'No data to chart.',
+    tablaTitle:'📋 Zootechnical Table',
+    paramsTitle:'Parameters by Species',paramsSub:'Modify according to your production system',
+    restaurar:'↺ Restore',
+    especiesTitle:'My Custom Species',especiesSub:'Up to 3 species with custom parameters',
+    nuevaEspecie:'＋ New Species',sinEspecies:'No custom species yet.<br>Create up to 3 with your own parameters.',
+    editar:'✏️ Edit',eliminar:'🗑️',
+    formulasTitle:'📐 Formulas Used',formulasSub:'Reference of all formulas used by AquaCalc',
+    fincasTitle:'🏠 My Farms',fincasSub:'Manage multiple farms or production units',
+    fincaActiva:'Active farm:',nuevaFinca:'＋ New Farm',
+    nombreDeFinca:'Farm name',ubicacion:'Location',descripcionFinca:'Description',
+    sinFincas:'No farms registered. Create your first farm.',
+    fincaGuardada:'✅ Farm saved',fincaEliminada:'🗑️ Farm deleted',
+    editarPerfil:'👤 Edit Profile',guardar:'Save',
+    guardadoNube:'☁️ Saved to cloud',errorGuardar:'⚠️ Error saving',
+    datosLocales:'📱 Using local data',perfilActualizado:'✅ Profile updated',
+    perfilLocal:'💾 Profile saved locally',especieGuardada:'✅ Species saved',
+    especieEliminada:'🗑️ Species deleted',maxEspecies:'⚠️ Maximum 3 species',
+    paramsRestaurados:'↺ Parameters restored',aquacalcInstalado:'✅ AquaCalc installed on your device',
+    campoRequerido:'Required field',fechaNoFutura:'Date cannot be in the future',
+    noNegativo:'Cannot be negative',phInvalido:'pH must be between 0 and 14',
+    fueraRangoOxigeno:'⚠️ Out of normal range (2–20 mg/L)',
+    fueraRangoTemp:'⚠️ Out of range (5–45°C)',
+    amonioElevado:'⚠️ High ammonia (>0.5 mg/L)',nitritoElevado:'⚠️ High nitrite (>0.3 mg/L)',
+    densidadRequerida:'Enter density',supervivenciaRango:'Must be between 0 and 100%',
+    pesoCosechaMayor:'Must be greater than initial weight',
+    correoRequerido:'Enter your email',correoInvalido:'Invalid email format',
+    passRequerida:'Enter your password',passMinima:'At least 6 characters',
+    nombreRequerido:'Enter your name',fincaRequerida:'Enter farm name',
+    nombreEspecieRequerido:'Enter a name',
+    confirmarEliminarRegistro:'Delete this record?',
+    confirmarEliminarEspecie:'Delete this species?',
+    confirmarEliminarFinca:'Delete this farm?',
+    confirmarRestaurar:'Restore default parameters?',
+    pdfTitulo:'Production Logbook',pdfFinca:'Farm',pdfFecha:'Export date',
+    pdfGenerando:'📄 Generating PDF...',pdfListo:'✅ PDF downloaded',
+    alimentacion_activa:'🍽️ Active feeding',alimentacion_reducida:'⬇️ Reduced feeding',
+    boqueo:'😮 Surface gasping',agua_verde:'🟢 Green water',agua_cafe:'🟤 Turbid water',
+    agua_clara:'💧 Clear water',espuma:'🫧 Foam',mortalidades_observadas:'💀 Visible mortalities',
+    peces_lentos:'🐢 Inactive fish',nado_erratico:'🌀 Erratic swimming'
   },
   pt:{
     calc:'🧮 Calculadora',bitacora:'📋 Diário',zootecnico:'🔬 Zootécnico',
-    params:'⚙️ Parâmetros',especies:'🐠 Minhas Espécies',formulas:'📐 Fórmulas',
-    moneda:'Moeda',precioAlim:'Preço ração',precioVenta:'Preço venda',
-    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referência de todas as fórmulas usadas pelo AquaCalc'
+    params:'⚙️ Parâmetros',especies:'🐠 Minhas Espécies',formulas:'📐 Fórmulas',fincas:'🏠 Minhas Fazendas',
+    iniciarSesion:'Entrar',registrarse:'Cadastrar',
+    entrar:'Entrar',crearCuenta:'Criar conta',enviando:'Enviando...',entrando:'Entrando...',creando:'Criando conta...',
+    nombreCompleto:'Nome completo',nombreFinca:'Nome da fazenda / empresa',
+    correo:'E-mail',contrasena:'Senha',minSeis:'Mínimo 6 caracteres',
+    olvidaste:'Esqueceu sua senha?',volver:'Voltar',enviarCorreo:'Enviar e-mail',
+    correoEnviado:'✅ E-mail enviado. Verifique sua caixa de entrada.',
+    salir:'Sair',
+    calculadoraTitle:'Calculadora',calculadoraSub:'Selecione a espécie e insira os dados do tanque',
+    especie:'🐠 Espécie',datosEstanque:'🏊 Dados do Tanque',parametros:'📊 Parâmetros',
+    volumenArea:'Volume / Área',densidadSiembra:'Densidade de estocagem',
+    pesoInicial:'Peso inicial (g)',pesoCosecha:'Peso de colheita (g)',
+    supervivencia:'Sobrevivência (%)',fcr:'FCA',moneda:'Moeda',
+    precioAlim:'Preço da ração',precioVenta:'Preço de venda',
+    resultados:'📈 Resultados',totalAnimales:'Total de animais',biomasaInicial:'Biomassa inicial (kg)',
+    biomasaCosecha:'Biomassa colheita (kg)',animalesCosecha:'Animais colheita',
+    alimentoTotal:'Ração total (kg)',costoAlimento:'Custo ração',
+    ingresoBruto:'Receita bruta',utilidad:'Lucro',
+    diasEstimados:'Dias estimados',gpd:'GMD (g/dia)',costoAlimKg:'Custo ração/kg',
+    racionDiaria:'🍽️ Ração Diária',biomasaActual:'Biomassa atual (kg)',
+    racionDia:'Ração/dia (kg)',porComida:'Por refeição (kg)',tasaAlim:'Taxa alimentar (%)',
+    bitacoraTitle:'Diário de Produção',bitacoraSub:'Registro diário de operações de campo',
+    exportarPDF:'📄 Exportar PDF',nuevoRegistro:'＋ Novo Registro',
+    nuevoRegistroTitle:'📝 Novo Registro',fecha:'Data',estanque:'Tanque',
+    alimento:'Ração (kg)',mortalidades:'Mortalidades',pesoMuestreo:'Peso amostragem (g)',
+    calidadAgua:'💧 Qualidade da Água',oxigeno:'Oxigênio dissolvido (mg/L)',temperatura:'Temperatura (°C)',
+    ph:'pH',amonio:'Amônia NH₃ (mg/L)',nitrito:'Nitrito NO₂ (mg/L)',nitrato:'Nitrato NO₃ (mg/L)',
+    alcalinidad:'Alcalinidade (mg/L)',salinidad:'Salinidade (ppt)',dureza:'Dureza (mg/L)',
+    datosZoo:'🔬 Dados Zootécnicos',biomasaEstanque:'Biomassa do tanque (kg)',
+    nAnimales:'N° animais estimado',sgrLabel:'TEC (%/dia)',fcrAcum:'FCA acumulado',
+    condicion:'Fator de condição (K)',cv:'CV% uniformidade',observaciones:'Observações',
+    cancelar:'Cancelar',guardarRegistro:'Salvar Registro',
+    filtrarEstanque:'Tanque',filtrarEspecie:'Espécie',
+    todasEspecies:'Todas',seleccionar:'Selecionar...',entradas:'registros',pendientes:'pendentes',
+    sinRegistros:'Sem registros. Pressione "+ Novo Registro".',
+    zootecnicoTitle:'Acompanhamento Zootécnico',zootecnicoSub:'Histórico de qualidade da água e parâmetros produtivos',
+    filtrar:'🔍 Filtrar',parametroGraficar:'Parâmetro para gráfico',sinDatos:'Sem dados para o gráfico.',
+    tablaTitle:'📋 Tabela Zootécnica',
+    paramsTitle:'Parâmetros por Espécie',paramsSub:'Modifique conforme seu sistema de produção',
+    restaurar:'↺ Restaurar',
+    especiesTitle:'Minhas Espécies Personalizadas',especiesSub:'Até 3 espécies com parâmetros próprios',
+    nuevaEspecie:'＋ Nova Espécie',sinEspecies:'Nenhuma espécie personalizada.<br>Crie até 3 com seus próprios parâmetros.',
+    editar:'✏️ Editar',eliminar:'🗑️',
+    formulasTitle:'📐 Fórmulas Utilizadas',formulasSub:'Referência de todas as fórmulas usadas pelo AquaCalc',
+    fincasTitle:'🏠 Minhas Fazendas',fincasSub:'Gerencie múltiplas fazendas ou unidades produtivas',
+    fincaActiva:'Fazenda ativa:',nuevaFinca:'＋ Nova Fazenda',
+    nombreDeFinca:'Nome da fazenda',ubicacion:'Localização',descripcionFinca:'Descrição',
+    sinFincas:'Nenhuma fazenda cadastrada. Crie sua primeira fazenda.',
+    fincaGuardada:'✅ Fazenda salva',fincaEliminada:'🗑️ Fazenda excluída',
+    editarPerfil:'👤 Editar Perfil',guardar:'Salvar',
+    guardadoNube:'☁️ Salvo na nuvem',errorGuardar:'⚠️ Erro ao salvar',
+    datosLocales:'📱 Usando dados locais',perfilActualizado:'✅ Perfil atualizado',
+    perfilLocal:'💾 Perfil salvo localmente',especieGuardada:'✅ Espécie salva',
+    especieEliminada:'🗑️ Espécie excluída',maxEspecies:'⚠️ Máximo 3 espécies',
+    paramsRestaurados:'↺ Parâmetros restaurados',aquacalcInstalado:'✅ AquaCalc instalado no seu dispositivo',
+    campoRequerido:'Campo obrigatório',fechaNoFutura:'A data não pode ser futura',
+    noNegativo:'Não pode ser negativo',phInvalido:'pH deve estar entre 0 e 14',
+    fueraRangoOxigeno:'⚠️ Fora do intervalo normal (2–20 mg/L)',
+    fueraRangoTemp:'⚠️ Fora do intervalo (5–45°C)',
+    amonioElevado:'⚠️ Amônia elevada (>0,5 mg/L)',nitritoElevado:'⚠️ Nitrito elevado (>0,3 mg/L)',
+    densidadRequerida:'Insira a densidade',supervivenciaRango:'Deve estar entre 0 e 100%',
+    pesoCosechaMayor:'Deve ser maior que o peso inicial',
+    correoRequerido:'Insira seu e-mail',correoInvalido:'Formato de e-mail inválido',
+    passRequerida:'Insira sua senha',passMinima:'Mínimo 6 caracteres',
+    nombreRequerido:'Insira seu nome',fincaRequerida:'Insira o nome da fazenda',
+    nombreEspecieRequerido:'Insira um nome',
+    confirmarEliminarRegistro:'Excluir este registro?',
+    confirmarEliminarEspecie:'Excluir esta espécie?',
+    confirmarEliminarFinca:'Excluir esta fazenda?',
+    confirmarRestaurar:'Restaurar parâmetros padrão?',
+    pdfTitulo:'Diário de Produção',pdfFinca:'Fazenda',pdfFecha:'Data de exportação',
+    pdfGenerando:'📄 Gerando PDF...',pdfListo:'✅ PDF baixado',
+    alimentacion_activa:'🍽️ Alimentação ativa',alimentacion_reducida:'⬇️ Alimentação reduzida',
+    boqueo:'😮 Boqueio na superfície',agua_verde:'🟢 Água verde',agua_cafe:'🟤 Água turva',
+    agua_clara:'💧 Água clara',espuma:'🫧 Espuma',mortalidades_observadas:'💀 Mortalidades visíveis',
+    peces_lentos:'🐢 Peixes inativos',nado_erratico:'🌀 Natação errática'
   }
 };
 
@@ -1396,13 +1678,47 @@ let idiomaActual = 'es';
 window.cambiarIdioma = () => {
   idiomaActual = document.getElementById('sel-idioma').value;
   const t = IDIOMAS[idiomaActual];
-  const tabs = document.querySelectorAll('.tab');
-  const ids = ['calc','bitacora','zootecnico','params','especies','formulas'];
-  tabs.forEach((tab,i)=>{ if(ids[i]&&t[ids[i]]) tab.textContent=t[ids[i]]; });
+  if (!t) return;
+
+  // TABS
+  const tabIds = ['calc','bitacora','zootecnico','params','especies','formulas','fincas'];
+  document.querySelectorAll('.tab').forEach((tab,i)=>{ if(tabIds[i]&&t[tabIds[i]]) tab.textContent=t[tabIds[i]]; });
+
+  // AUTH
+  const setT=(id,val)=>{const e=document.getElementById(id);if(e&&val)e.textContent=val;};
+  const setP=(id,val)=>{const e=document.getElementById(id);if(e&&val)e.placeholder=val;};
+
+  // Calculadora
+  setT('txt-calc-title',t.calculadoraTitle); setT('txt-calc-sub',t.calculadoraSub);
+
+  // Bitácora
+  setT('txt-bitacora-title',t.bitacoraTitle); setT('txt-bitacora-sub',t.bitacoraSub);
+  setT('btn-pdf',t.exportarPDF); setT('btn-nuevo-registro',t.nuevoRegistro);
+
+  // Fórmulas
   const ft=document.getElementById('txt-formulas-title');
   const fs=document.getElementById('txt-formulas-sub');
   if(ft) ft.textContent=t.formulasTitle;
   if(fs) fs.textContent=t.formulasSub;
+
+  // Fincas
+  setT('txt-fincas-title',t.fincasTitle); setT('txt-fincas-sub',t.fincasSub);
+  setT('txt-finca-activa-label',t.fincaActiva);
+  setT('btn-nueva-finca',t.nuevaFinca);
+
+  // Moneda labels
+  const lbl1=document.getElementById('lbl-precio-alimento');
+  const lbl2=document.getElementById('lbl-precio-venta');
+  const m=MONEDAS[monedaActual]||MONEDAS.CRC;
+  if(lbl1) lbl1.textContent=t.precioAlim+' ('+m.simbolo+'/kg)';
+  if(lbl2) lbl2.textContent=t.precioVenta+' ('+m.simbolo+'/kg)';
+
+  // Botón salir
+  const btnSalir = document.querySelector('button[onclick="doLogout()"]');
+  if(btnSalir) btnSalir.textContent = t.salir;
+
+  // Re-render bitácora con nuevos textos
+  renderBitacora();
 };
 
 window.calcular = () => {
@@ -1858,13 +2174,257 @@ window.guardarEspecie = async () => {
 };
 
 window.eliminarEspecie = async (id) => {
-  if(!confirm('¿Eliminar esta especie?')) return;
+  const t = IDIOMAS[idiomaActual];
+  if(!confirm(t.confirmarEliminarEspecie)) return;
   state.customSpecies = state.customSpecies.filter(e=>e.id!==id);
   delete state.params[id];
   if(state.especieSeleccionada===id) state.especieSeleccionada=null;
   await guardarDatos();
   renderSpeciesGrid();renderCustomSpeciesList();renderParamTabs();poblarSelectsEspecie();
-  showToast('🗑️ Especie eliminada','#ff4d6d');
+  showToast(t.especieEliminada,'#ff4d6d');
+};
+
+// ============================================================
+// MULTI-FINCA
+// ============================================================
+function renderFincas() {
+  const t = IDIOMAS[idiomaActual];
+  const list = document.getElementById('fincas-list');
+  const sel = document.getElementById('sel-finca-activa');
+
+  // Poblar selector
+  if (sel) {
+    sel.innerHTML = '<option value="">-- Sin finca seleccionada --</option>' +
+      state.fincas.map(f=>`<option value="${f.id}" ${state.fincaActiva===f.id?'selected':''}>${f.nombre}</option>`).join('');
+  }
+
+  if (!list) return;
+  if (state.fincas.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="icon">🏠</div><p>${t.sinFincas||'No hay fincas registradas.'}</p></div>`;
+    return;
+  }
+
+  list.innerHTML = state.fincas.map(f => `
+    <div class="card ${state.fincaActiva===f.id?'card-active':''}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:${state.fincaActiva===f.id?'var(--accent)':'var(--text)'}">
+            🏠 ${f.nombre} ${state.fincaActiva===f.id?'<span class="badge badge-green">Activa</span>':''}
+          </div>
+          ${f.ubicacion?`<div style="font-size:12px;color:var(--text2);margin-top:4px">📍 ${f.ubicacion}</div>`:''}
+          ${f.descripcion?`<div style="font-size:12px;color:var(--text3);margin-top:4px">${f.descripcion}</div>`:''}
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${state.fincaActiva!==f.id?`<button class="btn btn-outline btn-sm" onclick="activarFinca('${f.id}')">✓ Activar</button>`:''}
+          <button class="btn btn-secondary btn-sm" onclick="abrirModalFinca('${f.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarFinca('${f.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+window.cambiarFincaActiva = () => {
+  const sel = document.getElementById('sel-finca-activa');
+  state.fincaActiva = sel.value || null;
+  guardarLocal();
+  if (state.isOnline) guardarDatos();
+  renderFincas();
+  showToast('🏠 Finca activa cambiada');
+};
+
+window.activarFinca = (id) => {
+  state.fincaActiva = id;
+  const sel = document.getElementById('sel-finca-activa');
+  if (sel) sel.value = id;
+  guardarLocal();
+  if (state.isOnline) guardarDatos();
+  renderFincas();
+  showToast('🏠 Finca activa cambiada');
+};
+
+window.abrirModalFinca = (id) => {
+  const tit = document.getElementById('modal-finca-titulo');
+  document.getElementById('mf-index').value = id||'';
+  if (id) {
+    const f = state.fincas.find(f=>f.id===id);
+    if (!f) return;
+    tit.textContent = 'Editar Finca';
+    document.getElementById('mf-nombre').value = f.nombre||'';
+    document.getElementById('mf-ubicacion').value = f.ubicacion||'';
+    document.getElementById('mf-descripcion').value = f.descripcion||'';
+  } else {
+    tit.textContent = 'Nueva Finca';
+    document.getElementById('mf-nombre').value = '';
+    document.getElementById('mf-ubicacion').value = '';
+    document.getElementById('mf-descripcion').value = '';
+  }
+  document.getElementById('modal-finca').style.display = 'flex';
+};
+
+window.cerrarModalFinca = () => { document.getElementById('modal-finca').style.display='none'; };
+
+window.guardarFinca = async () => {
+  const t = IDIOMAS[idiomaActual];
+  const nombre = document.getElementById('mf-nombre').value.trim();
+  if (!nombre) { showFieldError('mf-nombre', t.nombreRequerido||'Nombre requerido'); return; }
+  const id_existente = document.getElementById('mf-index').value;
+  const finca = {
+    id: id_existente || 'finca_'+Date.now(),
+    nombre,
+    ubicacion: document.getElementById('mf-ubicacion').value.trim(),
+    descripcion: document.getElementById('mf-descripcion').value.trim()
+  };
+  if (id_existente) {
+    const idx = state.fincas.findIndex(f=>f.id===id_existente);
+    if (idx>=0) state.fincas[idx] = finca;
+  } else {
+    state.fincas.push(finca);
+    if (!state.fincaActiva) state.fincaActiva = finca.id;
+  }
+  await guardarDatos();
+  cerrarModalFinca();
+  renderFincas();
+  showToast(t.fincaGuardada||'✅ Finca guardada');
+};
+
+window.eliminarFinca = async (id) => {
+  const t = IDIOMAS[idiomaActual];
+  if (!confirm(t.confirmarEliminarFinca||'¿Eliminar esta finca?')) return;
+  state.fincas = state.fincas.filter(f=>f.id!==id);
+  if (state.fincaActiva === id) state.fincaActiva = state.fincas[0]?.id || null;
+  await guardarDatos();
+  renderFincas();
+  showToast(t.fincaEliminada||'🗑️ Finca eliminada','#ff4d6d');
+};
+
+// ============================================================
+// EXPORTAR PDF
+// ============================================================
+window.exportarPDF = async () => {
+  const t = IDIOMAS[idiomaActual];
+  showToast(t.pdfGenerando||'📄 Generando PDF...');
+
+  // Cargar jsPDF dinámicamente
+  if (!window.jspdf) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const fincaNombre = state.fincaActiva
+    ? (state.fincas.find(f=>f.id===state.fincaActiva)?.nombre || state.perfil?.finca || 'AquaCalc')
+    : (state.perfil?.finca || 'AquaCalc');
+
+  const fechaExport = new Date().toLocaleDateString('es-CR');
+  const registros = state.bitacora;
+
+  // HEADER
+  doc.setFillColor(10, 22, 40);
+  doc.rect(0, 0, 210, 30, 'F');
+  doc.setTextColor(0, 200, 150);
+  doc.setFontSize(20);
+  doc.setFont('helvetica', 'bold');
+  doc.text('AquaCalc', 14, 12);
+  doc.setFontSize(10);
+  doc.setTextColor(139, 168, 204);
+  doc.setFont('helvetica', 'normal');
+  doc.text(t.pdfTitulo||'Bitácora de Producción', 14, 19);
+  doc.text(`${t.pdfFinca||'Finca'}: ${fincaNombre}`, 14, 25);
+  doc.text(`${t.pdfFecha||'Fecha'}: ${fechaExport}`, 140, 25);
+
+  let y = 38;
+
+  // REGISTROS
+  doc.setTextColor(0,0,0);
+
+  if (registros.length === 0) {
+    doc.setFontSize(12);
+    doc.text('Sin registros para exportar.', 14, y);
+  } else {
+    registros.forEach((r, idx) => {
+      if (y > 260) {
+        doc.addPage();
+        y = 20;
+      }
+
+      // Cabecera del registro
+      doc.setFillColor(21, 40, 80);
+      doc.rect(10, y-4, 190, 8, 'F');
+      doc.setTextColor(0, 200, 150);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`📅 ${r.fecha}  •  ${r.estanque}`, 14, y+1);
+      if (r.especie) {
+        const esp = getAllSpecies().find(e=>e.id===r.especie);
+        if (esp) doc.text(esp.nombre, 140, y+1);
+      }
+      y += 10;
+
+      // Datos básicos
+      doc.setTextColor(60,60,60);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+
+      const campos = [];
+      if (r.alimento) campos.push(`Alimento: ${r.alimento} kg`);
+      if (r.mortalidad) campos.push(`Mortalidades: ${r.mortalidad}`);
+      if (r.peso) campos.push(`Peso: ${r.peso} g`);
+      if (r.oxigeno) campos.push(`O₂: ${r.oxigeno} mg/L`);
+      if (r.temperatura) campos.push(`Temp: ${r.temperatura}°C`);
+      if (r.ph) campos.push(`pH: ${r.ph}`);
+      if (r.amonio) campos.push(`NH₃: ${r.amonio} mg/L`);
+      if (r.nitrito) campos.push(`NO₂: ${r.nitrito} mg/L`);
+      if (r.salinidad) campos.push(`Sal: ${r.salinidad} ppt`);
+      if (r.biomasa) campos.push(`Biomasa: ${r.biomasa} kg`);
+      if (r.sgr) campos.push(`SGR: ${r.sgr}%/d`);
+      if (r.fcrAcum) campos.push(`FCR: ${r.fcrAcum}`);
+
+      // Distribuir en columnas
+      const cols = 3;
+      campos.forEach((c, i) => {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        doc.text(c, 14 + col * 65, y + row * 5);
+      });
+
+      const rows = Math.ceil(campos.length / cols);
+      y += rows * 5 + 2;
+
+      if (r.observaciones) {
+        doc.setTextColor(100,100,100);
+        doc.setFontSize(8);
+        const lines = doc.splitTextToSize(`Obs: ${r.observaciones}`, 180);
+        doc.text(lines, 14, y);
+        y += lines.length * 4 + 2;
+      }
+
+      // Línea separadora
+      doc.setDrawColor(30, 58, 90);
+      doc.line(10, y, 200, y);
+      y += 5;
+    });
+  }
+
+  // FOOTER
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(150,150,150);
+    doc.text(`AquaCalc — ${fincaNombre} — ${fechaExport}`, 14, 290);
+    doc.text(`${i} / ${pageCount}`, 196, 290, {align:'right'});
+  }
+
+  const fecha = new Date().toISOString().split('T')[0];
+  doc.save(`aquacalc-bitacora-${fecha}.pdf`);
+  showToast(t.pdfListo||'✅ PDF descargado');
 };
 
 // ============================================================
