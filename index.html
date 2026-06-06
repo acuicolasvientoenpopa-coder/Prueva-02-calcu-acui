@@ -230,6 +230,13 @@ textarea{resize:vertical;min-height:70px;}
 <!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-box">
+    <div style="text-align:right;margin-bottom:12px">
+      <select onchange="cambiarIdiomaAuth(this.value)" id="sel-idioma-auth" style="background:#152850;border:1px solid #1e3a5a;color:#e8f0fe;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">
+        <option value="es">🇪🇸 Español</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="pt">🇧🇷 Português</option>
+      </select>
+    </div>
     <div class="auth-logo">
       <div class="icon">🐟</div>
       <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
@@ -321,7 +328,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc <span class="version-badge">v3.3</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.4</span></h1>
       <span id="header-finca">ACUICULTURA</span>
     </div>
   </div>
@@ -469,77 +476,77 @@ textarea{resize:vertical;min-height:70px;}
       </div>
     </div>
     <div class="card" id="form-bitacora" style="display:none">
-      <div class="card-title">📝 Nuevo Registro</div>
+      <div class="card-title" id="txt-nuevo-registro">📝 Nuevo Registro</div>
       <div class="grid-3">
-        <div class="field"><label>Fecha</label><input type="date" id="b-fecha">
+        <div class="field"><label id="lbl-b-fecha">Fecha</label><input type="date" id="b-fecha">
           <div class="field-error" id="err-b-fecha"></div></div>
-        <div class="field"><label>Estanque</label><input type="text" id="b-estanque" placeholder="Ej: Estanque 1">
+        <div class="field"><label id="lbl-b-estanque">Estanque</label><input type="text" id="b-estanque" placeholder="Ej: Estanque 1">
           <div class="field-error" id="err-b-estanque"></div></div>
-        <div class="field"><label>Especie</label><select id="b-especie"><option value="">Seleccionar...</option></select></div>
+        <div class="field"><label id="lbl-b-especie">Especie</label><select id="b-especie"><option value="">Seleccionar...</option></select></div>
       </div>
       <div class="grid-3">
-        <div class="field"><label>Alimento (kg)</label><input type="number" step="0.1" id="b-alimento" placeholder="0.0" oninput="validarCampoLive('b-alimento')">
+        <div class="field"><label id="lbl-b-alimento">Alimento (kg)</label><input type="number" step="0.1" id="b-alimento" placeholder="0.0" oninput="validarCampoLive('b-alimento')">
           <div class="field-error" id="err-b-alimento"></div></div>
-        <div class="field"><label>Mortalidades</label><input type="number" id="b-mortalidad" placeholder="0" oninput="validarCampoLive('b-mortalidad')">
+        <div class="field"><label id="lbl-b-mortalidad">Mortalidades</label><input type="number" id="b-mortalidad" placeholder="0" oninput="validarCampoLive('b-mortalidad')">
           <div class="field-error" id="err-b-mortalidad"></div></div>
-        <div class="field"><label>Peso muestreo (g)</label><input type="number" step="0.1" id="b-peso" placeholder="0.0"></div>
+        <div class="field"><label id="lbl-b-peso">Peso muestreo (g)</label><input type="number" step="0.1" id="b-peso" placeholder="0.0"></div>
       </div>
 
       <!-- CALIDAD DE AGUA -->
       <div class="agua-section">
-        <div class="agua-title">💧 Calidad de Agua</div>
+        <div class="agua-title" id="lbl-agua">💧 Calidad de Agua</div>
         <div class="grid-3">
-          <div class="field"><label>Oxígeno disuelto (mg/L)
+          <div class="field"><label id="lbl-b-oxigeno">Oxígeno disuelto (mg/L)
             <span class="info-btn" onclick="toggleTooltip('tip-oxigeno')">ℹ</span>
           </label>
           <input type="number" step="0.1" id="b-oxigeno" placeholder="0.0" oninput="validarCampoLive('b-oxigeno')">
           <div class="tooltip-card" id="tip-oxigeno"><strong>Oxígeno disuelto</strong>: Rango óptimo para tilapia y trucha: 5–8 mg/L. Por debajo de 3 mg/L puede causar estrés; menos de 2 mg/L es crítico.</div>
           <div class="field-warning" id="warn-b-oxigeno"></div></div>
 
-          <div class="field"><label>Temperatura (°C)
+          <div class="field"><label id="lbl-b-temperatura">Temperatura (°C)
             <span class="info-btn" onclick="toggleTooltip('tip-temperatura')">ℹ</span>
           </label>
           <input type="number" step="0.1" id="b-temperatura" placeholder="0.0" oninput="validarCampoLive('b-temperatura')">
           <div class="tooltip-card" id="tip-temperatura"><strong>Temperatura</strong>: Tilapia: 25–30°C óptimo. Trucha: 12–18°C. Temperaturas extremas reducen el consumo de alimento y elevan mortalidad.</div>
           <div class="field-warning" id="warn-b-temperatura"></div></div>
 
-          <div class="field"><label>pH
+          <div class="field"><label id="lbl-b-ph">pH
             <span class="info-btn" onclick="toggleTooltip('tip-ph')">ℹ</span>
           </label>
           <input type="number" step="0.1" id="b-ph" placeholder="0.0" oninput="validarCampoLive('b-ph')">
           <div class="tooltip-card" id="tip-ph"><strong>pH</strong>: Rango aceptable: 6.5–9.0. Óptimo: 7.0–8.5. pH menor a 6 o mayor a 9 es peligroso para los peces.</div>
           <div class="field-error" id="err-b-ph"></div></div>
 
-          <div class="field"><label>Amonio NH₃ (mg/L)
+          <div class="field"><label id="lbl-b-amonio">Amonio NH₃ (mg/L)
             <span class="info-btn" onclick="toggleTooltip('tip-amonio')">ℹ</span>
           </label>
           <input type="number" step="0.01" id="b-amonio" placeholder="0.00" oninput="validarCampoLive('b-amonio')">
           <div class="tooltip-card" id="tip-amonio"><strong>Amonio (NH₃)</strong>: Nivel aceptable: &lt;0.05 mg/L de NH₃ libre. Concentraciones mayores a 0.5 mg/L totales son preocupantes y causan daño branquial.</div>
           <div class="field-warning" id="warn-b-amonio"></div></div>
 
-          <div class="field"><label>Nitrito NO₂ (mg/L)
+          <div class="field"><label id="lbl-b-nitrito">Nitrito NO₂ (mg/L)
             <span class="info-btn" onclick="toggleTooltip('tip-nitrito')">ℹ</span>
           </label>
           <input type="number" step="0.01" id="b-nitrito" placeholder="0.00" oninput="validarCampoLive('b-nitrito')">
           <div class="tooltip-card" id="tip-nitrito"><strong>Nitrito (NO₂)</strong>: Debe mantenerse por debajo de 0.3 mg/L. Concentraciones altas causan methemoglobinemia (enfermedad de la sangre marrón) en los peces.</div>
           <div class="field-warning" id="warn-b-nitrito"></div></div>
 
-          <div class="field"><label>Nitrato NO₃ (mg/L)</label>
+          <div class="field"><label id="lbl-b-nitrato">Nitrato NO₃ (mg/L)</label>
           <input type="number" step="0.1" id="b-nitrato" placeholder="0.0"></div>
 
-          <div class="field"><label>Alcalinidad (mg/L CaCO₃)
+          <div class="field"><label id="lbl-b-alcalinidad">Alcalinidad (mg/L CaCO₃)
             <span class="info-btn" onclick="toggleTooltip('tip-alcalinidad')">ℹ</span>
           </label>
           <input type="number" id="b-alcalinidad" placeholder="0">
           <div class="tooltip-card" id="tip-alcalinidad"><strong>Alcalinidad</strong>: Rango óptimo: 80–150 mg/L CaCO₃. Actúa como buffer del pH. Por debajo de 20 mg/L el agua es inestable y el pH puede fluctuar peligrosamente.</div></div>
 
-          <div class="field"><label>Salinidad (ppt)
+          <div class="field"><label id="lbl-b-salinidad">Salinidad (ppt)
             <span class="info-btn" onclick="toggleTooltip('tip-salinidad')">ℹ</span>
           </label>
           <input type="number" step="0.1" id="b-salinidad" placeholder="0.0">
           <div class="tooltip-card" id="tip-salinidad"><strong>Salinidad</strong>: Para camarón marino (L. vannamei): 10–35 ppt. Tilapia tolera hasta 10–15 ppt. Agua dulce: &lt;0.5 ppt.</div></div>
 
-          <div class="field"><label>Dureza (mg/L)</label>
+          <div class="field"><label id="lbl-b-dureza">Dureza (mg/L)</label>
           <input type="number" id="b-dureza" placeholder="0"></div>
         </div>
       </div>
@@ -607,49 +614,49 @@ textarea{resize:vertical;min-height:70px;}
 
       <!-- DATOS ZOOTÉCNICOS -->
       <div class="zoo-section">
-        <div class="zoo-title">🔬 Datos Zootécnicos
+        <div class="zoo-title" id="lbl-zoo">🔬 Datos Zootécnicos
           <span class="info-btn" onclick="toggleTooltip('tip-zoo-section')">ℹ</span>
         </div>
         <div class="tooltip-card" id="tip-zoo-section" style="margin-bottom:12px"><strong>Datos zootécnicos</strong> son indicadores del desempeño productivo. No todos son obligatorios; completá los que tengas disponibles.</div>
         <div class="grid-3">
-          <div class="field"><label>Biomasa estanque (kg)
+          <div class="field"><label id="lbl-b-biomasa">Biomasa estanque (kg)
             <span class="info-btn" onclick="toggleTooltip('tip-biomasa-log')">ℹ</span>
           </label>
           <input type="number" step="0.1" id="b-biomasa" placeholder="0.0">
           <div class="tooltip-card" id="tip-biomasa-log"><strong>Biomasa</strong> = N° animales × Peso promedio (en kg). Ejemplo: 1000 peces × 300g = 300 kg de biomasa.</div></div>
 
-          <div class="field"><label>N° animales estimado</label>
+          <div class="field"><label id="lbl-b-nanimales">N° animales estimado</label>
           <input type="number" id="b-nanimales" placeholder="0"></div>
 
-          <div class="field"><label>SGR (%/día)
+          <div class="field"><label id="lbl-b-sgr">SGR (%/día)
             <span class="info-btn" onclick="toggleTooltip('tip-sgr-log')">ℹ</span>
           </label>
           <input type="number" step="0.01" id="b-sgr" placeholder="0.00">
           <div class="tooltip-card" id="tip-sgr-log"><strong>SGR (Tasa de Crecimiento Específico)</strong> = [(ln Peso final − ln Peso inicial) ÷ días] × 100. Indica el porcentaje de ganancia de peso por día relativo al peso corporal.</div></div>
 
-          <div class="field"><label>FCR acumulado
+          <div class="field"><label id="lbl-b-fcr-acum">FCR acumulado
             <span class="info-btn" onclick="toggleTooltip('tip-fcr-log')">ℹ</span>
           </label>
           <input type="number" step="0.01" id="b-fcr-acum" placeholder="0.00">
           <div class="tooltip-card" id="tip-fcr-log"><strong>FCR acumulado</strong> = Total de alimento suministrado ÷ Ganancia de biomasa. Se calcula desde el inicio del ciclo hasta la fecha del registro.</div></div>
 
-          <div class="field"><label>Índice condición (K)</label>
+          <div class="field"><label id="lbl-b-condicion">Índice condición (K)</label>
           <input type="number" step="0.01" id="b-condicion" placeholder="0.00"></div>
 
-          <div class="field"><label>CV% uniformidad</label>
+          <div class="field"><label id="lbl-b-cv">CV% uniformidad</label>
           <input type="number" step="0.1" id="b-cv" placeholder="0.0"></div>
         </div>
       </div>
 
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn btn-secondary" onclick="toggleFormBitacora()">Cancelar</button>
-        <button class="btn btn-primary" onclick="guardarRegistro()">💾 Guardar Registro</button>
+        <button class="btn btn-secondary" id="btn-cancelar-bitacora" onclick="toggleFormBitacora()">Cancelar</button>
+        <button class="btn btn-primary" id="btn-guardar-registro" onclick="guardarRegistro()">💾 Guardar Registro</button>
       </div>
     </div>
     <div class="card" style="padding:14px 20px">
       <div class="grid-3">
-        <div class="field" style="margin:0"><label>Estanque</label><input type="text" id="filtro-estanque" placeholder="Todos" oninput="renderBitacora()"></div>
-        <div class="field" style="margin:0"><label>Especie</label><select id="filtro-especie" onchange="renderBitacora()"><option value="">Todas</option></select></div>
+        <div class="field" style="margin:0"><label id="lbl-filtro-estanque">Estanque</label><input type="text" id="filtro-estanque" placeholder="Todos" oninput="renderBitacora()"></div>
+        <div class="field" style="margin:0"><label id="lbl-filtro-especie">Especie</label><select id="filtro-especie" onchange="renderBitacora()"><option value="">Todas</option></select></div>
         <div class="field" style="margin:0"><label>Total</label><div style="display:flex;align-items:center;height:42px;gap:8px"><span id="total-registros" class="badge badge-green">0 entradas</span><span id="pending-registros" class="badge badge-yellow" style="display:none">0 pendientes</span></div></div>
       </div>
     </div>
@@ -659,13 +666,13 @@ textarea{resize:vertical;min-height:70px;}
   <!-- ZOOTÉCNICO -->
   <div id="panel-zootecnico" class="panel">
     <div class="section-header">
-      <div><div class="section-title">Seguimiento Zootécnico</div><div class="section-sub">Historial de calidad de agua y parámetros productivos</div></div>
+      <div><div class="section-title" id="txt-zoo-title">Seguimiento Zootécnico</div><div class="section-sub" id="txt-zoo-sub">Historial de calidad de agua y parámetros productivos</div></div>
     </div>
     <div class="card">
-      <div class="card-title">🔍 Filtrar</div>
+      <div class="card-title" id="lbl-z-filtro">🔍 Filtrar</div>
       <div class="grid-3">
         <div class="field" style="margin:0"><label>Estanque</label><input type="text" id="z-filtro-estanque" placeholder="Todos" oninput="renderZootecnico()"></div>
-        <div class="field" style="margin:0"><label>Parámetro</label>
+        <div class="field" style="margin:0"><label id="lbl-z-parametro">Parámetro</label>
           <select id="z-parametro" onchange="renderZootecnico()">
             <option value="oxigeno">Oxígeno disuelto (mg/L)</option>
             <option value="temperatura">Temperatura (°C)</option>
@@ -693,7 +700,7 @@ textarea{resize:vertical;min-height:70px;}
       <div id="z-chart"></div>
     </div>
     <div class="card">
-      <div class="card-title">📋 Tabla Zootécnica</div>
+      <div class="card-title" id="txt-z-tabla">📋 Tabla Zootécnica</div>
       <div id="z-tabla"></div>
     </div>
   </div>
@@ -701,8 +708,8 @@ textarea{resize:vertical;min-height:70px;}
   <!-- PARÁMETROS -->
   <div id="panel-params" class="panel">
     <div class="section-header">
-      <div><div class="section-title">Parámetros por Especie</div><div class="section-sub">Modifique según su sistema de producción</div></div>
-      <button class="btn btn-secondary" onclick="resetParams()">↺ Restaurar</button>
+      <div><div class="section-title" id="txt-params-title">Parámetros por Especie</div><div class="section-sub" id="txt-params-sub">Modifique según su sistema de producción</div></div>
+      <button class="btn btn-secondary" id="btn-restaurar" onclick="resetParams()">↺ Restaurar</button>
     </div>
     <div class="mini-tabs" id="param-tabs"></div>
     <div id="param-content"></div>
@@ -711,7 +718,7 @@ textarea{resize:vertical;min-height:70px;}
   <!-- MIS ESPECIES -->
   <div id="panel-especies" class="panel">
     <div class="section-header">
-      <div><div class="section-title">Mis Especies Personalizadas</div><div class="section-sub">Hasta 3 especies con parámetros propios</div></div>
+      <div><div class="section-title" id="txt-especies-title">Mis Especies Personalizadas</div><div class="section-sub" id="txt-especies-sub">Hasta 3 especies con parámetros propios</div></div>
       <button class="btn btn-primary" id="btn-nueva-especie" onclick="abrirModalEspecie(null)">＋ Nueva Especie</button>
     </div>
     <div id="custom-species-list"></div>
@@ -819,14 +826,14 @@ textarea{resize:vertical;min-height:70px;}
 <!-- MODAL PERFIL -->
 <div class="modal-overlay" id="modal-perfil" style="display:none">
   <div class="modal">
-    <div class="modal-title">👤 Editar Perfil</div>
+    <div class="modal-title" id="txt-perfil-title">👤 Editar Perfil</div>
     <div class="field"><label>Nombre completo</label><input type="text" id="p-nombre" placeholder="Tu nombre">
       <div class="field-error" id="err-p-nombre"></div></div>
     <div class="field"><label>Nombre de finca / empresa</label><input type="text" id="p-finca" placeholder="Nombre de tu finca">
       <div class="field-error" id="err-p-finca"></div></div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="cerrarModalPerfil()">Cancelar</button>
-      <button class="btn btn-primary" onclick="guardarPerfil()">Guardar</button>
+      <button class="btn btn-secondary" id="btn-cancelar-perfil" onclick="cerrarModalPerfil()">Cancelar</button>
+      <button class="btn btn-primary" id="btn-guardar-perfil" onclick="guardarPerfil()">Guardar</button>
     </div>
   </div>
 </div>
@@ -1675,51 +1682,159 @@ const IDIOMAS = {
 
 let idiomaActual = 'es';
 
+window.cambiarIdiomaAuth = (lang) => {
+  idiomaActual = lang;
+  const t = IDIOMAS[lang];
+  if (!t) return;
+  // Auth tabs
+  const tabs = document.querySelectorAll('.auth-tab');
+  if(tabs[0]) tabs[0].textContent = t.iniciarSesion;
+  if(tabs[1]) tabs[1].textContent = t.registrarse;
+  // Login form
+  const btnLogin = document.getElementById('btn-login');
+  if(btnLogin) btnLogin.textContent = t.entrar;
+  const btnReg = document.getElementById('btn-register');
+  if(btnReg) btnReg.textContent = t.crearCuenta;
+  const btnForgot = document.getElementById('btn-forgot');
+  if(btnForgot) btnForgot.textContent = t.enviarCorreo;
+  // Placeholders
+  const setP = (id,val) => { const e=document.getElementById(id); if(e&&val) e.placeholder=val; };
+  setP('l-email', t.correo); setP('l-pass', t.contrasena);
+  setP('r-nombre', t.nombreCompleto); setP('r-finca', t.nombreFinca);
+  setP('r-email', t.correo); setP('r-pass', t.minSeis);
+  setP('f-email', t.correo);
+  // Labels
+  const setL = (id,val) => { const e=document.getElementById(id); if(e&&val) e.textContent=val; };
+  setL('lbl-l-email', t.correo); setL('lbl-l-pass', t.contrasena);
+  setL('lbl-r-nombre', t.nombreCompleto); setL('lbl-r-finca', t.nombreFinca);
+  setL('lbl-r-email', t.correo); setL('lbl-r-pass', t.contrasena);
+  // Forgot link
+  const forgotLink = document.querySelector('.forgot-link a');
+  if(forgotLink) forgotLink.textContent = t.olvidaste;
+  const volverBtn = document.querySelector('#form-forgot .btn-secondary');
+  if(volverBtn) volverBtn.textContent = t.volver;
+  // Sync sel-idioma en app principal si existe
+  const selApp = document.getElementById('sel-idioma');
+  if(selApp) selApp.value = lang;
+};
+
 window.cambiarIdioma = () => {
   idiomaActual = document.getElementById('sel-idioma').value;
-  const t = IDIOMAS[idiomaActual];
+  // Sincronizar con selector del login
+  const selAuth = document.getElementById('sel-idioma-auth');
+  if(selAuth) selAuth.value = idiomaActual;
+  aplicarIdioma(idiomaActual);
+};
+
+function aplicarIdioma(lang) {
+  const t = IDIOMAS[lang];
   if (!t) return;
+
+  const setT = (id,val) => { const e=document.getElementById(id); if(e&&val) e.textContent=val; };
+  const setP = (id,val) => { const e=document.getElementById(id); if(e&&val) e.placeholder=val; };
+  const setH = (id,val) => { const e=document.getElementById(id); if(e&&val) e.innerHTML=val; };
 
   // TABS
   const tabIds = ['calc','bitacora','zootecnico','params','especies','formulas','fincas'];
   document.querySelectorAll('.tab').forEach((tab,i)=>{ if(tabIds[i]&&t[tabIds[i]]) tab.textContent=t[tabIds[i]]; });
 
-  // AUTH
-  const setT=(id,val)=>{const e=document.getElementById(id);if(e&&val)e.textContent=val;};
-  const setP=(id,val)=>{const e=document.getElementById(id);if(e&&val)e.placeholder=val;};
+  // CALCULADORA
+  setT('txt-calc-title', t.calculadoraTitle);
+  setT('txt-calc-sub', t.calculadoraSub);
 
-  // Calculadora
-  setT('txt-calc-title',t.calculadoraTitle); setT('txt-calc-sub',t.calculadoraSub);
+  // BITÁCORA
+  setT('txt-bitacora-title', t.bitacoraTitle);
+  setT('txt-bitacora-sub', t.bitacoraSub);
+  setT('btn-pdf', t.exportarPDF);
+  setT('btn-nuevo-registro', t.nuevoRegistro);
 
-  // Bitácora
-  setT('txt-bitacora-title',t.bitacoraTitle); setT('txt-bitacora-sub',t.bitacoraSub);
-  setT('btn-pdf',t.exportarPDF); setT('btn-nuevo-registro',t.nuevoRegistro);
+  // Formulario bitácora
+  setP('b-estanque', t.estanque||'Ej: Estanque 1');
+  setP('b-alimento', '0.0'); setP('b-mortalidad', '0');
+  setP('b-peso', '0.0'); setP('b-oxigeno', '0.0');
+  setP('b-temperatura', '0.0'); setP('b-ph', '0.0');
+  setP('b-amonio', '0.00'); setP('b-nitrito', '0.00');
+  setP('b-nitrato', '0.0'); setP('b-alcalinidad', '0');
+  setP('b-salinidad', '0.0'); setP('b-dureza', '0');
+  setP('b-biomasa', '0.0'); setP('b-nanimales', '0');
+  setP('b-sgr', '0.00'); setP('b-fcr-acum', '0.00');
+  setP('b-condicion', '0.00'); setP('b-cv', '0.0');
+  setP('b-observaciones', t.observaciones||'Notas del día...');
 
-  // Fórmulas
-  const ft=document.getElementById('txt-formulas-title');
-  const fs=document.getElementById('txt-formulas-sub');
-  if(ft) ft.textContent=t.formulasTitle;
-  if(fs) fs.textContent=t.formulasSub;
+  // Labels de formulario bitácora
+  setT('lbl-b-fecha', t.fecha); setT('lbl-b-estanque', t.estanque);
+  setT('lbl-b-especie', t.especie?.replace('🐠 ','')||'Especie');
+  setT('lbl-b-alimento', t.alimento); setT('lbl-b-mortalidad', t.mortalidades);
+  setT('lbl-b-peso', t.pesoMuestreo); setT('lbl-agua', t.calidadAgua);
+  setT('lbl-b-oxigeno', t.oxigeno); setT('lbl-b-temperatura', t.temperatura);
+  setT('lbl-b-ph', t.ph); setT('lbl-b-amonio', t.amonio);
+  setT('lbl-b-nitrito', t.nitrito); setT('lbl-b-nitrato', t.nitrato);
+  setT('lbl-b-alcalinidad', t.alcalinidad); setT('lbl-b-salinidad', t.salinidad);
+  setT('lbl-b-dureza', t.dureza); setT('lbl-zoo', t.datosZoo);
+  setT('lbl-b-biomasa', t.biomasaEstanque); setT('lbl-b-nanimales', t.nAnimales);
+  setT('lbl-b-sgr', t.sgrLabel); setT('lbl-b-fcr-acum', t.fcrAcum);
+  setT('lbl-b-condicion', t.condicion); setT('lbl-b-cv', t.cv);
+  setT('lbl-b-observaciones', t.observaciones);
+  setT('btn-cancelar-bitacora', t.cancelar);
+  setT('btn-guardar-registro', t.guardarRegistro);
 
-  // Fincas
-  setT('txt-fincas-title',t.fincasTitle); setT('txt-fincas-sub',t.fincasSub);
-  setT('txt-finca-activa-label',t.fincaActiva);
-  setT('btn-nueva-finca',t.nuevaFinca);
+  // Filtros bitácora
+  setT('lbl-filtro-estanque', t.filtrarEstanque);
+  setT('lbl-filtro-especie', t.filtrarEspecie);
 
-  // Moneda labels
-  const lbl1=document.getElementById('lbl-precio-alimento');
-  const lbl2=document.getElementById('lbl-precio-venta');
-  const m=MONEDAS[monedaActual]||MONEDAS.CRC;
-  if(lbl1) lbl1.textContent=t.precioAlim+' ('+m.simbolo+'/kg)';
-  if(lbl2) lbl2.textContent=t.precioVenta+' ('+m.simbolo+'/kg)';
+  // Selects de especie
+  const bEsp = document.getElementById('b-especie');
+  if(bEsp&&bEsp.options[0]) bEsp.options[0].textContent = t.seleccionar;
+  const fEsp = document.getElementById('filtro-especie');
+  if(fEsp&&fEsp.options[0]) fEsp.options[0].textContent = t.todasEspecies;
+  const zEsp = document.getElementById('z-filtro-especie');
+  if(zEsp&&zEsp.options[0]) zEsp.options[0].textContent = t.todasEspecies;
 
-  // Botón salir
+  // ZOOTÉCNICO
+  setT('txt-zoo-title', t.zootecnicoTitle);
+  setT('txt-zoo-sub', t.zootecnicoSub);
+  setT('lbl-z-filtro', t.filtrar);
+  setT('lbl-z-parametro', t.parametroGraficar);
+  setT('txt-z-tabla', t.tablaTitle);
+
+  // PARÁMETROS
+  setT('txt-params-title', t.paramsTitle);
+  setT('txt-params-sub', t.paramsSub);
+  setT('btn-restaurar', t.restaurar);
+
+  // ESPECIES
+  setT('txt-especies-title', t.especiesTitle);
+  setT('txt-especies-sub', t.especiesSub);
+  setT('btn-nueva-especie', t.nuevaEspecie);
+
+  // FÓRMULAS
+  setT('txt-formulas-title', t.formulasTitle);
+  setT('txt-formulas-sub', t.formulasSub);
+
+  // FINCAS
+  setT('txt-fincas-title', t.fincasTitle);
+  setT('txt-fincas-sub', t.fincasSub);
+  setT('txt-finca-activa-label', t.fincaActiva);
+  setT('btn-nueva-finca', t.nuevaFinca);
+
+  // PERFIL modal
+  setT('txt-perfil-title', t.editarPerfil);
+  setT('btn-guardar-perfil', t.guardar);
+  setT('btn-cancelar-perfil', t.cancelar);
+
+  // HEADER botón salir
   const btnSalir = document.querySelector('button[onclick="doLogout()"]');
   if(btnSalir) btnSalir.textContent = t.salir;
 
-  // Re-render bitácora con nuevos textos
+  // Moneda labels
+  const m = MONEDAS[monedaActual]||MONEDAS.CRC;
+  setT('lbl-precio-alimento', t.precioAlim+' ('+m.simbolo+'/kg)');
+  setT('lbl-precio-venta', t.precioVenta+' ('+m.simbolo+'/kg)');
+
+  // Re-render bitácora con textos actualizados
   renderBitacora();
-};
+  renderFincas();
+}
 
 window.calcular = () => {
   const g = id => parseFloat(document.getElementById(id)?.value)||0;
