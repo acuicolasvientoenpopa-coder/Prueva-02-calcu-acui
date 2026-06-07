@@ -239,11 +239,11 @@ textarea{resize:vertical;min-height:70px;}
     </div>
     <div class="auth-logo">
       <div class="icon">🐟</div>
-      <h1>AquaCalc <span class="version-badge">v3.4</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.2</span></h1>
       <span>HERRAMIENTA DE CAMPO · ACUICULTURA CR</span>
     </div>
     <div id="email-verify-banner" class="email-verify-banner">
-      ⚠️ <span id="txt-verify-msg">Tu correo aún no está verificado. Revisá tu bandeja de entrada o</span> <a onclick="reenviarVerificacion()" id="lnk-reenviar">reenviar correo</a>.
+      ⚠️ Tu correo aún no está verificado. Revisá tu bandeja de entrada o <a onclick="reenviarVerificacion()">reenviar correo</a>.
     </div>
     <div class="auth-tabs">
       <div class="auth-tab active" onclick="switchAuth('login')">Iniciar Sesión</div>
@@ -328,7 +328,7 @@ textarea{resize:vertical;min-height:70px;}
   <div class="logo">
     <div class="logo-icon">🐟</div>
     <div class="logo-text">
-      <h1>AquaCalc <span class="version-badge">v3.4</span></h1>
+      <h1>AquaCalc <span class="version-badge">v3.5</span></h1>
       <span id="header-finca">ACUICULTURA</span>
     </div>
   </div>
@@ -359,32 +359,32 @@ textarea{resize:vertical;min-height:70px;}
   <!-- CALCULADORA -->
   <div id="panel-calc" class="panel active">
     <div class="section-header">
-      <div><div class="section-title" id="txt-calc-title">Calculadora</div><div class="section-sub" id="txt-calc-sub">Seleccione especie e ingrese datos del estanque</div></div>
+      <div><div class="section-title">Calculadora</div><div class="section-sub">Seleccione especie e ingrese datos del estanque</div></div>
     </div>
     <div class="card">
-      <div class="card-title" id="ct-especie">🐠 Especie</div>
+      <div class="card-title">🐠 Especie</div>
       <div class="species-grid" id="speciesGrid"></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-title" id="ct-datos-estanque">🏊 Datos del Estanque</div>
-        <div class="field"><label id="lbl-volumen-area">Volumen / Área</label>
+        <div class="card-title">🏊 Datos del Estanque</div>
+        <div class="field"><label>Volumen / Área</label>
           <div class="input-group"><input type="number" id="inp-volumen" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-volumen">m³</span></div>
           <div class="field-error" id="err-volumen"></div></div>
-        <div class="field"><label id="lbl-densidad-siembra">Densidad de siembra</label>
+        <div class="field"><label>Densidad de siembra</label>
           <div class="input-group"><input type="number" id="inp-densidad" placeholder="0" oninput="calcular()"><span class="input-unit" id="unit-densidad">peces/m³</span></div>
           <div class="field-error" id="err-densidad"></div></div>
-        <div class="field"><label id="lbl-peso-inicial">Peso inicial (g)</label>
+        <div class="field"><label>Peso inicial (g)</label>
           <div class="input-group"><input type="number" id="inp-peso-inicial" placeholder="0" oninput="calcular()"><span class="input-unit">g</span></div>
           <div class="field-error" id="err-peso-inicial"></div></div>
-        <div class="field"><label id="lbl-peso-cosecha">Peso de cosecha (g)</label>
+        <div class="field"><label>Peso de cosecha (g)</label>
           <div class="input-group"><input type="number" id="inp-peso-cosecha" placeholder="0" oninput="calcular()"><span class="input-unit">g</span></div>
           <div class="field-error" id="err-peso-cosecha"></div></div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-parametros">📊 Parámetros</div>
+        <div class="card-title">📊 Parámetros</div>
         <div class="field">
-          <label id="lbl-supervivencia">Supervivencia (%)
+          <label>Supervivencia (%)
             <span class="info-btn" onclick="toggleTooltip('tip-supervivencia')">ℹ</span>
           </label>
           <div class="input-group"><input type="number" id="inp-supervivencia" placeholder="0" oninput="calcular()"><span class="input-unit">%</span></div>
@@ -392,13 +392,13 @@ textarea{resize:vertical;min-height:70px;}
           <div class="field-error" id="err-supervivencia"></div>
         </div>
         <div class="field">
-          <label id="lbl-fcr">FCR
+          <label>FCR
             <span class="info-btn" onclick="toggleTooltip('tip-fcr')">ℹ</span>
           </label>
           <div class="input-group"><input type="number" step="0.1" id="inp-fcr" placeholder="0.0" oninput="calcular()"><span class="input-unit">ratio</span></div>
           <div class="tooltip-card" id="tip-fcr"><strong>FCR (Factor de Conversión Alimenticia)</strong> indica cuántos kg de alimento se necesitan para producir 1 kg de carne. Un FCR de 1.4 significa que se usan 1.4 kg de alimento por cada kg de ganancia de peso. Menor es mejor.</div>
         </div>
-        <div class="field"><label id="lbl-moneda">Moneda</label>
+        <div class="field"><label>Moneda</label>
           <select id="sel-moneda" onchange="cambiarMoneda()" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;">
             <option value="USD">🇺🇸 USD — Dólar ($)</option>
             <option value="CRC" selected>🇨🇷 CRC — Colón (₡)</option>
@@ -424,7 +424,7 @@ textarea{resize:vertical;min-height:70px;}
       </div>
     </div>
     <div class="card">
-      <div class="card-title" id="ct-resultados">📈 Resultados</div>
+      <div class="card-title">📈 Resultados</div>
       <div class="grid-4">
         <div class="result-card h1"><div class="result-value" id="r-total-animales">—</div><div class="result-label">Total animales</div></div>
         <div class="result-card h1"><div class="result-value" id="r-biomasa-inicial">—</div><div class="result-label">Biomasa inicial (kg)</div></div>
@@ -455,8 +455,8 @@ textarea{resize:vertical;min-height:70px;}
       <div class="tooltip-card" id="tip-gpd-info" style="margin-top:8px"><strong>GPD (Ganancia de Peso Diaria)</strong> es cuántos gramos en promedio gana cada animal por día. Se calcula como (Peso final − Peso inicial) ÷ días de cultivo.</div>
     </div>
     <div class="card">
-      <div class="card-title" id="ct-racion-diaria">🍽️ Ración Diaria</div>
-      <div class="field"><label id="lbl-biomasa-actual">Biomasa actual (kg)</label>
+      <div class="card-title">🍽️ Ración Diaria</div>
+      <div class="field"><label>Biomasa actual (kg)</label>
         <div class="input-group"><input type="number" id="inp-biomasa-actual" placeholder="0" oninput="calcRacion()"><span class="input-unit">kg</span></div></div>
       <div class="grid-3" style="margin-top:12px">
         <div class="result-card h1"><div class="result-value" id="r-racion-dia">—</div><div class="result-label">Ración/día (kg)</div></div>
@@ -553,61 +553,61 @@ textarea{resize:vertical;min-height:70px;}
 
       <!-- OBSERVACIONES DE CAMPO -->
       <div class="obs-section">
-        <div class="obs-title" id="lbl-obs-campo">👀 Observaciones de Campo</div>
+        <div class="obs-title" id="lbl-obs-title">👀 Observaciones de Campo</div>
         <div class="obs-checks" id="obs-checks-container">
           <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_activa',event)">
             <input type="checkbox" value="alimentacion_activa">
             <span class="obs-check-icon">🍽️</span>
-            <span class="obs-check-label">Alimentación activa</span>
+            <span class="obs-check-label" id="obs-alimentacion_activa">Alimentación activa</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'alimentacion_reducida',event)">
             <input type="checkbox" value="alimentacion_reducida">
             <span class="obs-check-icon">⬇️</span>
-            <span class="obs-check-label">Alimentación reducida</span>
+            <span class="obs-check-label" id="obs-alimentacion_reducida">Alimentación reducida</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'boqueo',event)">
             <input type="checkbox" value="boqueo">
             <span class="obs-check-icon">😮</span>
-            <span class="obs-check-label">Boqueo en superficie</span>
+            <span class="obs-check-label" id="obs-boqueo">Boqueo en superficie</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'agua_verde',event)">
             <input type="checkbox" value="agua_verde">
             <span class="obs-check-icon">🟢</span>
-            <span class="obs-check-label">Agua verde (bloom)</span>
+            <span class="obs-check-label" id="obs-agua_verde">Agua verde (bloom)</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'agua_cafe',event)">
             <input type="checkbox" value="agua_cafe">
             <span class="obs-check-icon">🟤</span>
-            <span class="obs-check-label">Agua café/turbia</span>
+            <span class="obs-check-label" id="obs-agua_cafe">Agua café/turbia</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'agua_clara',event)">
             <input type="checkbox" value="agua_clara">
             <span class="obs-check-icon">💧</span>
-            <span class="obs-check-label">Agua clara</span>
+            <span class="obs-check-label" id="obs-agua_clara">Agua clara</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'espuma',event)">
             <input type="checkbox" value="espuma">
             <span class="obs-check-icon">🫧</span>
-            <span class="obs-check-label">Espuma excesiva</span>
+            <span class="obs-check-label" id="obs-espuma">Espuma excesiva</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'mortalidades_observadas',event)">
             <input type="checkbox" value="mortalidades_observadas">
             <span class="obs-check-icon">💀</span>
-            <span class="obs-check-label">Mortalidades visibles</span>
+            <span class="obs-check-label" id="obs-mortalidades_observadas">Mortalidades visibles</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'peces_lentos',event)">
             <input type="checkbox" value="peces_lentos">
             <span class="obs-check-icon">🐢</span>
-            <span class="obs-check-label">Peces lentos/inactivos</span>
+            <span class="obs-check-label" id="obs-peces_lentos">Peces lentos/inactivos</span>
           </label>
           <label class="obs-check" onclick="toggleObsCheck(this,'nado_errático',event)">
             <input type="checkbox" value="nado_erratico">
             <span class="obs-check-icon">🌀</span>
-            <span class="obs-check-label">Nado errático</span>
+            <span class="obs-check-label" id="obs-nado_erratico">Nado errático</span>
           </label>
         </div>
         <div class="field">
-          <label id="lbl-obs-libres">Observaciones libres</label>
+          <label id="lbl-b-observaciones">Observaciones libres</label>
           <textarea id="b-observaciones" placeholder="Notas adicionales, tratamientos, incidencias..."></textarea>
         </div>
       </div>
@@ -731,57 +731,57 @@ textarea{resize:vertical;min-height:70px;}
     </div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-title" id="ct-f-biomasa">⚖️ Biomasa</div>
+        <div class="card-title">⚖️ Biomasa</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Biomasa (kg) = N° animales × Peso promedio (g) ÷ 1000</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-biomasa">Indica el peso total de los animales en el sistema. Ejemplo: 1000 peces × 300g = 300 kg de biomasa.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-fcr">🍽️ FCR — Factor de Conversión Alimenticia</div>
+        <div class="card-title">🍽️ FCR — Factor de Conversión Alimenticia</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">FCR = Alimento consumido (kg) ÷ Ganancia de peso (kg)</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-fcr">Mide la eficiencia alimenticia. Un FCR de 1.5 significa que se necesitan 1.5 kg de alimento para producir 1 kg de carne. Menor es mejor.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-sgr">📈 SGR — Tasa de Crecimiento Específico</div>
+        <div class="card-title">📈 SGR — Tasa de Crecimiento Específico</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">SGR (%/día) = [(ln Pf − ln Pi) ÷ días] × 100</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-sgr">Indica el porcentaje de ganancia de peso por día relativo al peso corporal. Pf = peso final, Pi = peso inicial.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-supervivencia">✅ Supervivencia</div>
+        <div class="card-title">✅ Supervivencia</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Supervivencia (%) = (Animales finales ÷ Animales iniciales) × 100</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-supervivencia">Porcentaje de animales que sobreviven durante el ciclo de producción.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-k">🐟 Factor de Condición (K)</div>
+        <div class="card-title">🐟 Factor de Condición (K)</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">K = (Peso (g) ÷ Longitud (cm)³) × 100</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-k">Indica el estado de bienestar del pez. Valores cercanos a 1 son normales. Valores menores pueden indicar desnutrición.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-cv">📊 Coeficiente de Variación (CV)</div>
+        <div class="card-title">📊 Coeficiente de Variación (CV)</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">CV (%) = (Desviación estándar ÷ Media) × 100</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-cv">Mide la uniformidad del lote. CV menor a 20% indica lote uniforme. Mayor a 35% sugiere heterogeneidad problemática.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-tasa">🌊 Tasa de Alimentación</div>
+        <div class="card-title">🌊 Tasa de Alimentación</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Ración diaria (kg) = Biomasa (kg) × Tasa (%) ÷ 100</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-tasa">La tasa de alimentación varía según especie, temperatura y etapa de crecimiento. Generalmente entre 1% y 6% de la biomasa por día.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-densidad">🏗️ Densidad de Siembra</div>
+        <div class="card-title">🏗️ Densidad de Siembra</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Densidad = N° animales ÷ Volumen (m³ o m²)</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-densidad">Define cuántos animales se colocan por unidad de volumen o área. Afecta directamente la calidad del agua y el crecimiento.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-costo">💰 Costo por kg Producido</div>
+        <div class="card-title">💰 Costo por kg Producido</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Costo/kg = Costo total alimento ÷ Biomasa cosechada (kg)</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-costo">Indica cuánto cuesta producir cada kilogramo de producto. Es el principal indicador de rentabilidad.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-utilidad">📉 Utilidad</div>
+        <div class="card-title">📉 Utilidad</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Utilidad = Ingreso bruto − Costo de alimento</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-utilidad">Ingreso bruto = Biomasa cosechada × Precio de venta. Nota: no incluye otros costos operativos.</div>
       </div>
       <div class="card">
-        <div class="card-title" id="ct-f-dias">⏱️ Días al Mercado</div>
+        <div class="card-title">⏱️ Días al Mercado</div>
         <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);margin-bottom:8px">Días = (Peso cosecha − Peso inicial) ÷ GPD</div>
         <div style="font-size:12px;color:var(--text2);line-height:1.6" id="desc-dias">GPD = Ganancia de peso diaria (g/día). Estima el tiempo necesario para alcanzar el peso de cosecha.</div>
       </div>
@@ -827,9 +827,9 @@ textarea{resize:vertical;min-height:70px;}
 <div class="modal-overlay" id="modal-perfil" style="display:none">
   <div class="modal">
     <div class="modal-title" id="txt-perfil-title">👤 Editar Perfil</div>
-    <div class="field"><label id="lbl-p-nombre">Nombre completo</label><input type="text" id="p-nombre" placeholder="Tu nombre">
+    <div class="field"><label>Nombre completo</label><input type="text" id="p-nombre" placeholder="Tu nombre">
       <div class="field-error" id="err-p-nombre"></div></div>
-    <div class="field"><label id="lbl-p-finca">Nombre de finca / empresa</label><input type="text" id="p-finca" placeholder="Nombre de tu finca">
+    <div class="field"><label>Nombre de finca / empresa</label><input type="text" id="p-finca" placeholder="Nombre de tu finca">
       <div class="field-error" id="err-p-finca"></div></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" id="btn-cancelar-perfil" onclick="cerrarModalPerfil()">Cancelar</button>
@@ -844,15 +844,15 @@ textarea{resize:vertical;min-height:70px;}
     <div class="modal-title">🐠 <span id="modal-especie-titulo">Nueva Especie</span></div>
     <input type="hidden" id="ce-index">
     <div class="grid-2">
-      <div class="field"><label id="lbl-ce-nombre">Nombre común</label><input type="text" id="ce-nombre" placeholder="Ej: Mojarra">
+      <div class="field"><label>Nombre común</label><input type="text" id="ce-nombre" placeholder="Ej: Mojarra">
         <div class="field-error" id="err-ce-nombre"></div></div>
-      <div class="field"><label id="lbl-ce-sci">Nombre científico</label><input type="text" id="ce-sci" placeholder="Ej: Cichlasoma sp."></div>
+      <div class="field"><label>Nombre científico</label><input type="text" id="ce-sci" placeholder="Ej: Cichlasoma sp."></div>
     </div>
-    <div class="field"><label id="lbl-ce-emoji">Emoji</label><input type="text" id="ce-emoji" placeholder="🐟" maxlength="2"></div>
+    <div class="field"><label>Emoji</label><input type="text" id="ce-emoji" placeholder="🐟" maxlength="2"></div>
     <div class="divider"></div>
     <div class="grid-2">
-      <div class="field"><label id="lbl-ce-densidad">Densidad</label><input type="number" id="ce-densidad" placeholder="0"></div>
-      <div class="field"><label id="lbl-ce-densidad-unit">Unidad densidad</label>
+      <div class="field"><label>Densidad</label><input type="number" id="ce-densidad" placeholder="0"></div>
+      <div class="field"><label>Unidad densidad</label>
         <select id="ce-densidad-unit">
           <option value="peces/m³">peces/m³</option>
           <option value="kg/m³">kg/m³</option>
@@ -860,16 +860,16 @@ textarea{resize:vertical;min-height:70px;}
           <option value="peces/m²">peces/m²</option>
         </select>
       </div>
-      <div class="field"><label id="lbl-ce-supervivencia">Supervivencia (%)</label><input type="number" id="ce-supervivencia" placeholder="85"></div>
-      <div class="field"><label id="lbl-ce-fcr">FCR</label><input type="number" step="0.1" id="ce-fcr" placeholder="1.5"></div>
-      <div class="field"><label id="lbl-ce-tasa-alim">Tasa alimentación (%)</label><input type="number" step="0.1" id="ce-tasa-alim" placeholder="3.0"></div>
-      <div class="field"><label id="lbl-ce-comidas">Comidas/día</label><input type="number" id="ce-comidas" placeholder="3"></div>
-      <div class="field"><label id="lbl-ce-gpd">GPD (g/día)</label><input type="number" step="0.1" id="ce-gpd" placeholder="2.0"></div>
-      <div class="field"><label id="lbl-ce-precio-alimento">Precio alimento (₡/kg)</label><input type="number" id="ce-precio-alimento" placeholder="900"></div>
-      <div class="field"><label id="lbl-ce-precio-venta">Precio venta (₡/kg)</label><input type="number" id="ce-precio-venta" placeholder="3000"></div>
-      <div class="field"><label id="lbl-ce-peso-inicial">Peso inicial (g)</label><input type="number" step="0.1" id="ce-peso-inicial" placeholder="5"></div>
-      <div class="field"><label id="lbl-ce-peso-cosecha">Peso cosecha (g)</label><input type="number" id="ce-peso-cosecha" placeholder="500"></div>
-      <div class="field"><label id="lbl-ce-vol-unit">Unidad volumen</label>
+      <div class="field"><label>Supervivencia (%)</label><input type="number" id="ce-supervivencia" placeholder="85"></div>
+      <div class="field"><label>FCR</label><input type="number" step="0.1" id="ce-fcr" placeholder="1.5"></div>
+      <div class="field"><label>Tasa alimentación (%)</label><input type="number" step="0.1" id="ce-tasa-alim" placeholder="3.0"></div>
+      <div class="field"><label>Comidas/día</label><input type="number" id="ce-comidas" placeholder="3"></div>
+      <div class="field"><label>GPD (g/día)</label><input type="number" step="0.1" id="ce-gpd" placeholder="2.0"></div>
+      <div class="field"><label>Precio alimento (₡/kg)</label><input type="number" id="ce-precio-alimento" placeholder="900"></div>
+      <div class="field"><label>Precio venta (₡/kg)</label><input type="number" id="ce-precio-venta" placeholder="3000"></div>
+      <div class="field"><label>Peso inicial (g)</label><input type="number" step="0.1" id="ce-peso-inicial" placeholder="5"></div>
+      <div class="field"><label>Peso cosecha (g)</label><input type="number" id="ce-peso-cosecha" placeholder="500"></div>
+      <div class="field"><label>Unidad volumen</label>
         <select id="ce-vol-unit">
           <option value="m³">m³</option>
           <option value="m²">m²</option>
@@ -879,8 +879,8 @@ textarea{resize:vertical;min-height:70px;}
       </div>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="cerrarModalEspecie()" id="btn-cancelar-especie">Cancelar</button>
-      <button class="btn btn-primary" onclick="guardarEspecie()" id="btn-guardar-especie">Guardar</button>
+      <button class="btn btn-secondary" onclick="cerrarModalEspecie()">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarEspecie()">Guardar</button>
     </div>
   </div>
 </div>
@@ -1014,32 +1014,29 @@ function updateSyncBar() {
   const lastTxt = document.getElementById('last-sync-text');
   if (!bar) return;
 
-  const t = IDIOMAS[idiomaActual] || IDIOMAS.es;
   const pendingCount = state.pendingSync?.length || 0;
 
   if (!state.isOnline) {
     bar.style.display = 'flex';
     dot.className = 'offline-dot';
-    txt.textContent = (t.sinConexion||'Sin conexión — trabajando localmente') + (pendingCount > 0 ? ` (${pendingCount} ${pendingCount>1?(t.pendientesSync||'pendientes'):(t.pendienteSync||'pendiente')})` : '');
+    txt.textContent = 'Sin conexión — trabajando localmente' + (pendingCount > 0 ? ` (${pendingCount} pendientes)` : '');
     btnSync.disabled = true;
   } else if (pendingCount > 0) {
     bar.style.display = 'flex';
     dot.className = 'offline-dot';
     dot.style.background = 'var(--accent3)';
-    txt.textContent = `${pendingCount} registro${pendingCount>1?'s':''} ${pendingCount>1?(t.pendientesSync||'pendientes de sincronizar'):(t.pendienteSync||'pendiente de sincronizar')}`;
+    txt.textContent = `${pendingCount} registro${pendingCount>1?'s':''} pendiente${pendingCount>1?'s':''} de sincronizar`;
     btnSync.disabled = false;
   } else {
     bar.style.display = 'flex';
     dot.className = 'online-dot';
-    txt.textContent = t.conectado||'Conectado — datos sincronizados';
+    txt.textContent = 'Conectado — datos sincronizados';
     btnSync.disabled = true;
   }
 
-  if(btnSync) btnSync.textContent = t.sincronizar||'☁️ Sincronizar';
-
   if (state.lastSync) {
     const d = new Date(state.lastSync);
-    lastTxt.textContent = (t.ultimaSync||'Última sync:') + ' ' + d.toLocaleString('es-CR',{dateStyle:'short',timeStyle:'short'});
+    lastTxt.textContent = 'Última sync: ' + d.toLocaleString('es-CR',{dateStyle:'short',timeStyle:'short'});
   }
 }
 
@@ -1521,50 +1518,7 @@ const IDIOMAS = {
     alimentacion_activa:'🍽️ Alimentación activa',alimentacion_reducida:'⬇️ Alimentación reducida',
     boqueo:'😮 Boqueo en superficie',agua_verde:'🟢 Agua verde',agua_cafe:'🟤 Agua turbia',
     agua_clara:'💧 Agua clara',espuma:'🫧 Espuma',mortalidades_observadas:'💀 Mortalidades visibles',
-    peces_lentos:'🐢 Peces inactivos',nado_erratico:'🌀 Nado errático',
-    // CARD TITLES - CALCULADORA
-    ctEspecie:'🐠 Especie',ctDatosEstanque:'🏊 Datos del Estanque',ctParametros:'📊 Parámetros',
-    ctResultados:'📈 Resultados',ctRacionDiaria:'🍽️ Ración Diaria',
-    // LABELS CALCULADORA
-    volumenArea:'Volumen / Área',densidadSiembra:'Densidad de siembra',
-    pesoInicial:'Peso inicial (g)',pesoCosecha:'Peso de cosecha (g)',
-    supervivenciaLabel:'Supervivencia (%)',fcrLabel:'FCR',monedaLabel:'Moneda',
-    biomasaActual:'Biomasa actual (kg)',
-    // OBSERVACIONES
-    obsCampo:'👀 Observaciones de Campo',obsLibres:'Observaciones libres',
-    // SYNC BAR
-    sinConexion:'Sin conexión — trabajando localmente',conectado:'Conectado — datos sincronizados',
-    pendienteSync:'pendiente de sincronizar',pendientesSync:'pendientes de sincronizar',
-    ultimaSync:'Última sync:',sincronizar:'☁️ Sincronizar',
-    // EMAIL VERIFY
-    verifyMsg:'Tu correo aún no está verificado. Revisá tu bandeja de entrada o',
-    reenviarCorreo:'reenviar correo',
-    // MODAL ESPECIE
-    ceNombreComun:'Nombre común',ceCientifico:'Nombre científico',ceEmoji:'Emoji',
-    ceDensidad:'Densidad',ceDensidadUnit:'Unidad densidad',ceSupervivencia:'Supervivencia (%)',
-    ceFcr:'FCR',ceTasaAlim:'Tasa alimentación (%)',ceComidasDia:'Comidas/día',
-    ceGpd:'GPD (g/día)',cePrecioAlim:'Precio alimento',cePrecioVenta:'Precio venta',
-    cePesoInicial:'Peso inicial (g)',cePesoCosecha:'Peso cosecha (g)',ceVolUnit:'Unidad volumen',
-    // MODAL PERFIL
-    pNombre:'Nombre completo',pFinca:'Nombre de finca / empresa',
-    // FÓRMULAS card-titles
-    fBiomasa:'⚖️ Biomasa',fFcr:'🍽️ FCR — Factor de Conversión Alimenticia',
-    fSgr:'📈 SGR — Tasa de Crecimiento Específico',fSupervivencia:'✅ Supervivencia',
-    fK:'🐟 Factor de Condición (K)',fCv:'📊 Coeficiente de Variación (CV)',
-    fTasa:'🌊 Tasa de Alimentación',fDensidad:'🏗️ Densidad de Siembra',
-    fCosto:'💰 Costo por kg Producido',fUtilidad:'📉 Utilidad',fDias:'⏱️ Días al Mercado',
-    // FÓRMULAS descripciones
-    descBiomasa:'Indica el peso total de los animales en el sistema. Ejemplo: 1000 peces × 300g = 300 kg de biomasa.',
-    descFcr:'Mide la eficiencia alimenticia. Un FCR de 1.5 significa que se necesitan 1.5 kg de alimento para producir 1 kg de carne. Menor es mejor.',
-    descSgr:'Indica el porcentaje de ganancia de peso por día relativo al peso corporal. Pf = peso final, Pi = peso inicial.',
-    descSupervivencia:'Porcentaje de animales que sobreviven durante el ciclo de producción.',
-    descK:'Indica el estado de bienestar del pez. Valores cercanos a 1 son normales. Valores menores pueden indicar desnutrición.',
-    descCv:'Mide la uniformidad del lote. CV menor a 20% indica lote uniforme. Mayor a 35% sugiere heterogeneidad problemática.',
-    descTasa:'La tasa de alimentación varía según especie, temperatura y etapa de crecimiento. Generalmente entre 1% y 6% de la biomasa por día.',
-    descDensidad:'Define cuántos animales se colocan por unidad de volumen o área. Afecta directamente la calidad del agua y el crecimiento.',
-    descCosto:'Indica cuánto cuesta producir cada kilogramo de producto. Es el principal indicador de rentabilidad.',
-    descUtilidad:'Ingreso bruto = Biomasa cosechada × Precio de venta. Nota: no incluye otros costos operativos.',
-    descDias:'GPD = Ganancia de peso diaria (g/día). Estima el tiempo necesario para alcanzar el peso de cosecha.'
+    peces_lentos:'🐢 Peces inactivos',nado_erratico:'🌀 Nado errático'
   },
   en:{
     calc:'🧮 Calculator',bitacora:'📋 Logbook',zootecnico:'🔬 Zootechnical',
@@ -1643,50 +1597,7 @@ const IDIOMAS = {
     alimentacion_activa:'🍽️ Active feeding',alimentacion_reducida:'⬇️ Reduced feeding',
     boqueo:'😮 Surface gasping',agua_verde:'🟢 Green water',agua_cafe:'🟤 Turbid water',
     agua_clara:'💧 Clear water',espuma:'🫧 Foam',mortalidades_observadas:'💀 Visible mortalities',
-    peces_lentos:'🐢 Inactive fish',nado_erratico:'🌀 Erratic swimming',
-    // CARD TITLES - CALCULADORA
-    ctEspecie:'🐠 Species',ctDatosEstanque:'🏊 Pond Data',ctParametros:'📊 Parameters',
-    ctResultados:'📈 Results',ctRacionDiaria:'🍽️ Daily Ration',
-    // LABELS CALCULADORA
-    volumenArea:'Volume / Area',densidadSiembra:'Stocking density',
-    pesoInicial:'Initial weight (g)',pesoCosecha:'Harvest weight (g)',
-    supervivenciaLabel:'Survival (%)',fcrLabel:'FCR',monedaLabel:'Currency',
-    biomasaActual:'Current biomass (kg)',
-    // OBSERVACIONES
-    obsCampo:'👀 Field Observations',obsLibres:'Free notes',
-    // SYNC BAR
-    sinConexion:'Offline — working locally',conectado:'Online — data synced',
-    pendienteSync:'pending sync',pendientesSync:'pending sync',
-    ultimaSync:'Last sync:',sincronizar:'☁️ Sync',
-    // EMAIL VERIFY
-    verifyMsg:'Your email is not verified yet. Check your inbox or',
-    reenviarCorreo:'resend email',
-    // MODAL ESPECIE
-    ceNombreComun:'Common name',ceCientifico:'Scientific name',ceEmoji:'Emoji',
-    ceDensidad:'Density',ceDensidadUnit:'Density unit',ceSupervivencia:'Survival (%)',
-    ceFcr:'FCR',ceTasaAlim:'Feeding rate (%)',ceComidasDia:'Feedings/day',
-    ceGpd:'DWG (g/day)',cePrecioAlim:'Feed price',cePrecioVenta:'Sale price',
-    cePesoInicial:'Initial weight (g)',cePesoCosecha:'Harvest weight (g)',ceVolUnit:'Volume unit',
-    // MODAL PERFIL
-    pNombre:'Full name',pFinca:'Farm / company name',
-    // FÓRMULAS card-titles
-    fBiomasa:'⚖️ Biomass',fFcr:'🍽️ FCR — Feed Conversion Ratio',
-    fSgr:'📈 SGR — Specific Growth Rate',fSupervivencia:'✅ Survival',
-    fK:'🐟 Condition Factor (K)',fCv:'📊 Coefficient of Variation (CV)',
-    fTasa:'🌊 Feeding Rate',fDensidad:'🏗️ Stocking Density',
-    fCosto:'💰 Cost per kg Produced',fUtilidad:'📉 Profit',fDias:'⏱️ Days to Market',
-    // FÓRMULAS descripciones
-    descBiomasa:'Indicates the total weight of animals in the system. Example: 1,000 fish × 300g = 300 kg biomass.',
-    descFcr:'Measures feed efficiency. An FCR of 1.5 means 1.5 kg of feed is needed to produce 1 kg of flesh. Lower is better.',
-    descSgr:'Indicates the daily weight gain as a percentage of body weight. Pf = final weight, Pi = initial weight.',
-    descSupervivencia:'Percentage of animals that survive throughout the production cycle.',
-    descK:'Indicates the fish\'s condition. Values near 1 are normal. Lower values may indicate malnutrition.',
-    descCv:'Measures batch uniformity. CV below 20% means uniform batch. Above 35% suggests problematic heterogeneity.',
-    descTasa:'Feeding rate varies by species, temperature and growth stage. Generally between 1% and 6% of biomass per day.',
-    descDensidad:'Defines how many animals are placed per unit of volume or area. Directly affects water quality and growth.',
-    descCosto:'Indicates how much it costs to produce each kilogram of product. It is the main profitability indicator.',
-    descUtilidad:'Gross income = Harvested biomass × Sale price. Note: does not include other operating costs.',
-    descDias:'DWG = Daily Weight Gain (g/day). Estimates the time needed to reach harvest weight.'
+    peces_lentos:'🐢 Inactive fish',nado_erratico:'🌀 Erratic swimming'
   },
   pt:{
     calc:'🧮 Calculadora',bitacora:'📋 Diário',zootecnico:'🔬 Zootécnico',
@@ -1765,50 +1676,7 @@ const IDIOMAS = {
     alimentacion_activa:'🍽️ Alimentação ativa',alimentacion_reducida:'⬇️ Alimentação reduzida',
     boqueo:'😮 Boqueio na superfície',agua_verde:'🟢 Água verde',agua_cafe:'🟤 Água turva',
     agua_clara:'💧 Água clara',espuma:'🫧 Espuma',mortalidades_observadas:'💀 Mortalidades visíveis',
-    peces_lentos:'🐢 Peixes inativos',nado_erratico:'🌀 Natação errática',
-    // CARD TITLES - CALCULADORA
-    ctEspecie:'🐠 Espécie',ctDatosEstanque:'🏊 Dados do Tanque',ctParametros:'📊 Parâmetros',
-    ctResultados:'📈 Resultados',ctRacionDiaria:'🍽️ Ração Diária',
-    // LABELS CALCULADORA
-    volumenArea:'Volume / Área',densidadSiembra:'Densidade de estocagem',
-    pesoInicial:'Peso inicial (g)',pesoCosecha:'Peso de colheita (g)',
-    supervivenciaLabel:'Sobrevivência (%)',fcrLabel:'FCA',monedaLabel:'Moeda',
-    biomasaActual:'Biomassa atual (kg)',
-    // OBSERVACIONES
-    obsCampo:'👀 Observações de Campo',obsLibres:'Observações livres',
-    // SYNC BAR
-    sinConexion:'Sem conexão — trabalhando localmente',conectado:'Conectado — dados sincronizados',
-    pendienteSync:'pendente de sincronização',pendientesSync:'pendentes de sincronização',
-    ultimaSync:'Última sync:',sincronizar:'☁️ Sincronizar',
-    // EMAIL VERIFY
-    verifyMsg:'Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada ou',
-    reenviarCorreo:'reenviar e-mail',
-    // MODAL ESPECIE
-    ceNombreComun:'Nome comum',ceCientifico:'Nome científico',ceEmoji:'Emoji',
-    ceDensidad:'Densidade',ceDensidadUnit:'Unidade de densidade',ceSupervivencia:'Sobrevivência (%)',
-    ceFcr:'FCA',ceTasaAlim:'Taxa de alimentação (%)',ceComidasDia:'Refeições/dia',
-    ceGpd:'GMD (g/dia)',cePrecioAlim:'Preço da ração',cePrecioVenta:'Preço de venda',
-    cePesoInicial:'Peso inicial (g)',cePesoCosecha:'Peso de colheita (g)',ceVolUnit:'Unidade de volume',
-    // MODAL PERFIL
-    pNombre:'Nome completo',pFinca:'Nome da fazenda / empresa',
-    // FÓRMULAS card-titles
-    fBiomasa:'⚖️ Biomassa',fFcr:'🍽️ FCA — Fator de Conversão Alimentar',
-    fSgr:'📈 TEC — Taxa de Crescimento Específico',fSupervivencia:'✅ Sobrevivência',
-    fK:'🐟 Fator de Condição (K)',fCv:'📊 Coeficiente de Variação (CV)',
-    fTasa:'🌊 Taxa de Alimentação',fDensidad:'🏗️ Densidade de Estocagem',
-    fCosto:'💰 Custo por kg Produzido',fUtilidad:'📉 Lucro',fDias:'⏱️ Dias ao Mercado',
-    // FÓRMULAS descripciones
-    descBiomasa:'Indica o peso total dos animais no sistema. Exemplo: 1.000 peixes × 300g = 300 kg de biomassa.',
-    descFcr:'Mede a eficiência alimentar. Um FCA de 1,5 significa que são necessários 1,5 kg de ração para produzir 1 kg de carne. Quanto menor, melhor.',
-    descSgr:'Indica o percentual de ganho de peso por dia relativo ao peso corporal. Pf = peso final, Pi = peso inicial.',
-    descSupervivencia:'Percentual de animais que sobrevivem durante o ciclo de produção.',
-    descK:'Indica o estado de saúde do peixe. Valores próximos a 1 são normais. Valores menores podem indicar desnutrição.',
-    descCv:'Mede a uniformidade do lote. CV abaixo de 20% indica lote uniforme. Acima de 35% sugere heterogeneidade problemática.',
-    descTasa:'A taxa de alimentação varia conforme espécie, temperatura e fase de crescimento. Geralmente entre 1% e 6% da biomassa por dia.',
-    descDensidad:'Define quantos animais são colocados por unidade de volume ou área. Afeta diretamente a qualidade da água e o crescimento.',
-    descCosto:'Indica quanto custa produzir cada quilograma de produto. É o principal indicador de rentabilidade.',
-    descUtilidad:'Receita bruta = Biomassa colhida × Preço de venda. Nota: não inclui outros custos operacionais.',
-    descDias:'GMD = Ganho de peso diário (g/dia). Estima o tempo necessário para atingir o peso de colheita.'
+    peces_lentos:'🐢 Peixes inativos',nado_erratico:'🌀 Natação errática'
   }
 };
 
@@ -1845,11 +1713,6 @@ window.cambiarIdiomaAuth = (lang) => {
   if(forgotLink) forgotLink.textContent = t.olvidaste;
   const volverBtn = document.querySelector('#form-forgot .btn-secondary');
   if(volverBtn) volverBtn.textContent = t.volver;
-  // Email verify banner
-  const verifySpanA = document.getElementById('txt-verify-msg');
-  if(verifySpanA&&t.verifyMsg) verifySpanA.textContent = t.verifyMsg;
-  const lnkReenviarA = document.getElementById('lnk-reenviar');
-  if(lnkReenviarA&&t.reenviarCorreo) lnkReenviarA.textContent = t.reenviarCorreo;
   // Sync sel-idioma en app principal si existe
   const selApp = document.getElementById('sel-idioma');
   if(selApp) selApp.value = lang;
@@ -1968,108 +1831,38 @@ function aplicarIdioma(lang) {
   setT('lbl-precio-alimento', t.precioAlim+' ('+m.simbolo+'/kg)');
   setT('lbl-precio-venta', t.precioVenta+' ('+m.simbolo+'/kg)');
 
-  // CALCULADORA — card titles
-  setT('ct-especie', t.ctEspecie);
-  setT('ct-datos-estanque', t.ctDatosEstanque);
-  setT('ct-parametros', t.ctParametros);
-  setT('ct-resultados', t.ctResultados);
-  setT('ct-racion-diaria', t.ctRacionDiaria);
-
-  // CALCULADORA — labels
-  setT('lbl-volumen-area', t.volumenArea);
-  setT('lbl-densidad-siembra', t.densidadSiembra);
-  setT('lbl-peso-inicial', t.pesoInicial);
-  setT('lbl-peso-cosecha', t.pesoCosecha);
-  setT('lbl-biomasa-actual', t.biomasaActual);
-  // Supervivencia/FCR/Moneda labels have info-btn inside — use data-txt approach
-  const updateLabelWithBtn = (id, text) => {
-    const el = document.getElementById(id);
-    if(!el) return;
-    const ib = el.querySelector('.info-btn');
-    el.textContent = text + ' ';
-    if(ib) el.appendChild(ib);
-  };
-  updateLabelWithBtn('lbl-supervivencia', t.supervivenciaLabel);
-  updateLabelWithBtn('lbl-fcr', t.fcrLabel);
-  setT('lbl-moneda', t.monedaLabel);
-
-  // BITÁCORA — Observaciones
-  setT('lbl-obs-campo', t.obsCampo);
-  setT('lbl-obs-libres', t.obsLibres);
-  setP('b-observaciones', t.observaciones||'Notas del día...');
-
-  // EMAIL VERIFY BANNER
-  const verifySpan = document.getElementById('txt-verify-msg');
-  if(verifySpan) verifySpan.textContent = t.verifyMsg;
-  const lnkReenviar = document.getElementById('lnk-reenviar');
-  if(lnkReenviar) lnkReenviar.textContent = t.reenviarCorreo;
-
-  // SYNC BAR button
-  setT('btn-sync', t.sincronizar);
-
-  // MODAL ESPECIE — labels
-  setT('lbl-ce-nombre', t.ceNombreComun);
-  setT('lbl-ce-sci', t.ceCientifico);
-  setT('lbl-ce-emoji', t.ceEmoji);
-  setT('lbl-ce-densidad', t.ceDensidad);
-  setT('lbl-ce-densidad-unit', t.ceDensidadUnit);
-  setT('lbl-ce-supervivencia', t.ceSupervivencia);
-  setT('lbl-ce-fcr', t.ceFcr);
-  setT('lbl-ce-tasa-alim', t.ceTasaAlim);
-  setT('lbl-ce-comidas', t.ceComidasDia);
-  setT('lbl-ce-gpd', t.ceGpd);
-  setT('lbl-ce-peso-inicial', t.cePesoInicial);
-  setT('lbl-ce-peso-cosecha', t.cePesoCosecha);
-  setT('lbl-ce-vol-unit', t.ceVolUnit);
-  setT('btn-cancelar-especie', t.cancelar);
-  setT('btn-guardar-especie', t.guardar);
-
-  // MODAL PERFIL — labels
-  setT('lbl-p-nombre', t.pNombre);
-  setT('lbl-p-finca', t.pFinca);
-
-  // FÓRMULAS — card titles
-  setT('ct-f-biomasa', t.fBiomasa);
-  setT('ct-f-fcr', t.fFcr);
-  setT('ct-f-sgr', t.fSgr);
-  setT('ct-f-supervivencia', t.fSupervivencia);
-  setT('ct-f-k', t.fK);
-  setT('ct-f-cv', t.fCv);
-  setT('ct-f-tasa', t.fTasa);
-  setT('ct-f-densidad', t.fDensidad);
-  setT('ct-f-costo', t.fCosto);
-  setT('ct-f-utilidad', t.fUtilidad);
-  setT('ct-f-dias', t.fDias);
-
-  // FÓRMULAS — descripciones
-  setT('desc-biomasa', t.descBiomasa);
-  setT('desc-fcr', t.descFcr);
-  setT('desc-sgr', t.descSgr);
-  setT('desc-supervivencia', t.descSupervivencia);
-  setT('desc-k', t.descK);
-  setT('desc-cv', t.descCv);
-  setT('desc-tasa', t.descTasa);
-  setT('desc-densidad', t.descDensidad);
-  setT('desc-costo', t.descCosto);
-  setT('desc-utilidad', t.descUtilidad);
-  setT('desc-dias', t.descDias);
-
   // Re-render bitácora con textos actualizados
   renderBitacora();
   renderFincas();
+
+  // CHECKBOXES observaciones
+  const obsKeys = ['alimentacion_activa','alimentacion_reducida','boqueo','agua_verde','agua_cafe','agua_clara','espuma','mortalidades_observadas','peces_lentos','nado_erratico'];
+  obsKeys.forEach(k => {
+    const el = document.getElementById('obs-'+k);
+    if(el && t[k]) el.textContent = t[k].replace(/^[^\w\s]+\s/,''); // quitar emoji del label
+  });
+
+  // Traducir resultados de calculadora
+  setT('lbl-r-costo', t.costoAlimento||'Costo alimento');
+  setT('lbl-r-ingreso', t.ingresoBruto||'Ingreso bruto');
+  setT('lbl-r-utilidad', t.utilidad||'Utilidad');
+
+  // Llamar calcular para actualizar labels dinámicos
+  calcular();
 }
 
 window.calcular = () => {
+  const t = IDIOMAS[idiomaActual];
   const g = id => parseFloat(document.getElementById(id)?.value)||0;
   const vol=g('inp-volumen'),dens=g('inp-densidad'),sup=g('inp-supervivencia');
   const fcr=g('inp-fcr'),pi=g('inp-peso-inicial'),pc=g('inp-peso-cosecha');
   const pa=g('inp-precio-alimento'),pv=g('inp-precio-venta');
 
   let errores=false;
-  if(vol<0){showFieldError('volumen','No puede ser negativo');errores=true;}else clearFieldError('volumen');
-  if(dens<=0&&vol>0){showFieldError('densidad','Ingresá la densidad');errores=true;}else clearFieldError('densidad');
-  if(sup<0||sup>100){showFieldError('supervivencia','Debe estar entre 0 y 100%');errores=true;}else clearFieldError('supervivencia');
-  if(pc>0&&pi>0&&pc<=pi){showFieldError('peso-cosecha','Debe ser mayor al peso inicial');errores=true;}else clearFieldError('peso-cosecha');
+  if(vol<0){showFieldError('volumen',t.noNegativo||'No puede ser negativo');errores=true;}else clearFieldError('volumen');
+  if(dens<=0&&vol>0){showFieldError('densidad',t.densidadRequerida||'Ingresá la densidad');errores=true;}else clearFieldError('densidad');
+  if(sup<0||sup>100){showFieldError('supervivencia',t.supervivenciaRango||'Debe estar entre 0 y 100%');errores=true;}else clearFieldError('supervivencia');
+  if(pc>0&&pi>0&&pc<=pi){showFieldError('peso-cosecha',t.pesoCosechaMayor||'Debe ser mayor al peso inicial');errores=true;}else clearFieldError('peso-cosecha');
   if(errores) return;
 
   const gpd = state.especieSeleccionada?(state.params[state.especieSeleccionada]?.gpd||0):0;
@@ -2087,6 +1880,12 @@ window.calcular = () => {
   set('r-alimento-total',fmt(alimTotal,1));set('r-costo-alimento',fmtM(costoAlim));
   set('r-ingreso',fmtM(ingreso));set('r-utilidad',fmtM(utilidad));
   set('r-dias',dias>0?fmt(dias)+' d':'—');set('r-gpd',gpd>0?fmt(gpd,2):'—');set('r-costo-kg',fmtM(costoKg));
+
+  // Traducir labels de resultados
+  set('lbl-r-costo',t.costoAlimento||'Costo alimento');
+  set('lbl-r-ingreso',t.ingresoBruto||'Ingreso bruto');
+  set('lbl-r-utilidad',t.utilidad||'Utilidad');
+
   calcRacion();
 };
 
@@ -2105,50 +1904,52 @@ window.calcRacion = () => {
 // VALIDACIONES BITÁCORA
 // ============================================================
 window.validarCampoLive = (id) => {
+  const t = IDIOMAS[idiomaActual];
   const raw = document.getElementById('b-'+id.replace('b-',''))?.value || document.getElementById(id)?.value;
   const val = parseFloat(raw)||0;
   const campo = id.replace('b-','');
-  if(campo==='alimento'&&val<0){showFieldError('b-alimento','No puede ser negativo');return;}
-  if(campo==='mortalidad'&&val<0){showFieldError('b-mortalidad','No puede ser negativo');return;}
+  if(campo==='alimento'&&val<0){showFieldError('b-alimento',t.noNegativo||'No puede ser negativo');return;}
+  if(campo==='mortalidad'&&val<0){showFieldError('b-mortalidad',t.noNegativo||'No puede ser negativo');return;}
   if(campo==='oxigeno'){
     clearFieldError('b-oxigeno');
-    if(val>0&&(val<2||val>20)){showFieldWarning('b-oxigeno','⚠️ Valor fuera de rango normal (2–20 mg/L)');return;}
+    if(val>0&&(val<2||val>20)){showFieldWarning('b-oxigeno',t.fueraRangoOxigeno||'⚠️ Valor fuera de rango normal (2–20 mg/L)');return;}
     clearFieldWarning('b-oxigeno');
   }
   if(campo==='temperatura'){
     clearFieldError('b-temperatura');
-    if(val>0&&(val<5||val>45)){showFieldWarning('b-temperatura','⚠️ Valor fuera de rango (5–45°C)');return;}
+    if(val>0&&(val<5||val>45)){showFieldWarning('b-temperatura',t.fueraRangoTemp||'⚠️ Valor fuera de rango (5–45°C)');return;}
     clearFieldWarning('b-temperatura');
   }
   if(campo==='ph'){
-    if(val>0&&(val<0||val>14)){showFieldError('b-ph','pH debe estar entre 0 y 14');return;}
+    if(val>0&&(val<0||val>14)){showFieldError('b-ph',t.phInvalido||'pH debe estar entre 0 y 14');return;}
     clearFieldError('b-ph');
   }
-  if(campo==='amonio'&&val>0.5){showFieldWarning('b-amonio','⚠️ Amonio elevado (>0.5 mg/L)');return;}
+  if(campo==='amonio'&&val>0.5){showFieldWarning('b-amonio',t.amonioElevado||'⚠️ Amonio elevado (>0.5 mg/L)');return;}
   if(campo==='amonio') clearFieldWarning('b-amonio');
-  if(campo==='nitrito'&&val>0.3){showFieldWarning('b-nitrito','⚠️ Nitrito elevado (>0.3 mg/L)');return;}
+  if(campo==='nitrito'&&val>0.3){showFieldWarning('b-nitrito',t.nitritoElevado||'⚠️ Nitrito elevado (>0.3 mg/L)');return;}
   if(campo==='nitrito') clearFieldWarning('b-nitrito');
 };
 
 function validarFormBitacora() {
+  const t = IDIOMAS[idiomaActual];
   const fecha = document.getElementById('b-fecha').value;
   const estanque = document.getElementById('b-estanque').value.trim();
   const ph = parseFloat(document.getElementById('b-ph').value)||0;
   const alimento = parseFloat(document.getElementById('b-alimento').value)||0;
   const mortalidad = parseFloat(document.getElementById('b-mortalidad').value)||0;
   let valid = true;
-  if(!fecha){showFieldError('b-fecha','Fecha requerida');valid=false;}
+  if(!fecha){showFieldError('b-fecha',t.campoRequerido||'Campo requerido');valid=false;}
   else {
     const hoy=new Date();hoy.setHours(0,0,0,0);
     const fechaD=new Date(fecha+'T00:00:00');
     if(fechaD>hoy){showFieldError('b-fecha','La fecha no puede ser futura');valid=false;}
     else clearFieldError('b-fecha');
   }
-  if(!estanque){showFieldError('b-estanque','Estanque requerido');valid=false;}
+  if(!estanque){showFieldError('b-estanque',t.campoRequerido||'Campo requerido');valid=false;}
   else clearFieldError('b-estanque');
-  if(alimento<0){showFieldError('b-alimento','No puede ser negativo');valid=false;}
-  if(mortalidad<0){showFieldError('b-mortalidad','No puede ser negativo');valid=false;}
-  if(ph>0&&(ph<0||ph>14)){showFieldError('b-ph','pH debe estar entre 0 y 14');valid=false;}
+  if(alimento<0){showFieldError('b-alimento',t.noNegativo||'No puede ser negativo');valid=false;}
+  if(mortalidad<0){showFieldError('b-mortalidad',t.noNegativo||'No puede ser negativo');valid=false;}
+  if(ph>0&&(ph<0||ph>14)){showFieldError('b-ph',t.phInvalido||'pH debe estar entre 0 y 14');valid=false;}
   return valid;
 }
 
@@ -2237,43 +2038,45 @@ function limpiarFormBitacora() {
 }
 
 window.eliminarRegistro = async (id) => {
-  if(!confirm('¿Eliminar este registro?')) return;
+  const t = IDIOMAS[idiomaActual];
+  if(!confirm(t.confirmarEliminarRegistro||'¿Eliminar este registro?')) return;
   state.bitacora = state.bitacora.filter(r=>r.id!==id);
   state.pendingSync = (state.pendingSync||[]).filter(pid=>pid!==id);
   await guardarDatos();
   renderBitacora();
   renderZootecnico();
-  showToast('🗑️ Eliminado','#ff4d6d');
+  showToast('🗑️ '+(t.eliminar||'Eliminado'),'#ff4d6d');
 };
 
 function renderBitacora() {
+  const t = IDIOMAS[idiomaActual];
   const filtroEst = document.getElementById('filtro-estanque')?.value.toLowerCase()||'';
   const filtroEsp = document.getElementById('filtro-especie')?.value||'';
   const registros = state.bitacora.filter(r=>(!filtroEst||r.estanque.toLowerCase().includes(filtroEst))&&(!filtroEsp||r.especie===filtroEsp));
   const el = document.getElementById('total-registros');
-  if(el) el.textContent = registros.length+' entradas';
+  if(el) el.textContent = registros.length+' '+(t.entradas||'entradas');
   const pendingEl = document.getElementById('pending-registros');
   const pendingCount = (state.pendingSync||[]).length;
   if(pendingEl) {
-    if(pendingCount>0){pendingEl.textContent=pendingCount+' pendientes';pendingEl.style.display='inline-flex';}
+    if(pendingCount>0){pendingEl.textContent=pendingCount+' '+(t.pendientes||'pendientes');pendingEl.style.display='inline-flex';}
     else{pendingEl.style.display='none';}
   }
   const list = document.getElementById('log-list');
   if(!list) return;
-  if(registros.length===0){list.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>Sin registros. Presioná "+ Nuevo Registro".</p></div>';return;}
+  if(registros.length===0){list.innerHTML=`<div class="empty-state"><div class="icon">📋</div><p>${t.sinRegistros||'Sin registros.'}</p></div>`;return;}
   const eNombre = id => {const e=getAllSpecies().find(e=>e.id===id);return e?e.emoji+' '+e.nombre:id;};
   const fld = (lbl,val,unit='') => val?`<div class="log-field"><div class="log-field-label">${lbl}</div><div class="log-field-value">${val}${unit?' '+unit:''}</div></div>`:'';
   const OBS_LABELS = {
-    alimentacion_activa:'🍽️ Alimentación activa',
-    alimentacion_reducida:'⬇️ Alimentación reducida',
-    boqueo:'😮 Boqueo en superficie',
-    agua_verde:'🟢 Agua verde',
-    agua_cafe:'🟤 Agua turbia',
-    agua_clara:'💧 Agua clara',
-    espuma:'🫧 Espuma',
-    mortalidades_observadas:'💀 Mortalidades visibles',
-    peces_lentos:'🐢 Peces inactivos',
-    nado_erratico:'🌀 Nado errático'
+    alimentacion_activa: t.alimentacion_activa||'🍽️ Alimentación activa',
+    alimentacion_reducida: t.alimentacion_reducida||'⬇️ Alimentación reducida',
+    boqueo: t.boqueo||'😮 Boqueo en superficie',
+    agua_verde: t.agua_verde||'🟢 Agua verde',
+    agua_cafe: t.agua_cafe||'🟤 Agua turbia',
+    agua_clara: t.agua_clara||'💧 Agua clara',
+    espuma: t.espuma||'🫧 Espuma',
+    mortalidades_observadas: t.mortalidades_observadas||'💀 Mortalidades visibles',
+    peces_lentos: t.peces_lentos||'🐢 Peces inactivos',
+    nado_erratico: t.nado_erratico||'🌀 Nado errático'
   };
   list.innerHTML = registros.map(r=>`
     <div class="log-entry ${(state.pendingSync||[]).includes(r.id)?'pending-sync':''}">
@@ -2282,17 +2085,17 @@ function renderBitacora() {
           <span class="log-date">📅 ${r.fecha}</span>
           <span style="color:var(--text2);font-size:13px">• ${r.estanque}</span>
           ${r.especie?`<span class="log-species">${eNombre(r.especie)}</span>`:''}
-          ${(state.pendingSync||[]).includes(r.id)?`<span class="pending-badge">⏳ pendiente sync</span>`:''}
+          ${(state.pendingSync||[]).includes(r.id)?`<span class="pending-badge">⏳ ${t.pendientes||'pendiente sync'}</span>`:''}
         </div>
         <button class="btn btn-danger btn-sm" onclick="eliminarRegistro(${r.id})">✕</button>
       </div>
       <div class="log-data">
-        ${fld('Alimento',r.alimento,'kg')}${fld('Mortalidades',r.mortalidad,'ind')}${fld('Peso',r.peso,'g')}
-        ${fld('O₂',r.oxigeno,'mg/L')}${fld('Temp',r.temperatura,'°C')}${fld('pH',r.ph)}
+        ${fld(t.alimento||'Alimento',r.alimento,'kg')}${fld(t.mortalidades||'Mortalidades',r.mortalidad,'ind')}${fld(t.pesoMuestreo||'Peso',r.peso,'g')}
+        ${fld('O₂',r.oxigeno,'mg/L')}${fld(t.temperatura||'Temp',r.temperatura,'°C')}${fld('pH',r.ph)}
         ${fld('NH₃',r.amonio,'mg/L')}${fld('NO₂',r.nitrito,'mg/L')}${fld('NO₃',r.nitrato,'mg/L')}
-        ${fld('Alcalinidad',r.alcalinidad,'mg/L')}${fld('Salinidad',r.salinidad,'ppt')}${fld('Dureza',r.dureza,'mg/L')}
-        ${fld('Biomasa',r.biomasa,'kg')}${fld('N° anim.',r.nanimales)}${fld('SGR',r.sgr,'%/d')}
-        ${fld('FCR acum.',r.fcrAcum)}${fld('K',r.condicion)}${fld('CV%',r.cv,'%')}
+        ${fld(t.alcalinidad||'Alcalinidad',r.alcalinidad,'mg/L')}${fld(t.salinidad||'Salinidad',r.salinidad,'ppt')}${fld(t.dureza||'Dureza',r.dureza,'mg/L')}
+        ${fld(t.biomasaEstanque||'Biomasa',r.biomasa,'kg')}${fld(t.nAnimales||'N° anim.',r.nanimales)}${fld(t.sgrLabel||'SGR',r.sgr,'%/d')}
+        ${fld(t.fcrAcum||'FCR acum.',r.fcrAcum)}${fld(t.condicion||'K',r.condicion)}${fld(t.cv||'CV%',r.cv,'%')}
       </div>
       ${r.obsChecks&&r.obsChecks.length>0?`<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">${r.obsChecks.map(k=>`<span style="background:rgba(0,200,150,0.1);border:1px solid var(--border);border-radius:20px;padding:2px 8px;font-size:11px;color:var(--text2)">${OBS_LABELS[k]||k}</span>`).join('')}</div>`:''}
       ${r.observaciones?`<div class="log-obs">💬 ${r.observaciones}</div>`:''}
@@ -2300,11 +2103,12 @@ function renderBitacora() {
 }
 
 function poblarSelectsEspecie() {
+  const t = IDIOMAS[idiomaActual];
   const opts = getAllSpecies().map(e=>`<option value="${e.id}">${e.emoji} ${e.nombre}</option>`).join('');
   ['b-especie','filtro-especie','z-filtro-especie'].forEach(id=>{
     const el = document.getElementById(id);
     if(!el) return;
-    const prefix = id.includes('filtro')?'<option value="">Todas</option>':'<option value="">Seleccionar...</option>';
+    const prefix = id.includes('filtro')?`<option value="">${t.todasEspecies||'Todas'}</option>`:`<option value="">${t.seleccionar||'Seleccionar...'}</option>`;
     el.innerHTML = prefix+opts;
   });
 }
@@ -2313,22 +2117,34 @@ function poblarSelectsEspecie() {
 // ZOOTÉCNICO
 // ============================================================
 window.renderZootecnico = () => {
+  const t = IDIOMAS[idiomaActual];
   const filtroEst = document.getElementById('z-filtro-estanque')?.value.toLowerCase()||'';
   const filtroEsp = document.getElementById('z-filtro-especie')?.value||'';
   const param = document.getElementById('z-parametro')?.value||'oxigeno';
   const registros = state.bitacora.filter(r=>(!filtroEst||r.estanque.toLowerCase().includes(filtroEst))&&(!filtroEsp||r.especie===filtroEsp)&&r[param]).slice(0,30).reverse();
   const paramLabels = {
-    oxigeno:'Oxígeno disuelto (mg/L)',temperatura:'Temperatura (°C)',ph:'pH',
-    amonio:'Amonio NH₃',nitrito:'Nitrito NO₂',nitrato:'Nitrato NO₃',
-    alcalinidad:'Alcalinidad',salinidad:'Salinidad (ppt)',dureza:'Dureza',
-    biomasa:'Biomasa (kg)',peso:'Peso muestreo (g)',sgr:'SGR (%/día)',
-    fcrAcum:'FCR Acumulado',condicion:'Índice Condición K',cv:'CV% Uniformidad',mortalidad:'Mortalidades'
+    oxigeno: t.oxigeno||'Oxígeno disuelto (mg/L)',
+    temperatura: t.temperatura||'Temperatura (°C)',
+    ph:'pH',
+    amonio: t.amonio||'Amonio NH₃',
+    nitrito: t.nitrito||'Nitrito NO₂',
+    nitrato: t.nitrato||'Nitrato NO₃',
+    alcalinidad: t.alcalinidad||'Alcalinidad',
+    salinidad: t.salinidad||'Salinidad (ppt)',
+    dureza: t.dureza||'Dureza',
+    biomasa: t.biomasaEstanque||'Biomasa (kg)',
+    peso: t.pesoMuestreo||'Peso muestreo (g)',
+    sgr: t.sgrLabel||'SGR (%/día)',
+    fcrAcum: t.fcrAcum||'FCR Acumulado',
+    condicion: t.condicion||'Índice Condición K',
+    cv: t.cv||'CV% Uniformidad',
+    mortalidad: t.mortalidades||'Mortalidades'
   };
   const tit = document.getElementById('z-chart-title');
   if(tit) tit.textContent = '📊 '+(paramLabels[param]||param);
   const chart = document.getElementById('z-chart');
   if(!chart) return;
-  if(registros.length===0){chart.innerHTML='<div class="empty-state"><div class="icon">📊</div><p>Sin datos para graficar.</p></div>';}
+  if(registros.length===0){chart.innerHTML=`<div class="empty-state"><div class="icon">📊</div><p>${t.sinDatos||'Sin datos para graficar.'}</p></div>`;}
   else {
     const vals = registros.map(r=>parseFloat(r[param])||0);
     const max = Math.max(...vals)||1;
@@ -2341,10 +2157,11 @@ window.renderZootecnico = () => {
   const tabla = document.getElementById('z-tabla');
   if(!tabla) return;
   const todos = state.bitacora.filter(r=>(!filtroEst||r.estanque.toLowerCase().includes(filtroEst))&&(!filtroEsp||r.especie===filtroEsp));
-  if(todos.length===0){tabla.innerHTML='<div class="empty-state"><p>Sin registros.</p></div>';return;}
+  if(todos.length===0){tabla.innerHTML=`<div class="empty-state"><p>${t.sinRegistros||'Sin registros.'}</p></div>`;return;}
   const eNombre = id=>{const e=getAllSpecies().find(e=>e.id===id);return e?e.nombre:id||'—';};
+  const headers = [t.fecha||'Fecha',t.estanque||'Estanque',t.especie?.replace('🐠 ','')||'Especie','O₂',t.temperatura||'Temp','pH','NH₃','NO₂',t.salinidad||'Salinidad',t.biomasaEstanque||'Biomasa',t.pesoMuestreo||'Peso',t.sgrLabel||'SGR',t.fcrAcum||'FCR',t.condicion||'K','CV%'];
   tabla.innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
-    <thead><tr style="border-bottom:1px solid var(--border)">${['Fecha','Estanque','Especie','O₂','Temp','pH','NH₃','NO₂','Salinidad','Biomasa','Peso','SGR','FCR','K','CV%'].map(h=>`<th style="padding:8px 6px;text-align:left;color:var(--text2);font-family:'DM Mono',monospace;font-size:10px;white-space:nowrap">${h}</th>`).join('')}</tr></thead>
+    <thead><tr style="border-bottom:1px solid var(--border)">${headers.map(h=>`<th style="padding:8px 6px;text-align:left;color:var(--text2);font-family:'DM Mono',monospace;font-size:10px;white-space:nowrap">${h}</th>`).join('')}</tr></thead>
     <tbody>${todos.map(r=>`<tr style="border-bottom:1px solid var(--border)">${[r.fecha,r.estanque,eNombre(r.especie),r.oxigeno,r.temperatura,r.ph,r.amonio,r.nitrito,r.salinidad,r.biomasa,r.peso,r.sgr,r.fcrAcum,r.condicion,r.cv].map(v=>`<td style="padding:7px 6px;color:var(--text);white-space:nowrap">${v||'—'}</td>`).join('')}</tr>`).join('')}</tbody>
   </table></div>`;
 };
@@ -2360,21 +2177,22 @@ function renderParamTabs() {
 window.setParamTab = id => {state.paramActivo=id;renderParamTabs();renderParamContent();};
 
 function renderParamContent() {
+  const t = IDIOMAS[idiomaActual];
   const esp = getAllSpecies().find(e=>e.id===state.paramActivo);
   if(!esp) return;
   const p = state.params[state.paramActivo]||{};
   const def = esp.params;
   const paramDefs=[
-    {key:'densidad',label:'Densidad de siembra',unit:p.densidadUnit||'—'},
-    {key:'supervivencia',label:'Tasa de supervivencia',unit:'%'},
-    {key:'fcr',label:'FCR',unit:'ratio',step:0.1},
-    {key:'tasaAlim',label:'Tasa de alimentación',unit:'%',step:0.1},
+    {key:'densidad',label:t.densidadSiembra||'Densidad de siembra',unit:p.densidadUnit||'—'},
+    {key:'supervivencia',label:t.supervivencia||'Tasa de supervivencia',unit:'%'},
+    {key:'fcr',label:t.fcr||'FCR',unit:'ratio',step:0.1},
+    {key:'tasaAlim',label:t.tasaAlim||'Tasa de alimentación',unit:'%',step:0.1},
     {key:'comidasDia',label:'Comidas por día',unit:'veces/día'},
-    {key:'gpd',label:'GPD (g/día)',unit:'g/día',step:0.1},
-    {key:'precioAlimento',label:'Precio alimento',unit:'₡/kg'},
-    {key:'precioVenta',label:'Precio venta',unit:'₡/kg'},
-    {key:'pesoInicial',label:'Peso inicial',unit:'g',step:0.1},
-    {key:'pesoCosecha',label:'Peso cosecha',unit:'g'}
+    {key:'gpd',label:t.gpd||'GPD (g/día)',unit:'g/día',step:0.1},
+    {key:'precioAlimento',label:t.precioAlim||'Precio alimento',unit:MONEDAS[monedaActual]?.simbolo+'/kg'||'₡/kg'},
+    {key:'precioVenta',label:t.precioVenta||'Precio venta',unit:MONEDAS[monedaActual]?.simbolo+'/kg'||'₡/kg'},
+    {key:'pesoInicial',label:t.pesoInicial||'Peso inicial',unit:'g',step:0.1},
+    {key:'pesoCosecha',label:t.pesoCosecha||'Peso cosecha',unit:'g'}
   ];
   document.getElementById('param-content').innerHTML=`
     <div class="card">
@@ -2409,14 +2227,16 @@ window.resetParams = async () => {
 // CUSTOM SPECIES
 // ============================================================
 function renderCustomSpeciesList() {
+  const t = IDIOMAS[idiomaActual];
   const btn = document.getElementById('btn-nueva-especie');
   if(btn) btn.style.display = state.customSpecies.length>=3?'none':'inline-flex';
   const list = document.getElementById('custom-species-list');
   if(!list) return;
   if(state.customSpecies.length===0){
-    list.innerHTML='<div class="empty-state"><div class="icon">🐠</div><p>No hay especies personalizadas.<br>Creá hasta 3 con parámetros propios.</p></div>';
+    list.innerHTML=`<div class="empty-state"><div class="icon">🐠</div><p>${t.sinEspecies||'No hay especies personalizadas.'}</p></div>`;
     return;
   }
+  const m = MONEDAS[monedaActual]||MONEDAS.CRC;
   list.innerHTML = state.customSpecies.map(e=>`
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -2426,16 +2246,16 @@ function renderCustomSpeciesList() {
           <div style="font-size:12px;color:var(--text3);font-style:italic">${e.sci}</div></div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-outline btn-sm" onclick="abrirModalEspecie('${e.id}')">✏️ Editar</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModalEspecie('${e.id}')">✏️ ${t.editar?.replace('✏️ ','')||'Editar'}</button>
           <button class="btn btn-danger btn-sm" onclick="eliminarEspecie('${e.id}')">🗑️</button>
         </div>
       </div>
       <div class="divider"></div>
       <div class="grid-4" style="font-size:12px">
-        <div class="log-field"><div class="log-field-label">Densidad</div><div class="log-field-value">${e.params.densidad} ${e.params.densidadUnit}</div></div>
-        <div class="log-field"><div class="log-field-label">FCR</div><div class="log-field-value">${e.params.fcr}</div></div>
-        <div class="log-field"><div class="log-field-label">SGR/GPD</div><div class="log-field-value">${e.params.gpd} g/día</div></div>
-        <div class="log-field"><div class="log-field-label">Precio venta</div><div class="log-field-value">₡${e.params.precioVenta?.toLocaleString('es-CR')}/kg</div></div>
+        <div class="log-field"><div class="log-field-label">${t.densidadSiembra||'Densidad'}</div><div class="log-field-value">${e.params.densidad} ${e.params.densidadUnit}</div></div>
+        <div class="log-field"><div class="log-field-label">${t.fcr||'FCR'}</div><div class="log-field-value">${e.params.fcr}</div></div>
+        <div class="log-field"><div class="log-field-label">${t.gpd||'GPD'}</div><div class="log-field-value">${e.params.gpd} g/día</div></div>
+        <div class="log-field"><div class="log-field-label">${t.precioVenta||'Precio venta'}</div><div class="log-field-value">${m.simbolo}${e.params.precioVenta?.toLocaleString(m.locale)}/kg</div></div>
       </div>
     </div>`).join('');
 }
